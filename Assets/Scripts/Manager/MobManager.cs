@@ -46,6 +46,11 @@ public class MobManager : MonoBehaviour
     
    private static void DamageMob(GameObject obj, int dmg)
     {
+        if(obj.tag != "Mob")
+        {
+            return;
+        }
+
         var objHealthComp = obj.gameObject.GetComponent<HealthComponent>();
 
         if (!objHealthComp)
@@ -62,6 +67,11 @@ public class MobManager : MonoBehaviour
 
     private static void HealMob(GameObject obj, int hp)
     {
+        if (obj.tag != "Mob")
+        {
+            return;
+        }
+
         var objHealthComp = obj.gameObject.GetComponent<HealthComponent>();
 
         if (!objHealthComp)

@@ -4,13 +4,18 @@ using UnityEngine;
 
 public class AudioSourceSphereHandler : MonoBehaviour
 {
-    public AudioSource _audioSource;
     public SphereCollider _sphereCollider;
-    private float maxRadius = 100.0f;
+
+    private AudioSource _audioSource;
+
+    private float minRadius = 0.1f;
+    private float maxRadius = 25.0f;
+    private float expandRate = 0.0f;
+    private float smoothTime = 0.1f;
 
     private void Awake()
     {
-        _audioSource = GetComponent<AudioSource>();
+        _audioSource = GetComponentInParent<AudioSource>();
         _sphereCollider = GetComponent<SphereCollider>();
 
         if (!_audioSource)
@@ -24,6 +29,7 @@ public class AudioSourceSphereHandler : MonoBehaviour
             Debug.LogError("Failed to get Sphere Collider on " + gameObject.name.ToString() + ", creating one now...");
             _sphereCollider = gameObject.AddComponent<SphereCollider>();
         }
+
     }
 
     void Start()
@@ -34,24 +40,37 @@ public class AudioSourceSphereHandler : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        while (_audioSource.isPlaying)
+        if (_audioSource.isPlaying)
         {
-            _sphereCollider.radius += 1.0f;
-            if (_sphereCollider.radius >= maxRadius)
-            {
-                break;
-            }
+            Expand();
         }
+        else
+        {
+            _sphereCollider.radius = minRadius;
+        }
+    }
+
+    private void FixedUpdate()
+    {
         
     }
 
     private void OnCollisionEnter(Collision collision)
     {
-
+        
     }
 
     private void OnTriggerEnter(Collider other)
     {
-       Debug.LogWarning(_sphereCollider.name.ToString() + " has collided with " + other.gameObject.name.ToString());
+       
     }
+
+    private void Expand()
+    {
+        var newRad = Mathf.SmoothDamp(_sphereCollider.radius, maxRadius, ref expandRate, smoothTime);
+        _sphereCollider.radius = newRad;
+    }
+
+    
+
 }

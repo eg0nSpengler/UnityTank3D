@@ -6,6 +6,7 @@ public class ProjectileHandler : MonoBehaviour
 {
     private Rigidbody _rb;
 
+    private int damageAmount = 2;
     private void Awake()
     {
         _rb = GetComponent<Rigidbody>();
@@ -14,10 +15,6 @@ public class ProjectileHandler : MonoBehaviour
         {
             Debug.LogError("ProjectileHandler failed to get Rigidbody, creating one now.");
             _rb = gameObject.AddComponent<Rigidbody>();
-        }
-        else 
-        {
-            Debug.Log("Rigidbody found on Projectile!");
         }
 
     }
@@ -43,10 +40,12 @@ public class ProjectileHandler : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        Debug.Log("Projectile has collied with " + collision.gameObject.ToString());
+        Debug.Log("Projectile has collied with " + collision.gameObject.name.ToString());
         Destroy(gameObject);
+        MobManager.InvokeMobTakeDamage(collision.gameObject, damageAmount);
     }
 
+    
 
     private void OnDestroy()
     {

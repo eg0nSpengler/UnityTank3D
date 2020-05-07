@@ -9,24 +9,42 @@ public class TankGun : MonoBehaviour
     public GameObject projectile;
     public Transform gunTransform;
 
-    private static float _reloadTime = 3.0f;
-    private float _timeSinceLastShot = _reloadTime;
-
     private AudioSource _audioSource;
 
+    private static float _reloadTime;
+    private float _timeSinceLastShot;
+    
+    
     private void Awake()
     {
+        gunTransform = GetComponent<Transform>();
         _audioSource = GetComponentInParent<AudioSource>();
-        _audioSource.volume = 0.1f;
-    }
+        
 
-    void Start()
-    {
         if (!gunTransform)
         {
             Debug.LogError("No gun transform set in TankGun instance on " + gameObject.name.ToString() + ", setting gun transform to parent transform");
             gunTransform = gameObject.transform;
         }
+
+        if (!projectile)
+        {
+            Debug.LogError("No projectile found on " + gameObject.name.ToString() + ", you probably forgot to set it in the Inspector!");
+        }
+
+        if (!_audioSource)
+        {
+            Debug.LogError("No Audio Source found on " + gameObject.name.ToString() + ", creating one now..");
+            _audioSource = gameObject.AddComponent<AudioSource>();
+        }
+
+        _reloadTime = _audioSource.clip.length;
+        _timeSinceLastShot = _reloadTime;
+    }
+
+    void Start()
+    {
+        
     }
 
     // Update is called once per frame

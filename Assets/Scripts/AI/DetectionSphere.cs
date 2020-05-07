@@ -5,27 +5,19 @@ using UnityEngine.AI;
 
 public class DetectionSphere : MonoBehaviour
 {
-    enum MONSTER_STATE
-    {
-        NONE,
-        IDLE,
-        MOVING,
-        MOVING_TO_TARGET,
-        ATTACKING_TARGET
-    }
-
+ 
     [Header("References")]
-    public Transform NavGoal;
     public GameObject _currentTarget;
+    public Collider _currentTargetCollider;
+    public Collider _audioTargetCollider;
 
     private Vector3 _lastKnownPos;
     private SphereCollider _sphereCollider;
     private NavMeshAgent _navAgent;
     private NavMeshPath _navMeshPath;
-    private MONSTER_STATE monsterState;
     private float pathElapsed = 0.0f; //For NavMeshPath debugging purposes
-
-
+    private float sphereRadius = 5.0f;
+    private bool bHeardAudio = false; //Have we detected an audible source?
     private void Awake()
     {
         _sphereCollider = GetComponent<SphereCollider>();
@@ -36,7 +28,11 @@ public class DetectionSphere : MonoBehaviour
             _sphereCollider = gameObject.AddComponent<SphereCollider>();
         }
 
-        _navAgent = GetComponent<NavMeshAgent>();
+        _sphereCollider.radius = sphereRadius;
+        _sphereCollider.isTrigger = true;
+
+        _navAgent = GetComponentInParent<NavMeshAgent>();
+
         if (!_navAgent)
         {
             Debug.LogError("Failed to get NavMeshAgent on " + gameObject.name.ToString() + ", creating one now...");
@@ -49,7 +45,7 @@ public class DetectionSphere : MonoBehaviour
     // Start is called before the first frame update
     private void Start()
     {
-        _navAgent.destination = NavGoal.position;
+
     }
 
     // Update is called once per frame
@@ -68,19 +64,8 @@ public class DetectionSphere : MonoBehaviour
             Debug.DrawLine(_navMeshPath.corners[i], _navMeshPath.corners[i + 1], Color.red);
         }
 
-        var targetCol = _currentTarget.gameObject.GetComponent<Collider>();
-
-        if(_sphereCollider.bounds.Contains(targetCol.bounds.center))
-        {
-            if (InLineOfSight(targetCol))
-            {
-                _navAgent.SetDestination(targetCol.transform.position);
-                _lastKnownPos = _currentTarget.transform.position;   
-            }
-        }
-
-       Debug.Log(_lastKnownPos.ToString());
-       
+        SearchForTarget();
+        
     }
 
     private void FixedUpdate()
@@ -94,16 +79,21 @@ public class DetectionSphere : MonoBehaviour
         {
             if (InLineOfSight(other))
             {
-
-                _navAgent.SetDestination(other.transform.position);
-                _currentTarget = other.gameObject;
+                MoveToTarget(other);
             }
             else
             {
+                SetPossibleTarget(other);
                 return;
             }
         }
-        
+
+        if (other.gameObject.tag == "Audible")
+        {
+            bHeardAudio = true;
+            MoveToAudible(other);
+        }
+
     }
 
     private void OnTriggerExit(Collider other)
@@ -111,6 +101,9 @@ public class DetectionSphere : MonoBehaviour
         if (other.gameObject.tag == "Mob")
         {
             Debug.Log(other.gameObject.ToString() + " has exited my search radius!");
+            _currentTarget = null;
+            _currentTargetCollider = null;
+            _audioTargetCollider = null;
         }
     }
 
@@ -142,4 +135,53 @@ public class DetectionSphere : MonoBehaviour
         return false;
     }
 
+    private void SearchForTarget()
+    {
+        if (_currentTargetCollider)
+        {
+            if (_sphereCollider.bounds.Contains(_currentTargetCollider.bounds.center))
+            {
+                if (InLineOfSight(_currentTargetCollider))
+                {
+                    _navAgent.SetDestination(_currentTargetCollider.transform.position);
+                    _lastKnownPos = _currentTarget.transform.position;
+                }
+            }
+        }
+        
+    }
+
+    private void MoveToTarget(Collider other)
+    {
+        _navAgent.SetDestination(other.transform.position);
+        _currentTarget = other.gameObject;
+        _currentTargetCollider = other.gameObject.GetComponent<Collider>();
+    }
+
+    private void SetPossibleTarget(Collider other)
+    {
+        _currentTarget = other.gameObject;
+        _currentTargetCollider = other.gameObject.GetComponent<Collider>();
+        _currentTarget = other.gameObject;
+    }
+
+    private void MoveToAudible(Collider other)
+    {
+        _navAgent.SetDestination(other.transform.position);
+        _audioTargetCollider = other.gameObject.GetComponent<Collider>();
+        _currentTarget = other.gameObject;
+        _lastKnownPos = other.gameObject.transform.position;
+    }
+
+    private void ListenForAudible()
+    {
+        if (_audioTargetCollider)
+        {
+            if (_sphereCollider.bounds.Contains(_audioTargetCollider.bounds.center))
+            {
+                _navAgent.SetDestination(_audioTargetCollider.transform.position);
+               _lastKnownPos = _audioTargetCollider.transform.position;    
+            }
+        }
+    }
 }

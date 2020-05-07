@@ -22,7 +22,7 @@ public class AI_SimpleMob : MonoBehaviour
     
     private void Start()
     {
-        
+
     }
 
     // Update is called once per frame
@@ -36,19 +36,18 @@ public class AI_SimpleMob : MonoBehaviour
         if (collision.gameObject.tag == "Projectile")
         {
             Debug.LogWarning(gameObject.name.ToString() + " has been hit!");
-            MobManager.InvokeMobTakeDamage(gameObject, 2);
         }
 
-        Debug.LogWarning(gameObject.name.ToString() + " has had a collision with " + collision.gameObject.name.ToString());
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.tag == "Projectile")
-        {
-            return;
-        }
-
-        Debug.LogWarning(gameObject.name.ToString() + " has had a collision with " + other.gameObject.name.ToString());
+        
     }
+    private void OnDisable()
+    {
+        Debug.LogWarning(gameObject.name.ToString() + " has been disabled!");
+    }
+
+
 }
