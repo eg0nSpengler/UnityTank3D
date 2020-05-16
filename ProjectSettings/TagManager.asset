@@ -15,6 +15,9 @@ TagManager:
   - Weapon
   - Lighting
   - Pickup
+  - Interactables
+  - Detail
+  - Info
   layers:
   - Default
   - TransparentFX

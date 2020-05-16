@@ -1,10 +1,10 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using TMPro;
 
-public class MenuDoor : MonoBehaviour
+public class MenuRollingDoor : MonoBehaviour
 {
+
     [Header("References")]
     public AudioClip DoorOpenSound;
     public AudioClip DoorCloseSound;
@@ -13,22 +13,21 @@ public class MenuDoor : MonoBehaviour
     private GUIStyle toolTipForeground;
     private GUIStyle toolTipBackground;
 
-    private const float rotAmount = -45.0f;
-    private const string toolTipText = "Quit Game";
+    private const float transAmount = 2.0f;
+    private const string toolTipText = "Start Game";
     private string currentToolTipText;
 
 
     private void Awake()
     {
+
         _audioSource = GetComponent<AudioSource>();
-        
+
         if (!_audioSource)
         {
             Debug.LogError("Failed to get Audio Source on " + gameObject.name.ToString() + ", creating one now...");
             _audioSource = gameObject.AddComponent<AudioSource>();
         }
-
-        _audioSource.clip = DoorOpenSound;
 
         toolTipForeground = new GUIStyle();
         toolTipBackground = new GUIStyle();
@@ -51,28 +50,32 @@ public class MenuDoor : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-       
+        
     }
 
     private void OnMouseEnter()
     {
+        Debug.Log("Menu Door is being moused over!");
         _audioSource.clip = DoorOpenSound;
         _audioSource.Play();
-        gameObject.transform.Rotate(0.0f, rotAmount, 0.0f);
+        gameObject.transform.Translate(Vector3.up * transAmount, Space.World);
         currentToolTipText = toolTipText;
+
     }
 
     private void OnMouseExit()
     {
         _audioSource.clip = DoorCloseSound;
         _audioSource.Play();
-        gameObject.transform.Rotate(0.0f, rotAmount * -1, 0.0f);
+        gameObject.transform.Translate(Vector3.up * transAmount * -1, Space.World);
         currentToolTipText = " ";
+
     }
 
     private void OnMouseDown()
     {
-        Debug.Log("MenuDoor has been clicked on, at this point we'd quit from the game");
+        Debug.Log("MenuRollingDoor clicked on, at this point we'd load into the first level briefing scene");
+        GameManager.InvokePreBriefingDelegate(gameObject);
     }
 
     private void OnGUI()
@@ -89,5 +92,4 @@ public class MenuDoor : MonoBehaviour
             GUI.Label(new Rect(x - 150, y + 20, 300, 60), currentToolTipText, toolTipForeground);
         }
     }
-
 }

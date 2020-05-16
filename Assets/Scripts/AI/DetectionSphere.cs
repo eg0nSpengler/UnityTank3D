@@ -15,6 +15,7 @@ public class DetectionSphere : MonoBehaviour
     private SphereCollider _sphereCollider;
     private NavMeshAgent _navAgent;
     private NavMeshPath _navMeshPath;
+
     private float pathElapsed = 0.0f; //For NavMeshPath debugging purposes
     private float sphereRadius = 5.0f;
     private bool bHeardAudio = false; //Have we detected an audible source?

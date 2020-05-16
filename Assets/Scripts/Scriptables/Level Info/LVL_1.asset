@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7af50815609bfdf44b6cbf4245b81174, type: 3}
+  m_Name: LVL_1
+  m_EditorClassIdentifier: 
+  LevelName: Langston Research Facility
+  LevelNum: 1
+  LevelDescription: Your first assignment is to rescue a bunch of scientists who
+    have barracaded themselves inside the Langston Research Facility. They were working
+    on a new, clean fuel until some big oil corporations decided to buy Langston
+    out. Now insiders say the corporation is going to nuke them.

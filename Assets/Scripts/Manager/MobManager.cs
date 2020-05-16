@@ -2,9 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// A singleton to manage all Mobs within a level
+/// </summary>
 public class MobManager : MonoBehaviour
 {
-    private static List<GameObject> _mobList;
 
     private static OnMobDamage OnMobDamageDelegate;
     private static OnMobHeal OnMobHealDelegate;
@@ -14,17 +16,6 @@ public class MobManager : MonoBehaviour
 
     private void Awake()
     {
-        _mobList = new List<GameObject>();
-
-       foreach(var obj in FindObjectsOfType<GameObject>())
-       {
-            if (obj.tag == "Mob")
-            {
-                _mobList.Add(obj);
-            }
-       }
-
-        Debug.Log("The Mob List in the Mob Manger class currently contains " + _mobList.Count.ToString() + " mob(s)");
 
         OnMobDamageDelegate = DamageMob;
         OnMobHealDelegate = HealMob;
@@ -86,11 +77,21 @@ public class MobManager : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Invoke the Damage Mob function in the MobManager class
+    /// </summary>
+    /// <param name="obj">The Mob to be damaged</param>
+    /// <param name="dmg">The amount of damage dealt to the Mob</param>
     public static void InvokeMobTakeDamage(GameObject obj, int dmg)
     {
         OnMobDamageDelegate.Invoke(obj, dmg);
     }
 
+    /// <summary>
+    /// Invoke the Heal Mob function in the MobManager class
+    /// </summary>
+    /// <param name="obj">The Mob to be healed</param>
+    /// <param name="hp">The amount of health to be restored to the Mob</param>
     public static void InvokeMobHeal(GameObject obj, int hp)
     {
         OnMobHealDelegate.Invoke(obj, hp);

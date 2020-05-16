@@ -127,7 +127,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-39108
+  m_Name: pb_Mesh28304
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -1627,7 +1627,7 @@ Camera:
   m_FOVAxisMode: 0
   m_SensorSize: {x: 36, y: 24}
   m_LensShift: {x: 0, y: 0}
-  m_FocalLength: 50
+  m_FocalLength: 28.970562
   m_NormalizedViewPortRect:
     serializedVersion: 2
     x: 0
@@ -1636,7 +1636,7 @@ Camera:
     height: 1
   near clip plane: 0.3
   far clip plane: 1000
-  field of view: 26.991467
+  field of view: 45
   orthographic: 0
   orthographic size: 5
   m_Depth: -1
@@ -2512,7 +2512,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-23176
+  m_Name: pb_Mesh28364
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -3508,7 +3508,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-31362
+  m_Name: pb_Mesh28324
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2

@@ -33,8 +33,12 @@ public class LevelPortal : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-       Debug.Log("At this point, the player would be loaded into the POST-BRIEFING SCENE");
-       GameManager.InvokeOnPlayerEnterPortalDelegate();
+        if (other.gameObject.name == "TankActor")
+        {
+            Debug.Log("At this point, the player would be loaded into the POST-BRIEFING SCENE");
+            GameManager.InvokeOnPlayerEnterPortalDelegate(gameObject);
+        }
+       
     }
 
     private void OnEnable()

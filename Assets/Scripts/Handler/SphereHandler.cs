@@ -29,15 +29,19 @@ public class SphereHandler : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-         Debug.Log("Collision detected!");
-         OnSphereDestroyed();
+        if (other.gameObject.name == "TankActor")
+        {
+            Debug.Log("Collision detected!");
+            OnSphereDestroyed();
+        }
+         
     }
 
     private void OnSphereDestroyed()
     {
         AudioSource.PlayClipAtPoint(pickupSound, gameObject.transform.position, 0.2f);
         Destroy(gameObject);
-        GameManager.InvokeSphereDestroyedDelegate();
+        PickupManager.InvokePickupDestroyedDelegate(gameObject);
         
     }
 

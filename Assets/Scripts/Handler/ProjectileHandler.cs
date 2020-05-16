@@ -4,9 +4,11 @@ using UnityEngine;
 
 public class ProjectileHandler : MonoBehaviour
 {
+    [Header("Variables")]
+    public int damageAmount = 0;
+
     private Rigidbody _rb;
 
-    private int damageAmount = 2;
     private void Awake()
     {
         _rb = GetComponent<Rigidbody>();
