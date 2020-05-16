@@ -35,7 +35,7 @@ public class PickupManager : MonoBehaviour
 
         if(_pickupList.Count <= 0)
         {
-            Debug.LogWarning(gameObject.name.ToString() + " didn't find any valid pickups within the current level");
+            Debug.LogWarning("PickupManager didn't find any valid pickups within the current level");
             Debug.LogWarning("Did you forget to tag any Pickup prefab instances in the scene as Pickup?");
         }
 
@@ -43,7 +43,7 @@ public class PickupManager : MonoBehaviour
        
         Debug.Log("Pickup list contains " + _pickupList.Count + " pickups");
 
-        OnPickupDestroyedDelegate = RemoveSphereFromList;
+        OnPickupDestroyedDelegate = RemovePickupFromList;
     }
 
     // Start is called before the first frame update
@@ -52,7 +52,7 @@ public class PickupManager : MonoBehaviour
         
     }
 
-    private void RemoveSphereFromList()
+    private void RemovePickupFromList()
     {
         var rand = Random.Range(0, _pickupList.Count);
 

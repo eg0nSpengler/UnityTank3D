@@ -57,9 +57,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 144f9bfbafdffbb4f9d1bdbdab4afaa4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _currentTarget: {fileID: 0}
-  _currentTargetCollider: {fileID: 0}
-  _audioTargetCollider: {fileID: 0}
+  currentTarget: {fileID: 0}
+  currentTargetCollider: {fileID: 0}
+  audioTargetCollider: {fileID: 0}
 --- !u!1 &5070864400065652303
 GameObject:
   m_ObjectHideFlags: 0

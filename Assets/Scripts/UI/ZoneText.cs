@@ -6,7 +6,7 @@ using TMPro;
 public class ZoneText : MonoBehaviour
 {
     [Header("References")]
-    public LevelInfo _lvlInfo;
+    public LevelInfo lvlInfo;
 
     private TextMeshProUGUI _zoneText;
 
@@ -27,11 +27,11 @@ public class ZoneText : MonoBehaviour
         switch (gameObject.name.ToString())
         {
             case "TITLE":
-                _zoneText.text = _zoneString += _lvlInfo.GetLevelNum + ": " + _lvlInfo.GetLevelName;
+                _zoneText.text = _zoneString += lvlInfo.GetLevelNum + ": " + lvlInfo.GetLevelName;
                 break;
 
             case "DESCRIPTION":
-                _zoneText.text = _lvlInfo.GetLevelDesc;
+                _zoneText.text = lvlInfo.GetLevelDesc;
                 break;
 
             default:

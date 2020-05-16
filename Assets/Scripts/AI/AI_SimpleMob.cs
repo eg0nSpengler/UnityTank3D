@@ -33,9 +33,19 @@ public class AI_SimpleMob : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.tag == "Projectile")
+        switch (collision.gameObject.tag.ToString())
         {
-            Debug.LogWarning(gameObject.name.ToString() + " has been hit!");
+            case "Projectile":
+                Debug.LogWarning(gameObject.name.ToString() + " has been hit!");
+                break;
+
+            case "Mob":
+                Debug.LogWarning("Has collided with " + gameObject.name.ToString());
+                MobManager.InvokeMobTakeDamage(collision.gameObject, 2);
+                break;
+
+            default:
+                break;
         }
 
     }

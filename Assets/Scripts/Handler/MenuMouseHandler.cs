@@ -6,7 +6,6 @@ using TMPro;
 public class MenuMouseHandler : MonoBehaviour
 {
     private Transform _sphereTransform;
-
     private void Awake()
     {
         _sphereTransform = GetComponent<Transform>();

@@ -7,16 +7,19 @@ public class HealthComponent : MonoBehaviour
     [Header("Variables")]
     public int currentHP;
 
-    private int maxHP;
+    private int _maxHP;
     private void Awake()
     {
-        
+        if (gameObject.tag != "Mob")
+        {
+            Debug.LogWarning(gameObject.name.ToString() + " has a HealthComponent but is not tagged as a Mob!");
+        }
     }
 
     // Start is called before the first frame update
     void Start()
     {
-        maxHP = currentHP;   
+        _maxHP = currentHP;   
     }
 
     // Update is called once per frame
@@ -27,7 +30,7 @@ public class HealthComponent : MonoBehaviour
 
 
     /// <summary>
-    /// Damages the GameObject for X amount of health
+    /// Damages the Mob for X amount of health
     /// </summary>
     /// <param name="dmg"></param>
     public void TakeDamage(int dmg)
@@ -45,7 +48,6 @@ public class HealthComponent : MonoBehaviour
             }
             else
             {
-                Debug.LogWarning(gameObject.name.ToString() + "'s health component has taken " + dmg.ToString() + " damage!");
                 currentHP -= dmg;    
             }
 
@@ -58,20 +60,20 @@ public class HealthComponent : MonoBehaviour
     }
 
     /// <summary>
-    /// Heals the GameObject for X amount of health
+    /// Heals the Mob for X amount of health
     /// </summary>
     /// <param name="hp"></param>
     public void Heal(int hp)
     {
-        if (currentHP >= maxHP)
+        if (currentHP >= _maxHP)
         {
-            Debug.LogWarning("Cannot call Heal on " + gameObject.name.ToString() + " current HP is at maximum value of " + maxHP.ToString());
+            Debug.LogWarning("Cannot call Heal on " + gameObject.name.ToString() + " current HP is at maximum value of " + _maxHP.ToString());
         }
         else
         {
-            if (currentHP + hp > maxHP)
+            if (currentHP + hp > _maxHP)
             {
-                currentHP = maxHP;
+                currentHP = _maxHP;
             }
             else
             {

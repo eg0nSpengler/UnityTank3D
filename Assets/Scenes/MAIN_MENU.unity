@@ -604,6 +604,7 @@ GameObject:
   m_Component:
   - component: {fileID: 342551171}
   - component: {fileID: 342551172}
+  - component: {fileID: 342551173}
   m_Layer: 0
   m_Name: MANAGERS
   m_TagString: Untagged
@@ -639,6 +640,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   LevelPortal: {fileID: 0}
+--- !u!114 &342551173
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 342551170}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7b274621c56f5cf42bd5d27619204341, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!43 &385713588
 Mesh:
   m_ObjectHideFlags: 0

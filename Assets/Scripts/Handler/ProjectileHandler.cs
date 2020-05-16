@@ -44,7 +44,10 @@ public class ProjectileHandler : MonoBehaviour
     {
         Debug.Log("Projectile has collied with " + collision.gameObject.name.ToString());
         Destroy(gameObject);
-        MobManager.InvokeMobTakeDamage(collision.gameObject, damageAmount);
+        if (collision.collider.gameObject.tag == "Mob")
+        {
+            MobManager.InvokeMobTakeDamage(collision.gameObject, damageAmount);
+        }
     }
 
     

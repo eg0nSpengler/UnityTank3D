@@ -14,4 +14,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/POST_BRIEFING.unity
     guid: f7de4fcaf225f4c4cb409160f694cbd9
+  - enabled: 1
+    path: Assets/Scenes/MAIN_MENU.unity
+    guid: df4b29a98ddcd834387ddcf0883fed13
   m_configObjects: {}

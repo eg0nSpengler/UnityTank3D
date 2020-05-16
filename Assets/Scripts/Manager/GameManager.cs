@@ -9,6 +9,15 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
     
+
+    [Header("References")]
+    public GameObject LevelPortal;
+
+    private static GAME_STATE _gameState;
+     
+    private int _playerScore = 0;
+
+    private delegate void OnPlayerEnterPortal();
     private enum GAME_STATE 
     {
         STATE_NONE,
@@ -18,28 +27,14 @@ public class GameManager : MonoBehaviour
         STATE_GAME_OVER
     }
 
-    [Header("References")]
-    public GameObject LevelPortal;
-
-    private static OnPlayerEnterPortal OnPlayerEnterPortalDelegate;
-    private static OnPreBriefingLoad OnPreBriefingLoadDelegate;
-
-    private static GAME_STATE _gameState;
-     
-    private int _playerScore = 0;
-
-    private delegate void OnPlayerEnterPortal();
-    private delegate void OnPreBriefingLoad();
-
     private void Awake()
     {
-        OnPlayerEnterPortalDelegate = LoadPostBriefingScene;
-        OnPreBriefingLoadDelegate = LoadPreBriefingScene;
+        
     }
 
     private void OnEnable()
     {
-        SceneManager.sceneLoaded += OnSceneLoaded;
+
     }
     // Start is called before the first frame update
     private void Start()
@@ -60,23 +55,11 @@ public class GameManager : MonoBehaviour
         LevelPortal.SetActive(true);
     }
 
-    private static void LoadPreBriefingScene()
-    {
-        Debug.Log("Loading PRE_BRIEFING SCENE");
-        SceneManager.LoadSceneAsync("PRE_BRIEFING", LoadSceneMode.Single);
-    }
-    private static void LoadPostBriefingScene()
-    {
-        Debug.Log("Loading POST_BRIEFING SCENE");
-        SceneManager.LoadSceneAsync("POST_BRIEFING", LoadSceneMode.Single);
-    }
-
-
     public static void InvokeOnPlayerEnterPortalDelegate(GameObject obj)
     {
         if (obj.tag == "LevelPortal")
         {
-            OnPlayerEnterPortalDelegate.Invoke();
+            LevelManager.LoadScene(LevelManager.BriefingType.POST_BRIEFING);
         }
         else
         {
@@ -88,17 +71,12 @@ public class GameManager : MonoBehaviour
     {
         if (obj.tag == "Interactables")
         {
-            OnPreBriefingLoadDelegate.Invoke();
+            LevelManager.LoadScene(LevelManager.BriefingType.PRE_BRIEFING);
         }
         else
         {
             Debug.LogError("Failed to invoke PreBriefing Delegate in the Game Manager, you probably tried to invoke this delegate from the wrong GameObject");
         }
-    }
-
-    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
-    {
-        
     }
 
 }

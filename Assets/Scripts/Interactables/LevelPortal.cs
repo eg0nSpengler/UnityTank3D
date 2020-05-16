@@ -7,7 +7,7 @@ public class LevelPortal : MonoBehaviour
     private AudioSource _audioSource;
     private void Awake()
     {
-        gameObject.SetActive(false);
+        //gameObject.SetActive(false);
         _audioSource = GetComponent<AudioSource>();
 
         if (!_audioSource)
@@ -35,7 +35,6 @@ public class LevelPortal : MonoBehaviour
     {
         if (other.gameObject.name == "TankActor")
         {
-            Debug.Log("At this point, the player would be loaded into the POST-BRIEFING SCENE");
             GameManager.InvokeOnPlayerEnterPortalDelegate(gameObject);
         }
        

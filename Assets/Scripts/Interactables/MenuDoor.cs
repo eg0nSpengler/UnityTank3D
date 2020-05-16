@@ -10,12 +10,12 @@ public class MenuDoor : MonoBehaviour
     public AudioClip DoorCloseSound;
 
     private AudioSource _audioSource;
-    private GUIStyle toolTipForeground;
-    private GUIStyle toolTipBackground;
+    private GUIStyle _toolTipForeground;
+    private GUIStyle _toolTipBackground;
 
-    private const float rotAmount = -45.0f;
-    private const string toolTipText = "Quit Game";
-    private string currentToolTipText;
+    private const float _rotAmount = -45.0f;
+    private const string _toolTipText = "Quit Game";
+    private string _currentToolTipText;
 
 
     private void Awake()
@@ -30,16 +30,16 @@ public class MenuDoor : MonoBehaviour
 
         _audioSource.clip = DoorOpenSound;
 
-        toolTipForeground = new GUIStyle();
-        toolTipBackground = new GUIStyle();
+        _toolTipForeground = new GUIStyle();
+        _toolTipBackground = new GUIStyle();
 
-        toolTipForeground.normal.textColor = Color.white;
-        toolTipForeground.alignment = TextAnchor.UpperCenter;
-        toolTipForeground.wordWrap = true;
+        _toolTipForeground.normal.textColor = Color.white;
+        _toolTipForeground.alignment = TextAnchor.UpperCenter;
+        _toolTipForeground.wordWrap = true;
 
-        toolTipBackground.normal.textColor = Color.black;
-        toolTipBackground.alignment = TextAnchor.UpperCenter;
-        toolTipBackground.wordWrap = true;
+        _toolTipBackground.normal.textColor = Color.black;
+        _toolTipBackground.alignment = TextAnchor.UpperCenter;
+        _toolTipBackground.wordWrap = true;
 
     }
     // Start is called before the first frame update
@@ -58,16 +58,16 @@ public class MenuDoor : MonoBehaviour
     {
         _audioSource.clip = DoorOpenSound;
         _audioSource.Play();
-        gameObject.transform.Rotate(0.0f, rotAmount, 0.0f);
-        currentToolTipText = toolTipText;
+        gameObject.transform.Rotate(0.0f, _rotAmount, 0.0f);
+        _currentToolTipText = _toolTipText;
     }
 
     private void OnMouseExit()
     {
         _audioSource.clip = DoorCloseSound;
         _audioSource.Play();
-        gameObject.transform.Rotate(0.0f, rotAmount * -1, 0.0f);
-        currentToolTipText = " ";
+        gameObject.transform.Rotate(0.0f, _rotAmount * -1, 0.0f);
+        _currentToolTipText = " ";
     }
 
     private void OnMouseDown()
@@ -81,12 +81,12 @@ public class MenuDoor : MonoBehaviour
         //Yet again, some obscure thread from almost a decade ago has the answer to your solution
         //Rather than some 1-3yr old threads posted on the most recent Unity version
         //Seriously, it's mind boggling
-        if (currentToolTipText != " ")
+        if (_currentToolTipText != " ")
         {
             var x = Event.current.mousePosition.x;
             var y = Event.current.mousePosition.y;
-            GUI.Label(new Rect(x - 149, y + 21, 300, 60), currentToolTipText, toolTipBackground);
-            GUI.Label(new Rect(x - 150, y + 20, 300, 60), currentToolTipText, toolTipForeground);
+            GUI.Label(new Rect(x - 149, y + 21, 300, 60), _currentToolTipText, _toolTipBackground);
+            GUI.Label(new Rect(x - 150, y + 20, 300, 60), _currentToolTipText, _toolTipForeground);
         }
     }
 

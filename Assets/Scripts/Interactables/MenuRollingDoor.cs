@@ -10,12 +10,12 @@ public class MenuRollingDoor : MonoBehaviour
     public AudioClip DoorCloseSound;
 
     private AudioSource _audioSource;
-    private GUIStyle toolTipForeground;
-    private GUIStyle toolTipBackground;
+    private GUIStyle _toolTipForeground;
+    private GUIStyle _toolTipBackground;
 
-    private const float transAmount = 2.0f;
-    private const string toolTipText = "Start Game";
-    private string currentToolTipText;
+    private const float _transAmount = 2.0f;
+    private const string _toolTipText = "Start Game";
+    private string _currentToolTipText;
 
 
     private void Awake()
@@ -29,16 +29,16 @@ public class MenuRollingDoor : MonoBehaviour
             _audioSource = gameObject.AddComponent<AudioSource>();
         }
 
-        toolTipForeground = new GUIStyle();
-        toolTipBackground = new GUIStyle();
+        _toolTipForeground = new GUIStyle();
+        _toolTipBackground = new GUIStyle();
 
-        toolTipForeground.normal.textColor = Color.white;
-        toolTipForeground.alignment = TextAnchor.UpperCenter;
-        toolTipForeground.wordWrap = true;
+        _toolTipForeground.normal.textColor = Color.white;
+        _toolTipForeground.alignment = TextAnchor.UpperCenter;
+        _toolTipForeground.wordWrap = true;
 
-        toolTipBackground.normal.textColor = Color.black;
-        toolTipBackground.alignment = TextAnchor.UpperCenter;
-        toolTipBackground.wordWrap = true;
+        _toolTipBackground.normal.textColor = Color.black;
+        _toolTipBackground.alignment = TextAnchor.UpperCenter;
+        _toolTipBackground.wordWrap = true;
 
     }
     // Start is called before the first frame update
@@ -58,8 +58,8 @@ public class MenuRollingDoor : MonoBehaviour
         Debug.Log("Menu Door is being moused over!");
         _audioSource.clip = DoorOpenSound;
         _audioSource.Play();
-        gameObject.transform.Translate(Vector3.up * transAmount, Space.World);
-        currentToolTipText = toolTipText;
+        gameObject.transform.Translate(Vector3.up * _transAmount, Space.World);
+        _currentToolTipText = _toolTipText;
 
     }
 
@@ -67,8 +67,8 @@ public class MenuRollingDoor : MonoBehaviour
     {
         _audioSource.clip = DoorCloseSound;
         _audioSource.Play();
-        gameObject.transform.Translate(Vector3.up * transAmount * -1, Space.World);
-        currentToolTipText = " ";
+        gameObject.transform.Translate(Vector3.up * _transAmount * -1, Space.World);
+        _currentToolTipText = " ";
 
     }
 
@@ -84,12 +84,12 @@ public class MenuRollingDoor : MonoBehaviour
         //Yet again, some obscure thread from almost a decade ago has the answer to your solution
         //Rather than some 1-3yr old threads posted on the most recent Unity version
         //Seriously, it's mind boggling
-        if (currentToolTipText != " ")
+        if (_currentToolTipText != " ")
         {
             var x = Event.current.mousePosition.x;
             var y = Event.current.mousePosition.y;
-            GUI.Label(new Rect(x - 149, y + 21, 300, 60), currentToolTipText, toolTipBackground);
-            GUI.Label(new Rect(x - 150, y + 20, 300, 60), currentToolTipText, toolTipForeground);
+            GUI.Label(new Rect(x - 149, y + 21, 300, 60), _currentToolTipText, _toolTipBackground);
+            GUI.Label(new Rect(x - 150, y + 20, 300, 60), _currentToolTipText, _toolTipForeground);
         }
     }
 }

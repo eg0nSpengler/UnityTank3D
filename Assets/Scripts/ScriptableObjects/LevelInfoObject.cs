@@ -6,11 +6,11 @@ public class LevelInfoObject : MonoBehaviour
 {
 
     [SerializeField]
-    private LevelInfo levelInfo;
+    private LevelInfo _levelInfo;
 
     private void OnEnable()
     {
-        Debug.Log(levelInfo.GetLevelName);
-        Debug.Log(levelInfo.GetLevelDesc);
+        Debug.Log(_levelInfo.GetLevelName);
+        Debug.Log(_levelInfo.GetLevelDesc);
     }
 }

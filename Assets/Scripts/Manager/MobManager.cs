@@ -39,6 +39,7 @@ public class MobManager : MonoBehaviour
     {
         if(obj.tag != "Mob")
         {
+            Debug.LogError("Failed to call DamageMob on " + obj.name.ToString() + " the GameObject may be an untagged Mob or not a Mob at all.");
             return;
         }
 
@@ -46,7 +47,7 @@ public class MobManager : MonoBehaviour
 
         if (!objHealthComp)
         {
-            Debug.LogError("Failed to get a Health Component in Mob Manager!");
+            Debug.LogError("Failed to get a Health Component on " + obj.name.ToString() + " the GameObject may be a Mob without a Health Component or not a Mob at all.");
             return;
         }
         else
@@ -60,6 +61,7 @@ public class MobManager : MonoBehaviour
     {
         if (obj.tag != "Mob")
         {
+            Debug.LogError("Failed to call HealMob on " + obj.name.ToString() + " the GameObject may be an untagged Mob or not a Mob at all.");
             return;
         }
 
@@ -67,7 +69,7 @@ public class MobManager : MonoBehaviour
 
         if (!objHealthComp)
         {
-            Debug.LogError("Failed to get a Health Component in Mob Manager!");
+            Debug.LogError("Failed to get a Health Component on " + obj.name.ToString() + " the GameObject may be a Mob without a Health Component or not a Mob at all.");
             return;
         }
         else

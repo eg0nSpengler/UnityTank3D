@@ -7,19 +7,19 @@ public class LevelInfo : ScriptableObject
 {
 
     [SerializeField]
-    private string LevelName;
+    private string _levelName;
 
     [SerializeField]
-    private int LevelNum;
+    private int _levelNum;
 
     [SerializeField]
-    private string LevelDescription;
+    private string _levelDescription;
 
     public string GetLevelName
     {
         get
         {
-            return LevelName;
+            return _levelName;
         }
     }
 
@@ -27,7 +27,7 @@ public class LevelInfo : ScriptableObject
     {
         get 
         {
-            return LevelDescription;
+            return _levelDescription;
         }
     }
 
@@ -35,7 +35,7 @@ public class LevelInfo : ScriptableObject
     {
         get
         {
-            return LevelNum;
+            return _levelNum;
         }
     }
 }
