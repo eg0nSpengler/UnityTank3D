@@ -79,6 +79,19 @@ public class MobManager : MonoBehaviour
         }
     }
 
+    private static void GetMobGunStatus(GameObject obj)
+    {
+        if (obj.tag != "Mob")
+        {
+            Debug.LogError("Failed to call GetMobGunStatus on " + obj.name.ToString() + " the Gameobject may be an untagged Mob or not a Mob at all");
+            return;
+        }
+
+        var objGunComp = obj.gameObject.GetComponent<TankGun>();
+
+       
+    }
+
     /// <summary>
     /// Invoke the Damage Mob function in the MobManager class
     /// </summary>

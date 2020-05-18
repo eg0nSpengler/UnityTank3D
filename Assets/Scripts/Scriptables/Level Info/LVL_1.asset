@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7af50815609bfdf44b6cbf4245b81174, type: 3}
   m_Name: LVL_1
   m_EditorClassIdentifier: 
-  _levelName: 
-  _levelNum: 0
+  _levelName: TestLevel
+  _levelNum: 1
+  _levelTime: 60
   _levelDescription: 

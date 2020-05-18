@@ -57,7 +57,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f5ed6d1cacf6a464689fe1d3304dd458, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _sphereCollider: {fileID: 0}
+  sphereCollider: {fileID: 0}
 --- !u!1 &2808160856049747290
 GameObject:
   m_ObjectHideFlags: 0

@@ -13,7 +13,11 @@ public class LevelInfo : ScriptableObject
     private int _levelNum;
 
     [SerializeField]
+    private int _levelTime;
+
+    [SerializeField]
     private string _levelDescription;
+
 
     public string GetLevelName
     {
@@ -36,6 +40,14 @@ public class LevelInfo : ScriptableObject
         get
         {
             return _levelNum;
+        }
+    }
+
+    public int GetLevelTime
+    {
+        get 
+        {
+            return _levelTime;
         }
     }
 }

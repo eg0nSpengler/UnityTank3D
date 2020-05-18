@@ -360,7 +360,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 886617839}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: UI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -400,7 +400,7 @@ GameObject:
   - component: {fileID: 1432815026}
   - component: {fileID: 1432815024}
   - component: {fileID: 1432815025}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: UICamera
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -484,7 +484,7 @@ GameObject:
   - component: {fileID: 1447690530}
   - component: {fileID: 1447690529}
   - component: {fileID: 1447690528}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -616,6 +616,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: ZoneDescBox
       objectReference: {fileID: 0}
+    - target: {fileID: 2891916455567067594, guid: 15b3b42b75c44c94c910103e5c055184,
+        type: 3}
+      propertyPath: m_Layer
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 2891916455567067595, guid: 15b3b42b75c44c94c910103e5c055184,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -727,6 +732,11 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 11400000, guid: 6a5d824038196f94494c0a6abda580cb,
         type: 2}
+    - target: {fileID: 2891916455716697404, guid: 15b3b42b75c44c94c910103e5c055184,
+        type: 3}
+      propertyPath: m_Layer
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 2891916455716697406, guid: 15b3b42b75c44c94c910103e5c055184,
         type: 3}
       propertyPath: m_text
@@ -876,6 +886,16 @@ PrefabInstance:
       propertyPath: m_Name
       value: ZoneTitleBox
       objectReference: {fileID: 0}
+    - target: {fileID: 3014787942180297835, guid: b0de2d85939a64f43854ab1208a941f5,
+        type: 3}
+      propertyPath: m_Layer
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3014787943593322082, guid: b0de2d85939a64f43854ab1208a941f5,
+        type: 3}
+      propertyPath: m_Layer
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 3014787943593322110, guid: b0de2d85939a64f43854ab1208a941f5,
         type: 3}
       propertyPath: lvlInfo
@@ -895,6 +915,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: GameVersion
+      objectReference: {fileID: 0}
+    - target: {fileID: 6462720357204570840, guid: 196a7d4486b58114fa83de69f1e9d251,
+        type: 3}
+      propertyPath: m_Layer
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 6462720357204570843, guid: 196a7d4486b58114fa83de69f1e9d251,
         type: 3}
@@ -1000,6 +1025,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Pivot.y
       value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6462720358576211282, guid: 196a7d4486b58114fa83de69f1e9d251,
+        type: 3}
+      propertyPath: m_Layer
+      value: 5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 196a7d4486b58114fa83de69f1e9d251, type: 3}

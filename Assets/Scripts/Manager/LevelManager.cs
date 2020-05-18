@@ -8,6 +8,12 @@ using UnityEngine.SceneManagement;
 /// </summary>
 public class LevelManager : MonoBehaviour
 {
+    [Header("References")]
+    public LevelInfo levelInfo;
+
+    private static int _levelNum;
+    private static int _levelTime;
+
     public enum BriefingType
     {
         PRE_BRIEFING,
@@ -29,6 +35,9 @@ public class LevelManager : MonoBehaviour
             Debug.Log("Added " + str + " to SceneList in LevelManager");
         }
 
+        _levelNum = levelInfo.GetLevelNum;
+        _levelTime = levelInfo.GetLevelTime;
+
         Debug.Log("The SceneList in LevelManager contains " + _sceneList.Count.ToString() + " scene(s)");
 
     }
@@ -42,7 +51,7 @@ public class LevelManager : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
-        
+
     }
 
     public static void LoadScene(BriefingType briefType)
@@ -65,6 +74,20 @@ public class LevelManager : MonoBehaviour
             default:
                 break;
         }
+    }
+
+    /// <summary>
+    /// Returns the current loaded Level Number
+    /// </summary>
+    /// <returns></returns>
+    public static int GetLevelNum()
+    {
+        return _levelNum;
+    }
+
+    public static int GetLevelTime()
+    {
+        return _levelTime;
     }
 
 }

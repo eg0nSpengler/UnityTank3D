@@ -12,8 +12,16 @@ public class TankGun : MonoBehaviour
     private AudioSource _audioSource;
 
     private static float _reloadTime;
+    private static GUN_STATUS gunStatus;
     private float _timeSinceLastShot;
-    
+
+    private enum GUN_STATUS
+    {
+        NONE,
+        GUN_READY,
+        REARMING,
+        CHARGING
+    }
     
     private void Awake()
     {
@@ -40,6 +48,7 @@ public class TankGun : MonoBehaviour
 
         _reloadTime = _audioSource.clip.length;
         _timeSinceLastShot = _reloadTime;
+        gunStatus = GUN_STATUS.GUN_READY;
     }
 
     void Start()
@@ -52,6 +61,15 @@ public class TankGun : MonoBehaviour
     {
         HandleInput();
         _timeSinceLastShot += Time.deltaTime;
+
+        if (IsGunReady() == true)
+        {
+            UpdateGunStatus(GUN_STATUS.GUN_READY);
+        }
+        else
+        {
+            UpdateGunStatus(GUN_STATUS.REARMING);
+        }
     }
 
     void HandleInput()
@@ -85,5 +103,55 @@ public class TankGun : MonoBehaviour
         {
             Debug.LogWarning("Gun not ready to fire on TankGun!");
         }
+    }
+    
+    void UpdateGunStatus(GUN_STATUS newStatus)
+    {
+        switch (newStatus)
+        {
+            case GUN_STATUS.GUN_READY:
+                gunStatus = GUN_STATUS.GUN_READY;
+                break;
+
+            case GUN_STATUS.REARMING:
+                gunStatus = GUN_STATUS.REARMING;
+                break;
+
+            case GUN_STATUS.CHARGING:
+                gunStatus = GUN_STATUS.CHARGING;
+                break;
+
+            case GUN_STATUS.NONE:
+                gunStatus = GUN_STATUS.NONE;
+                break;
+
+            default:
+                break;
+        }
+    }
+
+    /// <summary>
+    /// Returns the current Gun Status in string format
+    /// </summary>
+    /// <returns></returns>
+    public static string GunStatusToString()
+    {
+        switch(gunStatus)
+        {
+            case GUN_STATUS.GUN_READY:
+                return "GUN READY";
+
+            case GUN_STATUS.REARMING:
+                return "REARMING";
+
+            case GUN_STATUS.CHARGING:
+                return "RECHARGING";
+
+            case GUN_STATUS.NONE:
+                Debug.LogError("GunStatus in TankGun is currently NONE");
+                Debug.LogError("Double check the firing/reload timers");
+                return "NONE";
+        }
+        return "NONE";
     }
 }
