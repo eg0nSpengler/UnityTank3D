@@ -20,6 +20,8 @@ public class ZoneText : MonoBehaviour
             Debug.LogError("Failed to get TextMeshProTextUI element on " + gameObject.name.ToString() + ", creating one now...");
             _zoneText = gameObject.AddComponent<TextMeshProUGUI>();
         }
+
+        _zoneText.color = Color.green;
     }
     // Start is called before the first frame update
     void Start()

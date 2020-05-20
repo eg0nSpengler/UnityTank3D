@@ -7,18 +7,26 @@ using UnityEngine;
 /// </summary>
 public class PickupManager : MonoBehaviour
 {
+    public delegate void AllPickupsCollected();
+    public delegate void PortalSpawn();
+    public delegate void PreBriefingLoad();
+    public delegate void ScoreUpdated();
+
+    /// <summary>
+    /// Called when all pickups in a level are collected
+    /// </summary>
+    public static event AllPickupsCollected OnAllPickupsCollectedEvent;
+
+    /// <summary>
+    /// Called when the player score is updated at the end of a level
+    /// </summary>
+    public static event ScoreUpdated OnScoreUpdated;
+
     private static List<GameObject> _pickupList;
 
+    private static int _playerScore = 0;
     private int _numPickupsInLevel = 0;
     private int _numPickupsCollected = 0;
-
-    private static OnPickupDestroyed OnPickupDestroyedDelegate;
-    private static OnPlayerEnterPortal OnPlayerEnterPortalDelegate;
-    private static OnPreBriefingLoad OnPreBriefingLoadDelegate;
-
-    private delegate void OnPickupDestroyed();
-    private delegate void OnPlayerEnterPortal();
-    private delegate void OnPreBriefingLoad();
 
 
     private void Awake()
@@ -40,10 +48,12 @@ public class PickupManager : MonoBehaviour
         }
 
         _numPickupsInLevel = _pickupList.Count;
+
        
         Debug.Log("Pickup list contains " + _pickupList.Count + " pickups");
 
-        OnPickupDestroyedDelegate = RemovePickupFromList;
+        SphereHandler.OnPickupCollectedEvent += RemovePickupFromList;
+        
     }
 
     // Start is called before the first frame update
@@ -54,6 +64,8 @@ public class PickupManager : MonoBehaviour
 
     private void RemovePickupFromList()
     {
+        //I only remove a random pickup because we don't care about which pickup was removed
+        //We only care that ANY pickup was removed
         var rand = Random.Range(0, _pickupList.Count);
 
         _numPickupsInLevel--;
@@ -67,30 +79,23 @@ public class PickupManager : MonoBehaviour
         {
             Debug.Log("No more Pickups to remove from the PickupList!");
             TallyScore();
-            //ShowPortal();
+            OnAllPickupsCollectedEvent();
         }
 
     }
 
     private void TallyScore()
     {
-        //_playerScore = _numPickupsCollected * 10000;
+        _playerScore = _numPickupsCollected * 10000;
 
-        //Debug.Log("The final score is " + _playerScore.ToString());
+        OnScoreUpdated();
+
+        Debug.Log("The final score is " + _playerScore.ToString());
     }
 
-    //This will inform the PickupManager to remove our pickup from the pickup list
-    public static void InvokePickupDestroyedDelegate(GameObject obj)
+    public static int GetScore()
     {
-        if (obj.tag == "Pickup")
-        {
-            OnPickupDestroyedDelegate.Invoke();
-        }
-        else
-        {
-            Debug.LogError("Failed to invoke PickupDestroyed Delegate in the Game Manager, you probably tried to invoke this delegate from the wrong GameObject");
-        }
-
+        return _playerScore;
     }
-    
+
 }

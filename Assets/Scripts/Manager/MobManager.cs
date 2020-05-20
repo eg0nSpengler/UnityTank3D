@@ -20,6 +20,7 @@ public class MobManager : MonoBehaviour
         OnMobDamageDelegate = DamageMob;
         OnMobHealDelegate = HealMob;
 
+        ProjectileHandler.OnDamageMobEvent += DamageMob;
     }
 
     // Start is called before the first frame update
@@ -89,27 +90,6 @@ public class MobManager : MonoBehaviour
 
         var objGunComp = obj.gameObject.GetComponent<TankGun>();
 
-       
-    }
-
-    /// <summary>
-    /// Invoke the Damage Mob function in the MobManager class
-    /// </summary>
-    /// <param name="obj">The Mob to be damaged</param>
-    /// <param name="dmg">The amount of damage dealt to the Mob</param>
-    public static void InvokeMobTakeDamage(GameObject obj, int dmg)
-    {
-        OnMobDamageDelegate.Invoke(obj, dmg);
-    }
-
-    /// <summary>
-    /// Invoke the Heal Mob function in the MobManager class
-    /// </summary>
-    /// <param name="obj">The Mob to be healed</param>
-    /// <param name="hp">The amount of health to be restored to the Mob</param>
-    public static void InvokeMobHeal(GameObject obj, int hp)
-    {
-        OnMobHealDelegate.Invoke(obj, hp);
     }
 
 }

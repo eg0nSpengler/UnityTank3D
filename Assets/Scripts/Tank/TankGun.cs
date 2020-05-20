@@ -9,6 +9,13 @@ public class TankGun : MonoBehaviour
     public GameObject projectile;
     public Transform gunTransform;
 
+    public delegate void GunStatusUpdated();
+
+    /// <summary>
+    /// Called when the gun status is updated
+    /// </summary>
+    public static event GunStatusUpdated OnGunStatusUpdate;
+
     private AudioSource _audioSource;
 
     private static float _reloadTime;
@@ -128,6 +135,8 @@ public class TankGun : MonoBehaviour
             default:
                 break;
         }
+
+        OnGunStatusUpdate();
     }
 
     /// <summary>

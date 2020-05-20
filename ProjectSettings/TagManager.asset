@@ -18,6 +18,7 @@ TagManager:
   - Interactables
   - Detail
   - Info
+  - Level
   layers:
   - Default
   - TransparentFX

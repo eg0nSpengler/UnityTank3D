@@ -9,6 +9,13 @@ public class ProjectileHandler : MonoBehaviour
 
     private Rigidbody _rb;
 
+    public delegate void DamageMob(GameObject obj, int dmg);
+
+    /// <summary>
+    /// Called when a mob is hit by a projectile
+    /// </summary>
+    public static event DamageMob OnDamageMobEvent;
+
     private void Awake()
     {
         _rb = GetComponent<Rigidbody>();
@@ -46,7 +53,7 @@ public class ProjectileHandler : MonoBehaviour
         Destroy(gameObject);
         if (collision.collider.gameObject.tag == "Mob")
         {
-            MobManager.InvokeMobTakeDamage(collision.gameObject, damageAmount);
+            OnDamageMobEvent(collision.collider.gameObject, damageAmount);
         }
     }
 

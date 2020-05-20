@@ -75,7 +75,7 @@ public class MenuRollingDoor : MonoBehaviour
     private void OnMouseDown()
     {
         Debug.Log("MenuRollingDoor clicked on, at this point we'd load into the first level briefing scene");
-        GameManager.InvokePreBriefingDelegate(gameObject);
+        
     }
 
     private void OnGUI()

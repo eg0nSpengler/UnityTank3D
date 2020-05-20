@@ -5,9 +5,16 @@ using UnityEngine;
 public class LevelPortal : MonoBehaviour
 {
     private AudioSource _audioSource;
+
+    public delegate void PlayerEnteredPortal();
+
+    /// <summary>
+    /// Called when the player enters the Level Portal
+    /// </summary>
+    public static event PlayerEnteredPortal OnPlayerEnterPortalEvent;
     private void Awake()
     {
-        //gameObject.SetActive(false);
+        gameObject.SetActive(false);
         _audioSource = GetComponent<AudioSource>();
 
         if (!_audioSource)
@@ -17,6 +24,9 @@ public class LevelPortal : MonoBehaviour
         }
 
         _audioSource.volume = 0.2f;
+
+        PickupManager.OnAllPickupsCollectedEvent += Spawn;
+        
     }
 
     // Start is called before the first frame update
@@ -35,14 +45,15 @@ public class LevelPortal : MonoBehaviour
     {
         if (other.gameObject.name == "TankActor")
         {
-            GameManager.InvokeOnPlayerEnterPortalDelegate(gameObject);
+            OnPlayerEnterPortalEvent();
         }
        
     }
 
-    private void OnEnable()
+    private void Spawn()
     {
         Debug.Log("GATE DETECTED!");
+        gameObject.SetActive(true);
         _audioSource.Play();
     }
 }

@@ -3,31 +3,38 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
-public class LevelTimerBox : MonoBehaviour
+public class ScoreBox : MonoBehaviour
 {
-    private TextMeshProUGUI _levelTime;
+    private TextMeshProUGUI _score;
 
     private void Awake()
     {
-        _levelTime = GetComponent<TextMeshProUGUI>();
-
-        if (!_levelTime)
+        _score = GetComponent<TextMeshProUGUI>();
+        if (!_score)
         {
             Debug.LogError("Failed to get TextMeshProTextUI element on " + gameObject.name.ToString() + ", creating one now...");
-            _levelTime = gameObject.AddComponent<TextMeshProUGUI>();
+            _score = gameObject.AddComponent<TextMeshProUGUI>();
         }
 
-        _levelTime.color = Color.green;
+        _score.color = Color.green;
+
+        PickupManager.OnScoreUpdated += UpdateScoreText;
     }
+
     // Start is called before the first frame update
     void Start()
     {
-        
+        _score.text = "0";
     }
 
     // Update is called once per frame
     void Update()
     {
-        _levelTime.text = LevelManager.GetLevelTime().ToString();
+        
+    }
+
+    void UpdateScoreText()
+    {
+        _score.text = PickupManager.GetScore().ToString();
     }
 }

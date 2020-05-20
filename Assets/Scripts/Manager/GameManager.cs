@@ -13,12 +13,10 @@ public class GameManager : MonoBehaviour
     [Header("References")]
     public GameObject LevelPortal;
 
-    private static GAME_STATE _gameState;
-     
-    private int _playerScore = 0;
 
-    private delegate void OnPlayerEnterPortal();
-    private enum GAME_STATE 
+    private static GAME_STATE _gameState;
+
+    public enum GAME_STATE 
     {
         STATE_NONE,
         STATE_PREBRIEFING,
@@ -40,43 +38,15 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         _gameState = GAME_STATE.STATE_PREBRIEFING;
-        
     }
 
-    // Update is called once per frame
-    private void Update()
+    /// <summary>
+    /// Returns the current GameState
+    /// </summary>
+    /// <returns>GAME_STATE</returns>
+    public static GAME_STATE GetGameState()
     {
-        
-    }
-
-
-    private void ShowPortal()
-    {
-        LevelPortal.SetActive(true);
-    }
-
-    public static void InvokeOnPlayerEnterPortalDelegate(GameObject obj)
-    {
-        if (obj.tag == "LevelPortal")
-        {
-            LevelManager.LoadScene(LevelManager.BriefingType.POST_BRIEFING);
-        }
-        else
-        {
-            Debug.LogError("Failed to invoke OnPlayerEnterPortal Delegate in the Game Manager, you probably tried to invoke this delegate from the wrong GameObject");
-        }
-    }
-
-    public static void InvokePreBriefingDelegate(GameObject obj)
-    {
-        if (obj.tag == "Interactables")
-        {
-            LevelManager.LoadScene(LevelManager.BriefingType.PRE_BRIEFING);
-        }
-        else
-        {
-            Debug.LogError("Failed to invoke PreBriefing Delegate in the Game Manager, you probably tried to invoke this delegate from the wrong GameObject");
-        }
+        return _gameState;
     }
 
 }

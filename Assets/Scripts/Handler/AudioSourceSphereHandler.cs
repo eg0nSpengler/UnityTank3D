@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class AudioSourceSphereHandler : MonoBehaviour
 {
+    [Header("References")]
     public SphereCollider sphereCollider;
 
     private AudioSource _audioSource;
@@ -57,7 +58,7 @@ public class AudioSourceSphereHandler : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        
+
     }
 
     private void OnTriggerEnter(Collider other)

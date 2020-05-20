@@ -7,12 +7,21 @@ public class SphereHandler : MonoBehaviour
     [Header("References")]
     public AudioClip pickupSound;
 
+    public delegate void PickupCollected();
+
+    /// <summary>
+    /// Called when a pickup is collected
+    /// </summary>
+    public static event PickupCollected OnPickupCollectedEvent;
+
     private void Awake()
     {
         if (!pickupSound)
         {
             Debug.LogError("No Pickup sound provided for " + gameObject.name.ToString());
         }
+
+        
     }
 
     // Start is called before the first frame update
@@ -39,10 +48,9 @@ public class SphereHandler : MonoBehaviour
 
     private void OnSphereDestroyed()
     {
-        AudioSource.PlayClipAtPoint(pickupSound, gameObject.transform.position, 0.2f);
+        AudioSource.PlayClipAtPoint(pickupSound, gameObject.transform.position);
         Destroy(gameObject);
-        PickupManager.InvokePickupDestroyedDelegate(gameObject);
-        
+        OnPickupCollectedEvent();
     }
 
 }
