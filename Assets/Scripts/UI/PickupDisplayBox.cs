@@ -5,33 +5,41 @@ using UnityEngine.UI;
 
 public class PickupDisplayBox : MonoBehaviour
 {
-
+    [Header("References")]
     public Image pickupImage;
 
+    private int imgListIter;
     private GameObject _parentPanel;
-    private List<Image> _pickupimages;
-
+    private List<Image> _imgList;
 
     private void Awake()
     {
         _parentPanel = gameObject;
-        _pickupimages = new List<Image>();
-
-        if (!pickupImage)
-        {
-            Debug.LogError("No pickup image set for PickupDisplayBox!");
-        }
-        
+        _imgList = new List<Image>();
+        PickupManager.OnPickupCollected += UpdatePickups;
     }
     // Start is called before the first frame update
     void Start()
     {
-        _pickupimages.Add(pickupImage);
+        for (var i = 0; i < PickupManager.GetNumPickupsInLevel(); i++)
+        {
+            Image imgInstance = Instantiate(pickupImage, _parentPanel.transform);
+            imgInstance.color = Color.white;
+            _imgList.Add(imgInstance);
+        }
+
+        imgListIter = _imgList.Count - 1;
     }
 
     // Update is called once per frame
     void Update()
     {
         
+    }
+
+    void UpdatePickups()
+    {
+        _imgList[imgListIter].color = Color.green;
+        imgListIter--;
     }
 }

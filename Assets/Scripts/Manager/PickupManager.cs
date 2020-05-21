@@ -7,6 +7,7 @@ using UnityEngine;
 /// </summary>
 public class PickupManager : MonoBehaviour
 {
+    public delegate void PickupCollected();
     public delegate void AllPickupsCollected();
     public delegate void PortalSpawn();
     public delegate void PreBriefingLoad();
@@ -16,6 +17,11 @@ public class PickupManager : MonoBehaviour
     /// Called when all pickups in a level are collected
     /// </summary>
     public static event AllPickupsCollected OnAllPickupsCollectedEvent;
+
+    /// <summary>
+    /// Called when a pickup is collected and removed from the list
+    /// </summary>
+    public static event PickupCollected OnPickupCollected;
 
     /// <summary>
     /// Called when the player score is updated at the end of a level
@@ -75,6 +81,8 @@ public class PickupManager : MonoBehaviour
 
         Debug.Log("The Pickup list now contains " + _pickupList.Count.ToString() + " pickups");
 
+        OnPickupCollected();
+
         if (_pickupList.Count <= 0)
         {
             Debug.Log("No more Pickups to remove from the PickupList!");
@@ -98,4 +106,8 @@ public class PickupManager : MonoBehaviour
         return _playerScore;
     }
 
+    public static int GetNumPickupsInLevel()
+    {
+        return _pickupList.Count;
+    }
 }
