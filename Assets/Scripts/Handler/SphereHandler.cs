@@ -38,7 +38,7 @@ public class SphereHandler : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.name == "TankActor")
+        if (other.gameObject.name == "TankActor" )
         {
             Debug.Log("Collision detected!");
             OnSphereDestroyed();

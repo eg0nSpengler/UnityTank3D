@@ -110,4 +110,17 @@ public class PickupManager : MonoBehaviour
     {
         return _pickupList.Count;
     }
+
+
+    /// <summary>
+    /// Returns each Pickup Position in the Level
+    /// </summary>
+    /// <returns></returns>
+    public static IEnumerable<Vector3> GetPickupPositions()
+    {
+        foreach (var pos in _pickupList)
+        {
+            yield return pos.transform.position;
+        }
+    }
 }
