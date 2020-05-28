@@ -40,7 +40,6 @@ public class MenuDoor : MonoBehaviour
         _toolTipBackground.normal.textColor = Color.black;
         _toolTipBackground.alignment = TextAnchor.UpperCenter;
         _toolTipBackground.wordWrap = true;
-
     }
     // Start is called before the first frame update
     void Start()

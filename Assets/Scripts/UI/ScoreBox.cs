@@ -17,14 +17,18 @@ public class ScoreBox : MonoBehaviour
         }
 
         _score.color = Color.green;
-
+        _score.text = "0";
         PickupManager.OnScoreUpdated += UpdateScoreText;
     }
 
     // Start is called before the first frame update
     void Start()
     {
-        _score.text = "0";
+    }
+
+    private void OnDisable()
+    {
+        PickupManager.OnScoreUpdated -= UpdateScoreText;
     }
 
     // Update is called once per frame

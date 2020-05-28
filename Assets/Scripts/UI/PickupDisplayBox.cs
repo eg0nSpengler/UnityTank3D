@@ -10,13 +10,16 @@ public class PickupDisplayBox : MonoBehaviour
 
     private int imgListIter;
     private GameObject _parentPanel;
-    private List<Image> _imgList;
+    private static List<Image> _imgList;
 
     private void Awake()
     {
         _parentPanel = gameObject;
+
         _imgList = new List<Image>();
+
         PickupManager.OnPickupCollected += UpdatePickups;
+
     }
     // Start is called before the first frame update
     void Start()
@@ -29,6 +32,13 @@ public class PickupDisplayBox : MonoBehaviour
         }
 
         imgListIter = _imgList.Count - 1;
+
+        
+    }
+
+    private void OnDisable()
+    {
+        PickupManager.OnPickupCollected -= UpdatePickups;
     }
 
     // Update is called once per frame

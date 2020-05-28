@@ -19,7 +19,11 @@ public class AI_SimpleMob : MonoBehaviour
 
     }
 
-    
+    private void OnEnable()
+    {
+        Debug.Log(gameObject.name.ToString() + "has been created");
+    }
+
     private void Start()
     {
 

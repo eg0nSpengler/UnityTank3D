@@ -29,9 +29,6 @@ public class DetectionSphere : MonoBehaviour
             _sphereCollider = gameObject.AddComponent<SphereCollider>();
         }
 
-        _sphereCollider.radius = _sphereRadius;
-        _sphereCollider.isTrigger = true;
-
         _navAgent = GetComponentInParent<NavMeshAgent>();
 
         if (!_navAgent)
@@ -40,6 +37,8 @@ public class DetectionSphere : MonoBehaviour
             _navAgent = gameObject.AddComponent<NavMeshAgent>();
         }
 
+        _sphereCollider.radius = _sphereRadius;
+        _sphereCollider.isTrigger = true;
         _navMeshPath = new NavMeshPath();
     }
 

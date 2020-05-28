@@ -21,6 +21,7 @@ public class LevelManager : MonoBehaviour
 
     private static int _levelNum;
     private static float _levelTime;
+    private static float _levelTimer;
 
     private static List<string> _sceneList;
 
@@ -43,34 +44,37 @@ public class LevelManager : MonoBehaviour
         {
             _levelNum = levelInfo.GetLevelNum;
             _levelTime = levelInfo.GetLevelTime;
+            _levelTimer = levelInfo.GetLevelTime;
         }
         else
         {
             Debug.LogWarning("No LevelInfo provided for LevelManager...");
             _levelTime = 0.0f;
             _levelNum = 0;
+            _levelTimer = 0.0f;
         }
 
         Debug.Log("The SceneList in LevelManager contains " + _sceneList.Count.ToString() + " scene(s)");
 
         LevelPortal.OnPlayerEnterPortalEvent += LoadPostBriefing;
-        
+        GameManager.OnGameStatePlayEvent += RunLevelTimer;
     }
 
     // Start is called before the first frame update
     private void Start()
     {
-        
+
     }
 
+    private void OnDisable()
+    {
+        LevelPortal.OnPlayerEnterPortalEvent -= LoadPostBriefing;
+        GameManager.OnGameStatePlayEvent -= RunLevelTimer;
+    }
     // Update is called once per frame
     private void Update()
     {
-        if (GameManager.GetGameState() == GameManager.GAME_STATE.STATE_PLAYING)
-        {
-            _levelTime -= Time.deltaTime;
-        }
-        
+
     }
 
     public static void LoadLevel(LEVEL_TYPE levelType)
@@ -103,6 +107,18 @@ public class LevelManager : MonoBehaviour
         SceneManager.LoadSceneAsync("POST_BRIEFING");
     }
 
+    private void RunLevelTimer()
+    {
+        while (_levelTimer > _levelTime)
+        {
+            _levelTime -= Time.deltaTime;
+
+            if (_levelTimer <= _levelTime)
+            {
+                return;
+            }
+        }
+    }
     /// <summary>
     /// Returns the current level number
     /// </summary>
@@ -121,4 +137,5 @@ public class LevelManager : MonoBehaviour
         return Mathf.RoundToInt(_levelTime);
     }
 
+    
 }

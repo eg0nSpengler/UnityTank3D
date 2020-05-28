@@ -20,6 +20,7 @@ public class TankMovement : MonoBehaviour
             Debug.LogError("Failed to get character controller in TankMovement instance on " + gameObject.name.ToString() + ", creating one now.");
             _charController = gameObject.AddComponent<CharacterController>();
         }
+
         tankSpeed = 2;
         rotationSpeed = 1;
     }

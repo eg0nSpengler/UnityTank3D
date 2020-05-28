@@ -9,6 +9,14 @@ public class MenuRollingDoor : MonoBehaviour
     public AudioClip DoorOpenSound;
     public AudioClip DoorCloseSound;
 
+
+    public delegate void GameStart();
+
+    /// <summary>
+    /// Called when the user clicks on the door to start the game
+    /// </summary>
+    public static event GameStart OnGameStartEvent;
+
     private AudioSource _audioSource;
     private GUIStyle _toolTipForeground;
     private GUIStyle _toolTipBackground;
@@ -74,7 +82,8 @@ public class MenuRollingDoor : MonoBehaviour
 
     private void OnMouseDown()
     {
-        Debug.Log("MenuRollingDoor clicked on, at this point we'd load into the first level briefing scene");
+        
+        OnGameStartEvent();
         
     }
 

@@ -23,6 +23,8 @@ public class TankRadarBox : MonoBehaviour
     private void Awake()
     {
         _parentPanel = gameObject.GetComponent<RectTransform>();
+        _pickupPositions = new List<Vector3>();
+        _imgList = new List<Image>();
 
         if (!FriendlyRadarBlip)
         {
@@ -42,15 +44,13 @@ public class TankRadarBox : MonoBehaviour
             Debug.LogError("You probably forgot to assign it in the Inspector");
         }
 
-        _pickupPositions = new List<Vector3>();
-        _imgList = new List<Image>();
-
         TankRadar.OnPickupInRange += DrawRadarBlips;
     }
 
     // Start is called before the first frame update
     void Start()
-    {
+    { 
+
         foreach (var pos in PickupManager.GetPickupPositions())
         {
             _pickupPositions.Add(pos);
@@ -58,6 +58,11 @@ public class TankRadarBox : MonoBehaviour
 
         CreateBlips();
 
+    }
+
+    private void OnDisable()
+    {
+        TankRadar.OnPickupInRange -= DrawRadarBlips;
     }
 
     // Update is called once per frame

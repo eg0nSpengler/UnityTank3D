@@ -22,13 +22,16 @@ public class HealthComponent : MonoBehaviour
         {
             Debug.LogWarning(gameObject.name.ToString() + " has a HealthComponent but is not tagged as a Mob!");
         }
+
+        _maxHP = currentHP;   
     }
 
     // Start is called before the first frame update
     void Start()
     {
-        _maxHP = currentHP;   
     }
+
+
 
     // Update is called once per frame
     void Update()

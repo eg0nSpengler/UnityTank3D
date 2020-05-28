@@ -22,7 +22,11 @@ public class GunStatusBox : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+    }
+
+    private void OnDisable()
+    {
+        TankGun.OnGunStatusUpdate -= UpdateGunStatusText;
     }
 
     // Update is called once per frame

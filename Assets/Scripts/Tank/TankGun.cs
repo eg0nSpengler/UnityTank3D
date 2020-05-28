@@ -55,12 +55,12 @@ public class TankGun : MonoBehaviour
 
         _reloadTime = _audioSource.clip.length;
         _timeSinceLastShot = _reloadTime;
-        gunStatus = GUN_STATUS.GUN_READY;
+        gunStatus = GUN_STATUS.GUN_READY; 
+
     }
 
     void Start()
     {
-        
     }
 
     // Update is called once per frame
@@ -136,7 +136,9 @@ public class TankGun : MonoBehaviour
                 break;
         }
 
-        OnGunStatusUpdate();
+        
+       OnGunStatusUpdate();
+
     }
 
     /// <summary>

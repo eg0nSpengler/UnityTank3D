@@ -9,6 +9,7 @@ public class MenuMouseHandler : MonoBehaviour
     private void Awake()
     {
         _sphereTransform = GetComponent<Transform>();
+
         if (!_sphereTransform)
         {
             Debug.LogError("Failed to get valid transform in " + gameObject.name.ToString() + ", creating one now...");

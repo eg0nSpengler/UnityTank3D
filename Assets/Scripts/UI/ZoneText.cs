@@ -22,10 +22,12 @@ public class ZoneText : MonoBehaviour
         }
 
         _zoneText.color = Color.green;
+
     }
     // Start is called before the first frame update
     void Start()
     {
+
         switch (gameObject.name.ToString())
         {
             case "TITLE":

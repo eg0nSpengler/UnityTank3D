@@ -53,19 +53,22 @@ public class PickupManager : MonoBehaviour
             Debug.LogWarning("Did you forget to tag any Pickup prefab instances in the scene as Pickup?");
         }
 
-        _numPickupsInLevel = _pickupList.Count;
-
-       
         Debug.Log("Pickup list contains " + _pickupList.Count + " pickups");
 
+        _numPickupsInLevel = _pickupList.Count;
         SphereHandler.OnPickupCollectedEvent += RemovePickupFromList;
-        
+
     }
 
     // Start is called before the first frame update
     void Start()
     {
-        
+
+    }
+
+    private void OnDisable()
+    {
+        SphereHandler.OnPickupCollectedEvent -= RemovePickupFromList;
     }
 
     private void RemovePickupFromList()

@@ -16,19 +16,21 @@ public class MobManager : MonoBehaviour
 
     private void Awake()
     {
-
         OnMobDamageDelegate = DamageMob;
         OnMobHealDelegate = HealMob;
-
         ProjectileHandler.OnDamageMobEvent += DamageMob;
     }
 
     // Start is called before the first frame update
     void Start()
     {
-        
+
     }
 
+    private void OnDisable()
+    {
+        ProjectileHandler.OnDamageMobEvent -= DamageMob;
+    }
     // Update is called once per frame
     void Update()
     {

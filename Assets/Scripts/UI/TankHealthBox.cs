@@ -27,12 +27,17 @@ public class TankHealthBox : MonoBehaviour
         _panel.fillAmount = minFillValue;
 
         HealthComponent.OnHealthModified += UpdateHealth;
+
     }
 
     // Start is called before the first frame update
     void Start()
     {
-        
+    }
+
+    private void OnDisable()
+    {
+        HealthComponent.OnHealthModified -= UpdateHealth;
     }
 
     // Update is called once per frame

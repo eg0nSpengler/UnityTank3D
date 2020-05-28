@@ -14,7 +14,6 @@ public class LevelPortal : MonoBehaviour
     public static event PlayerEnteredPortal OnPlayerEnterPortalEvent;
     private void Awake()
     {
-        gameObject.SetActive(false);
         _audioSource = GetComponent<AudioSource>();
 
         if (!_audioSource)
@@ -25,14 +24,27 @@ public class LevelPortal : MonoBehaviour
 
         _audioSource.volume = 0.2f;
 
-        PickupManager.OnAllPickupsCollectedEvent += Spawn;
         
+        gameObject.SetActive(false);
+        PickupManager.OnAllPickupsCollectedEvent += Spawn;
+
+    }
+
+    private void OnEnable()
+    {
+        Debug.Log(gameObject.name.ToString() + " has been created");
+    }
+
+    private void OnDisable()
+    { 
+        PickupManager.OnAllPickupsCollectedEvent -= Spawn;
+        Debug.LogWarning(gameObject.name.ToString() + " has been destroyed");
     }
 
     // Start is called before the first frame update
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
