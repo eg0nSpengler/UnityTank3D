@@ -22,6 +22,7 @@ public class LevelTimerBox : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+
     }
 
     // Update is called once per frame
@@ -29,4 +30,5 @@ public class LevelTimerBox : MonoBehaviour
     {
         _levelTime.text = LevelManager.GetLevelTime().ToString();
     }
+
 }

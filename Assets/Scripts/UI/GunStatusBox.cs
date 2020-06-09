@@ -22,6 +22,7 @@ public class GunStatusBox : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        UpdateGunStatusText();
     }
 
     private void OnDisable()
@@ -40,8 +41,21 @@ public class GunStatusBox : MonoBehaviour
         _gunStatus.text = TankGun.GunStatusToString();
         switch (_gunStatus.text.ToString())
         {
+
+            case "GUN READY":
+                _gunStatus.color = Color.green;
+                break;
+
             case "REARMING":
                 _gunStatus.color = Color.red;
+                break;
+
+            case "CHARGING":
+                _gunStatus.color = Color.cyan;
+                break;
+
+            case "MAX CHARGE":
+                _gunStatus.color = Color.magenta;
                 break;
 
             default:

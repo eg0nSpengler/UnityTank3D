@@ -37,11 +37,6 @@ public class PostBriefCamera : MonoBehaviour
     void Update()
     {
         transform.position = Vector3.Lerp(transform.position, _transPoint1.position, Time.deltaTime * 2.0f);
-
-        if (Vector3.Distance(_transPoint1.position, transform.position) <= 1.0f)
-        {
-            transform.position = Vector3.Lerp(transform.position, _transPoint2.position, Time.deltaTime * 2.0f);
-        }
     }
 
     private void OnTriggerEnter(Collider other)

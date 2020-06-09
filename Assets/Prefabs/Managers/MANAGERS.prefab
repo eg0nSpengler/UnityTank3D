@@ -58,6 +58,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7b274621c56f5cf42bd5d27619204341, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  levelInfo: {fileID: 0}
 --- !u!114 &8916938708837098349
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -82,4 +83,3 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bc14a7affda4d5d4ab6061d838e9ee9c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  LevelPortal: {fileID: 0}

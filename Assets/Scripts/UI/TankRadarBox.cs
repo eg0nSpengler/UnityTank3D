@@ -45,6 +45,7 @@ public class TankRadarBox : MonoBehaviour
         }
 
         TankRadar.OnPickupInRange += DrawRadarBlips;
+        SphereHandler.OnPickupCollectedEvent += UpdateRadarBlips;
     }
 
     // Start is called before the first frame update
@@ -63,6 +64,7 @@ public class TankRadarBox : MonoBehaviour
     private void OnDisable()
     {
         TankRadar.OnPickupInRange -= DrawRadarBlips;
+        SphereHandler.OnPickupCollectedEvent -= UpdateRadarBlips;
     }
 
     // Update is called once per frame
@@ -110,6 +112,11 @@ public class TankRadarBox : MonoBehaviour
             }        
             
         }
+    }
+
+    void UpdateRadarBlips()
+    {
+        
     }
 
 }

@@ -31,8 +31,9 @@ public class PickupManager : MonoBehaviour
     private static List<GameObject> _pickupList;
 
     private static int _playerScore = 0;
-    private int _numPickupsInLevel = 0;
-    private int _numPickupsCollected = 0;
+    private static int _numPickupsInLevel = 0;
+    private static int _numPickupsCollected = 0;
+    private static int _numPickupsLost = 0;
 
 
     private void Awake()
@@ -44,6 +45,11 @@ public class PickupManager : MonoBehaviour
             if (obj.tag == "Pickup")
             {
                 _pickupList.Add(obj);
+                if (obj.GetComponent<PickupComponent>() == null)
+                {
+                    Debug.LogError(obj.name.ToString() + " in the PickupList in PickupManager doesn't have a Pickup Component, adding one to it now ...");
+                    obj.AddComponent<PickupComponent>();
+                }
             }
         }
 
@@ -56,7 +62,7 @@ public class PickupManager : MonoBehaviour
         Debug.Log("Pickup list contains " + _pickupList.Count + " pickups");
 
         _numPickupsInLevel = _pickupList.Count;
-        SphereHandler.OnPickupCollectedEvent += RemovePickupFromList;
+        SphereHandler.OnPickupCollectedEvent += UpdatePickupList;
 
     }
 
@@ -68,27 +74,24 @@ public class PickupManager : MonoBehaviour
 
     private void OnDisable()
     {
-        SphereHandler.OnPickupCollectedEvent -= RemovePickupFromList;
+        SphereHandler.OnPickupCollectedEvent -= UpdatePickupList;
     }
 
-    private void RemovePickupFromList()
+    private void UpdatePickupList()
     {
-        //I only remove a random pickup because we don't care about which pickup was removed
-        //We only care that ANY pickup was removed
+        //I only remove a random pickup because we don't care about which pickup was collected
+        //We only care that ANY pickup was collected
         var rand = Random.Range(0, _pickupList.Count);
 
         _numPickupsInLevel--;
         _numPickupsCollected++;
-
-        _pickupList.RemoveRange(rand, 1);
+        _pickupList[rand].GetComponent<PickupComponent>().IsCollected = true;
 
         Debug.Log("The Pickup list now contains " + _pickupList.Count.ToString() + " pickups");
-
         OnPickupCollected();
 
-        if (_pickupList.Count <= 0)
+        if (_numPickupsCollected >= _pickupList.Count)
         {
-            Debug.Log("No more Pickups to remove from the PickupList!");
             TallyScore();
             OnAllPickupsCollectedEvent();
         }
@@ -104,16 +107,41 @@ public class PickupManager : MonoBehaviour
         Debug.Log("The final score is " + _playerScore.ToString());
     }
 
+    /// <summary>
+    /// Returns the current Player Score
+    /// </summary>
+    /// <returns></returns>
     public static int GetScore()
     {
         return _playerScore;
     }
 
+    /// <summary>
+    /// Returns the total number of Pickups in the current Level
+    /// </summary>
+    /// <returns></returns>
     public static int GetNumPickupsInLevel()
     {
         return _pickupList.Count;
     }
 
+    /// <summary>
+    /// Returns the current number of Pickups collected by the Player
+    /// </summary>
+    /// <returns></returns>
+    public static int GetNumCollectedPickups()
+    {
+        return _numPickupsCollected; 
+    }
+
+    /// <summary>
+    /// Returns the current number of Pickups failed to be collected by the Player
+    /// </summary>
+    /// <returns></returns>
+    public static int GetNumLostPickups()
+    {
+        return _numPickupsLost;
+    }
 
     /// <summary>
     /// Returns each Pickup Position in the Level

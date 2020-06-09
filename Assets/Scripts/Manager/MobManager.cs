@@ -8,16 +8,8 @@ using UnityEngine;
 public class MobManager : MonoBehaviour
 {
 
-    private static OnMobDamage OnMobDamageDelegate;
-    private static OnMobHeal OnMobHealDelegate;
-
-    private delegate void OnMobDamage(GameObject obj, int dmg);
-    private delegate void OnMobHeal(GameObject obj, int hp);
-
     private void Awake()
     {
-        OnMobDamageDelegate = DamageMob;
-        OnMobHealDelegate = HealMob;
         ProjectileHandler.OnDamageMobEvent += DamageMob;
     }
 
@@ -80,18 +72,6 @@ public class MobManager : MonoBehaviour
             objHealthComp.Heal(hp);
             Debug.Log(obj.name.ToString() + " has been healed for " + hp.ToString() + " hitpoints");
         }
-    }
-
-    private static void GetMobGunStatus(GameObject obj)
-    {
-        if (obj.tag != "Mob")
-        {
-            Debug.LogError("Failed to call GetMobGunStatus on " + obj.name.ToString() + " the Gameobject may be an untagged Mob or not a Mob at all");
-            return;
-        }
-
-        var objGunComp = obj.gameObject.GetComponent<TankGun>();
-
     }
 
 }

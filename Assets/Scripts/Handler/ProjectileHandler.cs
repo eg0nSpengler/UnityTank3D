@@ -31,8 +31,6 @@ public class ProjectileHandler : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Debug.Log("Tank Projectile created!");
-        
         Destroy(gameObject, 3.0f);
     }
 

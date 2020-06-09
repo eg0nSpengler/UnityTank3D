@@ -46,3 +46,5 @@ sysinfo.txt
 
 # Crashlytics generated file
 crashlytics-build.properties
+/Assets/Audio/dota_meepmerp.wav.meta
+/Assets/Audio/dota_meepmerp.wav

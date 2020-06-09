@@ -5,24 +5,28 @@ using UnityEngine.AI;
 
 public class AI_SimpleMob : MonoBehaviour
 {
-    private CapsuleCollider _capsuleCollider;
+    private AudioSource _audioSource;
+
 
     private void Awake()
     {
-        _capsuleCollider = GetComponent<CapsuleCollider>();
 
-        if(!_capsuleCollider)
+        _audioSource = GetComponent<AudioSource>();
+        if (!_audioSource)
+
         {
-            Debug.LogError("Failed to get CapsuleCollider on " + gameObject.name.ToString() + ", creating one now...");
-            _capsuleCollider = gameObject.AddComponent<CapsuleCollider>();
+            Debug.LogError("Failed to get Audio Source on " + gameObject.name.ToString() + ", creating one now...");
+            _audioSource = gameObject.AddComponent<AudioSource>();
         }
+        
 
     }
 
     private void OnEnable()
     {
-        Debug.Log(gameObject.name.ToString() + "has been created");
+        
     }
+
 
     private void Start()
     {
@@ -46,7 +50,7 @@ public class AI_SimpleMob : MonoBehaviour
     }
     private void OnDisable()
     {
-        Debug.LogWarning(gameObject.name.ToString() + " has been disabled!");
+        
     }
 
 

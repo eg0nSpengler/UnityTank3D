@@ -7,6 +7,8 @@ public class SphereHandler : MonoBehaviour
     [Header("References")]
     public AudioClip pickupSound;
 
+    private PickupComponent _pickupComp;
+
     public delegate void PickupCollected();
 
     /// <summary>
@@ -21,6 +23,7 @@ public class SphereHandler : MonoBehaviour
             Debug.LogError("No Pickup sound provided for " + gameObject.name.ToString());
         }
 
+        _pickupComp = gameObject.AddComponent<PickupComponent>();
         
     }
 
@@ -49,7 +52,7 @@ public class SphereHandler : MonoBehaviour
     private void OnSphereDestroyed()
     {
         AudioSource.PlayClipAtPoint(pickupSound, gameObject.transform.position);
-        Destroy(gameObject);
+        gameObject.SetActive(false);
         OnPickupCollectedEvent();
     }
 

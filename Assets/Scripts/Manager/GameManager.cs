@@ -9,17 +9,19 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
     
-
-    [Header("References")]
-    public GameObject LevelPortal;
-
-
     public delegate void GameStatePlay();
+    public delegate void GameStatePostBrief();
+    public delegate int GameLoadLevel();
 
     /// <summary>
     /// Called when the GameState is PLAY
     /// </summary>
     public static event GameStatePlay OnGameStatePlayEvent;
+
+    /// <summary>
+    /// Called when the GameState is POSTBRIEFING
+    /// </summary>
+    public static event GameStatePostBrief OnGameStatePostBrief;
 
     private static GAME_STATE _gameState;
 
@@ -38,6 +40,9 @@ public class GameManager : MonoBehaviour
         _gameState = GAME_STATE.STATE_MENU;
         MenuRollingDoor.OnGameStartEvent += StartGame;
         StartLevelButton.OnLevelStartEvent += PlayGame;
+        LevelPortal.OnPlayerEnterPortalEvent += PauseGame;
+        LevelManager.OnLevelTimerEnd += PauseGame;
+        //PickupManager.OnAllPickupsCollectedEvent += SaveData;
     }
 
     // Start is called before the first frame update
@@ -50,6 +55,9 @@ public class GameManager : MonoBehaviour
     {
         MenuRollingDoor.OnGameStartEvent -= StartGame;
         StartLevelButton.OnLevelStartEvent -= PlayGame;
+        LevelPortal.OnPlayerEnterPortalEvent -= PauseGame;
+        LevelManager.OnLevelTimerEnd -= PauseGame;
+        //PickupManager.OnAllPickupsCollectedEvent -= SaveData;
     }
     /// <summary>
     /// Returns the current GameState
@@ -72,6 +80,13 @@ public class GameManager : MonoBehaviour
         LevelManager.LoadLevel(LevelManager.LEVEL_TYPE.LEVEL_PLAY);
         _gameState = GAME_STATE.STATE_PLAYING;
         OnGameStatePlayEvent();
+    }
+
+    private void PauseGame()
+    {
+        LevelManager.LoadLevel(LevelManager.LEVEL_TYPE.LEVEL_POST_BRIEFING);
+        _gameState = GAME_STATE.STATE_POSTBRIEFING;
+        OnGameStatePostBrief();
     }
 
 }
