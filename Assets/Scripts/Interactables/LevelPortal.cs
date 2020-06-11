@@ -5,15 +5,25 @@ using UnityEngine;
 public class LevelPortal : MonoBehaviour
 {
     private AudioSource _audioSource;
+    private static Vector3 _portalPos;
 
     public delegate void PlayerEnteredPortal();
+    public delegate void LevelPortalEnabled();
 
     /// <summary>
     /// Called when the player enters the Level Portal
     /// </summary>
     public static event PlayerEnteredPortal OnPlayerEnterPortalEvent;
+
+    /// <summary>
+    /// Called when the Level Portal becomes enabled
+    /// </summary>
+    public static event LevelPortalEnabled OnLevelPortalEnabled;
+
     private void Awake()
     {
+        gameObject.SetActive(false);
+
         _audioSource = GetComponent<AudioSource>();
 
         if (!_audioSource)
@@ -23,9 +33,8 @@ public class LevelPortal : MonoBehaviour
         }
 
         _audioSource.volume = 0.2f;
-
+        _portalPos = gameObject.transform.position;
         
-        gameObject.SetActive(false);
         PickupManager.OnAllPickupsCollectedEvent += Spawn;
 
     }
@@ -33,6 +42,7 @@ public class LevelPortal : MonoBehaviour
     private void OnEnable()
     {
         Debug.Log(gameObject.name.ToString() + " has been created");
+        OnLevelPortalEnabled();
     }
 
     private void OnDisable()
@@ -44,7 +54,7 @@ public class LevelPortal : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-
+     
     }
 
     // Update is called once per frame
@@ -67,5 +77,14 @@ public class LevelPortal : MonoBehaviour
         Debug.Log("GATE DETECTED!");
         gameObject.SetActive(true);
         _audioSource.Play();
+    }
+
+    /// <summary>
+    /// Returns the position of the Level Portal
+    /// </summary>
+    /// <returns>The Level Portal position, in Vector3 format</returns>
+    public static Vector3 GetLevelPortalPosition()
+    {
+        return _portalPos;
     }
 }

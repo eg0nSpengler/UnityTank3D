@@ -29,27 +29,25 @@ public class PickupManager : MonoBehaviour
     public static event ScoreUpdated OnScoreUpdated;
 
     private static List<GameObject> _pickupList;
+    private static List<Vector3> _pickupPosList;
 
-    private static int _playerScore = 0;
-    private static int _numPickupsInLevel = 0;
-    private static int _numPickupsCollected = 0;
-    private static int _numPickupsLost = 0;
+    private static Vector3 _lastCollectedPos;
+    private static int _playerScore;
+    private static int _numPickupsCollected;
+    private static int _numPickupsLost;
 
 
     private void Awake()
     {
         _pickupList = new List<GameObject>();
+        _pickupPosList = new List<Vector3>();
 
         foreach (var obj in FindObjectsOfType<GameObject>())
         {
             if (obj.tag == "Pickup")
             {
+                _pickupPosList.Add(obj.transform.position);
                 _pickupList.Add(obj);
-                if (obj.GetComponent<PickupComponent>() == null)
-                {
-                    Debug.LogError(obj.name.ToString() + " in the PickupList in PickupManager doesn't have a Pickup Component, adding one to it now ...");
-                    obj.AddComponent<PickupComponent>();
-                }
             }
         }
 
@@ -59,9 +57,12 @@ public class PickupManager : MonoBehaviour
             Debug.LogWarning("Did you forget to tag any Pickup prefab instances in the scene as Pickup?");
         }
 
-        Debug.Log("Pickup list contains " + _pickupList.Count + " pickups");
+        _playerScore = 0;
+        _numPickupsCollected = 0;
+        _numPickupsLost = 0;
+        _lastCollectedPos = new Vector3(0.0f, 0.0f, 0.0f);
 
-        _numPickupsInLevel = _pickupList.Count;
+        Debug.Log("Pickup list contains " + _pickupList.Count + " pickups");
         SphereHandler.OnPickupCollectedEvent += UpdatePickupList;
 
     }
@@ -79,18 +80,28 @@ public class PickupManager : MonoBehaviour
 
     private void UpdatePickupList()
     {
-        //I only remove a random pickup because we don't care about which pickup was collected
-        //We only care that ANY pickup was collected
-        var rand = Random.Range(0, _pickupList.Count);
+        
+        //This container copy is done because modifying a container while iterating over it is a giant NO-NO
+        //Anyways, here we just loop over each pickup in the pickup list
+        foreach (var pickup in _pickupList.ToArray()) 
+        {
+            //When a pickup is collected, it sets itself to be inactive in the scene
+            //We know the pickup that was just collected if we find an inactive Pickup in our list
+            if (pickup.activeInHierarchy == false)
+            {
+                Debug.LogWarning("Found a disabled pickup!");
+                _lastCollectedPos = pickup.transform.position;
+                _pickupList.Remove(pickup);
+                break;
+            }
+        }
 
-        _numPickupsInLevel--;
         _numPickupsCollected++;
-        _pickupList[rand].GetComponent<PickupComponent>().IsCollected = true;
 
         Debug.Log("The Pickup list now contains " + _pickupList.Count.ToString() + " pickups");
         OnPickupCollected();
 
-        if (_numPickupsCollected >= _pickupList.Count)
+        if (_pickupList.Count <= 0)
         {
             TallyScore();
             OnAllPickupsCollectedEvent();
@@ -105,6 +116,7 @@ public class PickupManager : MonoBehaviour
         OnScoreUpdated();
 
         Debug.Log("The final score is " + _playerScore.ToString());
+        Debug.Log("The player has collected " + _numPickupsCollected.ToString() + " pickups");
     }
 
     /// <summary>
@@ -146,12 +158,20 @@ public class PickupManager : MonoBehaviour
     /// <summary>
     /// Returns each Pickup Position in the Level
     /// </summary>
-    /// <returns></returns>
     public static IEnumerable<Vector3> GetPickupPositions()
     {
         foreach (var pos in _pickupList)
         {
             yield return pos.transform.position;
         }
+    }
+
+    /// <summary>
+    /// Returns the position of the most recently collected Pickup
+    /// </summary>
+    /// <returns></returns>
+    public static Vector3 GetRecentCollectedPos()
+    {
+        return _lastCollectedPos;
     }
 }

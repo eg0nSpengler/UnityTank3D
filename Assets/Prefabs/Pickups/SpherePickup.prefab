@@ -13,7 +13,6 @@ GameObject:
   - component: {fileID: 2209361669934509014}
   - component: {fileID: 2209361669934509013}
   - component: {fileID: 2209361669934509016}
-  - component: {fileID: 7223365758702721008}
   m_Layer: 12
   m_Name: SpherePickup
   m_TagString: Pickup
@@ -61,7 +60,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 9772d4405e339654b923209042c3f5bf, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -108,16 +107,3 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pickupSound: {fileID: 8300000, guid: 51db81b9412c40248b19399666599754, type: 3}
---- !u!114 &7223365758702721008
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2209361669934509011}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e51c2c1adcdbd854bbfcbdf611921ab1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _isCollected: 0

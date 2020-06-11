@@ -7,7 +7,7 @@ public class TankRadarBox : MonoBehaviour
 {
 
     [Header("References")]
-    public Image FriendlyRadarBlip;
+    public Image RadarBlip;
     public Transform playerPosition;
     public SphereCollider playerRadarSphere;
 
@@ -16,8 +16,17 @@ public class TankRadarBox : MonoBehaviour
     /// </summary>
     private List<Vector3> _pickupPositions;
 
+    /// <summary>
+    /// A List of radar blips to draw on the radar panel
+    /// White Blip - Pickup
+    /// Red Blip - Enemy
+    /// Yellow Blip - Level Portal
+    /// </summary>
     private List<Image> _imgList;
 
+    /// <summary>
+    /// The parent radar panel
+    /// </summary>
     public RectTransform _parentPanel;
 
     private void Awake()
@@ -26,9 +35,9 @@ public class TankRadarBox : MonoBehaviour
         _pickupPositions = new List<Vector3>();
         _imgList = new List<Image>();
 
-        if (!FriendlyRadarBlip)
+        if (!RadarBlip)
         {
-            Debug.LogError("No FriendlyRadarBlip image set in TankRadarBox!");
+            Debug.LogError("No RadarBlip image set in TankRadarBox!");
             Debug.LogError("You probably forgot to assign one in the Inspector");
         }
 
@@ -45,17 +54,22 @@ public class TankRadarBox : MonoBehaviour
         }
 
         TankRadar.OnPickupInRange += DrawRadarBlips;
-        SphereHandler.OnPickupCollectedEvent += UpdateRadarBlips;
+        PickupManager.OnPickupCollected += UpdateRadarBlips;
+        LevelPortal.OnLevelPortalEnabled += ShowPortalRadarBlip;
     }
 
     // Start is called before the first frame update
     void Start()
     { 
+        // For the PickupPosition List, we add all the pickup positions in the scene to the list
 
         foreach (var pos in PickupManager.GetPickupPositions())
         {
             _pickupPositions.Add(pos);
         }
+
+        // We reserve the last element in the list for the LevelPortal position
+        _pickupPositions.Add(LevelPortal.GetLevelPortalPosition());
 
         CreateBlips();
 
@@ -64,7 +78,8 @@ public class TankRadarBox : MonoBehaviour
     private void OnDisable()
     {
         TankRadar.OnPickupInRange -= DrawRadarBlips;
-        SphereHandler.OnPickupCollectedEvent -= UpdateRadarBlips;
+        PickupManager.OnPickupCollected -= UpdateRadarBlips;
+        LevelPortal.OnLevelPortalEnabled -= ShowPortalRadarBlip;
     }
 
     // Update is called once per frame
@@ -73,17 +88,33 @@ public class TankRadarBox : MonoBehaviour
         DrawRadarBlips();
     }
 
+    /// <summary>
+    /// Creates the radar "contacts" and adds them to the radar panel
+    /// </summary>
     void CreateBlips()
     {
-        foreach (var pos in _pickupPositions)
+        //Minus one since the last element is the LevelPortal Position
+        for (var i = 0; i < _pickupPositions.Count - 1; i++)
         {
-            Image imgInstance = Instantiate(FriendlyRadarBlip, _parentPanel.transform);
+            Image imgInstance = Instantiate(RadarBlip, _parentPanel.transform);
             imgInstance.rectTransform.anchoredPosition = _parentPanel.rect.center;
             imgInstance.color = Color.white;
             _imgList.Add(imgInstance);
         }
+
+        // While it isn't a pickup
+        // We add the LevelPortal pos to our radar so that we can render it when the portal appears
+        // We simply set the blip color to Clear so that it doesn't show on the radar panel until the actual LevelPortal gameobject is enabled in scene
+        Image lvlPortal = Instantiate(RadarBlip, _parentPanel.transform);
+        lvlPortal.rectTransform.anchoredPosition = _parentPanel.rect.center;
+        lvlPortal.color = Color.clear;
+        _imgList.Add(lvlPortal);
+
     }
 
+    /// <summary>
+    /// Draws each radar blip on the radar panel
+    /// </summary>
     void DrawRadarBlips()
     {
         for (var x = 0; x < _imgList.Count; x++)
@@ -105,19 +136,40 @@ public class TankRadarBox : MonoBehaviour
                 var radarVec = new Vector3(radarPos.x, radarPos.z, 0.0f);
                 _imgList[x].rectTransform.localPosition = radarVec;
 
+                // Just so we don't apply the same panel position to each radar blip
                 if (x == i)
                 {
                     break;
                 }
             }        
-            
         }
     }
 
     void UpdateRadarBlips()
     {
-        
+            // Looping through all of our pickup positions
+            for (var y = 0; y < _pickupPositions.Count; y++)
+            {
+                // If a position in our list matches the position of a recently collected pickup, "remove" it from the radar
+                if (_pickupPositions[y] == PickupManager.GetRecentCollectedPos())
+                {
+                    // I'd rather not explicitly delete the Image instance, so we just set the color to transparent
+                    // The Pickup Positions List and the Image List both share the same indexes (Element 0 in the pos List corresponds directly Element 0 in the img List and it's associated radar blip)
+                    // Hence why we can just use this same iterator for accessing the Image List
+                    _imgList[y].color = Color.clear;
+                    return;
+                }
+            }
     }
 
+    void ShowPortalRadarBlip()
+    {
+        //This sets the LevelPortal radar blip color to yellow, making it finally *appear* on radar.
+        _imgList[_imgList.Count - 1].color = Color.yellow;
+        // *gasp*
+        // IS THIS A DIRECT CONTAINER ELEMENT ACCESS **WITHOUT** BOUNDS CHECKING????
+        // *gasp*
+        // :)
+    }
 }
 

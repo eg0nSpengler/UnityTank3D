@@ -36,6 +36,7 @@ public class TankRadar : MonoBehaviour
             Debug.Log(other.gameObject.name.ToString() + " has entered the TankRadar radius!");
         }
 
-        //OnPickupInRange();
+        OnPickupInRange();
     }
+
 }

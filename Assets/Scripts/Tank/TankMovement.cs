@@ -6,14 +6,22 @@ using UnityEngine;
 public class TankMovement : MonoBehaviour
 {
     [Header("Variables")]
-    public int tankSpeed = 0;
-    public int rotationSpeed = 0;
+    public int tankSpeed;
+    public int rotationSpeed;
+
+    [Header("Audio References")]
+    public AudioClip boostSound;
+
+    private int boostAmount;
+    private bool isBoosting; // Are we currently boosting?
 
     private CharacterController _charController;
+    private AudioSource _audioSource;
 
     private void Awake()
     {
         _charController = GetComponent<CharacterController>();
+        _audioSource =  GetComponent<AudioSource>();
 
         if (!_charController)
         {
@@ -21,8 +29,21 @@ public class TankMovement : MonoBehaviour
             _charController = gameObject.AddComponent<CharacterController>();
         }
 
+        if (!_audioSource)
+        {
+            Debug.LogError("Failed to get AudioSource in TankMovement instance on " + gameObject.name.ToString() + ", creating one now.");
+            _audioSource = gameObject.AddComponent<AudioSource>();
+        }
+
+        if (!boostSound)
+        {
+            Debug.LogWarning("No Boost Sound provided for TankMovement!");
+        }
+
+        isBoosting = false;
         tankSpeed = 2;
         rotationSpeed = 1;
+        boostAmount = 4;
     }
 
     // Start is called before the first frame update
@@ -32,17 +53,6 @@ public class TankMovement : MonoBehaviour
     }
 
     private void FixedUpdate()
-    {
-        HandleMovement();
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        //HandleMovement();
-    }
-
-    void HandleMovement()
     {
         if (Input.GetKey(KeyCode.W))
         {
@@ -54,6 +64,11 @@ public class TankMovement : MonoBehaviour
             _charController.SimpleMove((transform.forward * -1) * tankSpeed);
         }
 
+        if (Input.GetKey(KeyCode.LeftAlt))
+        {
+            _charController.SimpleMove((transform.forward * tankSpeed * boostAmount));
+        }
+
         if (Input.GetKey(KeyCode.A))
         {
             transform.Rotate(Vector3.down * rotationSpeed);
@@ -63,5 +78,11 @@ public class TankMovement : MonoBehaviour
         {
             transform.Rotate(Vector3.up * rotationSpeed);
         }
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+      
     }
 }
