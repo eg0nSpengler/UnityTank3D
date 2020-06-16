@@ -5,7 +5,7 @@ using UnityEngine;
 public class LevelPortal : MonoBehaviour
 {
     private AudioSource _audioSource;
-    private static Vector3 _portalPos;
+    private Vector3 _portalPos;
 
     public delegate void PlayerEnteredPortal();
     public delegate void LevelPortalEnabled();
@@ -22,7 +22,6 @@ public class LevelPortal : MonoBehaviour
 
     private void Awake()
     {
-        gameObject.SetActive(false);
 
         _audioSource = GetComponent<AudioSource>();
 
@@ -34,14 +33,10 @@ public class LevelPortal : MonoBehaviour
 
         _audioSource.volume = 0.2f;
         _portalPos = gameObject.transform.position;
-        
-        PickupManager.OnAllPickupsCollectedEvent += Spawn;
-
     }
 
     private void OnEnable()
     {
-        Debug.Log(gameObject.name.ToString() + " has been created");
         OnLevelPortalEnabled();
     }
 
@@ -54,7 +49,8 @@ public class LevelPortal : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-     
+        gameObject.SetActive(false);
+        PickupManager.OnAllPickupsCollectedEvent += Spawn;
     }
 
     // Update is called once per frame
@@ -83,7 +79,7 @@ public class LevelPortal : MonoBehaviour
     /// Returns the position of the Level Portal
     /// </summary>
     /// <returns>The Level Portal position, in Vector3 format</returns>
-    public static Vector3 GetLevelPortalPosition()
+    public Vector3 GetLevelPortalPosition()
     {
         return _portalPos;
     }

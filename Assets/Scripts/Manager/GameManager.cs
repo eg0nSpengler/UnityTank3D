@@ -37,7 +37,6 @@ public class GameManager : MonoBehaviour
 
     private void Awake()
     {
-        _gameState = GAME_STATE.STATE_MENU;
         MenuRollingDoor.OnGameStartEvent += StartGame;
         StartLevelButton.OnLevelStartEvent += PlayGame;
         LevelPortal.OnPlayerEnterPortalEvent += PauseGame;
@@ -48,7 +47,7 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     private void Start()
     {
-
+        
     }
 
     private void OnDisable()
@@ -70,7 +69,6 @@ public class GameManager : MonoBehaviour
 
     private void StartGame()
     {
-        Debug.Log("StartGame called from GameManager");
         LevelManager.LoadLevel(LevelManager.LEVEL_TYPE.LEVEL_PRE_BRIEFING);
         _gameState = GAME_STATE.STATE_PREBRIEFING;
     }

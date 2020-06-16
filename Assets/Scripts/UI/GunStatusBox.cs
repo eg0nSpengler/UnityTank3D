@@ -6,15 +6,23 @@ using TMPro;
 public class GunStatusBox : MonoBehaviour
 {
     private TextMeshProUGUI _gunStatus;
+    public TankGun _tankGun;
 
     private void Awake()
     {
         _gunStatus = GetComponent<TextMeshProUGUI>();
+        _tankGun = FindObjectOfType<TankGun>();
 
         if (!_gunStatus)
         {
             Debug.LogError("Failed to get TextMeshProTextUI element on " + gameObject.name.ToString() + ", creating one now...");
             _gunStatus = gameObject.AddComponent<TextMeshProUGUI>();
+        }
+
+        if(!_tankGun)
+        {
+            Debug.LogError("No TankGun found in the current scene!");
+            Debug.LogError("You may have forgotten to place a TankActor instance!");
         }
 
         TankGun.OnGunStatusUpdate += UpdateGunStatusText;
@@ -38,7 +46,7 @@ public class GunStatusBox : MonoBehaviour
 
     void UpdateGunStatusText()
     {
-        _gunStatus.text = TankGun.GunStatusToString();
+        _gunStatus.text = _tankGun.GunStatusToString();
         switch (_gunStatus.text.ToString())
         {
 

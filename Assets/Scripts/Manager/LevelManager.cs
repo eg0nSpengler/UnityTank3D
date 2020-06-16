@@ -11,6 +11,11 @@ public class LevelManager : MonoBehaviour
     [Header("References")]
     public LevelInfo levelInfo;
 
+    [Header("Audio References")]
+    public AudioClip lowTimeSound;
+
+    private AudioSource _audioSource;
+
     public enum LEVEL_TYPE
     {
         LEVEL_NONE,
@@ -40,7 +45,6 @@ public class LevelManager : MonoBehaviour
     }
 
     private static int _levelIter;
-    private static bool bIsPlaying = false;
 
 
     private static List<string> _sceneList;
@@ -60,6 +64,7 @@ public class LevelManager : MonoBehaviour
     {
         _sceneList = new List<string>();
         _levelList = new List<string>();
+        _audioSource = GetComponent<AudioSource>();
 
         _currentLevelStats = new LevelStats();
 
@@ -90,33 +95,36 @@ public class LevelManager : MonoBehaviour
             _currentLevelStats.CurrentLevelTime = 0;
         }
 
+        if (!lowTimeSound)
+        {
+            Debug.LogWarning("No Low Time Sound Provided for LevelManager!");
+        }
+
+        if (!_audioSource)
+        {
+            Debug.LogError("No AudioSource found on LevelManager!" + ", creating one now.");
+            gameObject.AddComponent<AudioSource>();
+        }
+
         _levelIter = 0;
+        _audioSource.clip = lowTimeSound;
         Debug.Log("The SceneList in LevelManager contains " + _sceneList.Count.ToString() + " scene(s)");
         Debug.Log("The LevelList in LevelManager contains " + _levelList.Count.ToString() + " level(s)");
         
         LevelPortal.OnPlayerEnterPortalEvent += LoadPostBriefing;
-        GameManager.OnGameStatePlayEvent += RunLevelTimer;
-        GameManager.OnGameStatePostBrief += SaveLevelInfo;
+        GameManager.OnGameStatePlayEvent += InvokeLevelTimer;
     }
 
     // Start is called before the first frame update
     private void Start()
     {
-
+        
     }
 
     private void OnDisable()
     {
         LevelPortal.OnPlayerEnterPortalEvent -= LoadPostBriefing;
-        GameManager.OnGameStatePlayEvent -= RunLevelTimer;
-    }
-    // Update is called once per frame
-    private void Update()
-    {
-        if(_currentLevelStats.CurrentLevelTime > 0 && bIsPlaying)
-        {
-            RunLevelTimer();
-        }
+        GameManager.OnGameStatePlayEvent -= InvokeLevelTimer;
     }
 
     public static void LoadLevel(LEVEL_TYPE levelType)
@@ -147,9 +155,8 @@ public class LevelManager : MonoBehaviour
 
     private void SaveLevelInfo()
     {
-        bIsPlaying = false;
         _currentLevelStats.CurrentLevelNum = levelInfo.GetLevelNum;
-        GameData.levelStats.Add(_currentLevelStats);
+        
     }
 
     private void LoadPostBriefing()
@@ -159,19 +166,15 @@ public class LevelManager : MonoBehaviour
         Debug.Log("Level Iterator is now " + _levelIter.ToString());
     }
 
-    private void RunLevelTimer()
+
+    private void InvokeLevelTimer()
     {
-            bIsPlaying = true;
-            _currentLevelStats.CurrentLevelTime -= Time.deltaTime;
-
-            if (_currentLevelStats.CurrentLevelTime <= 0)
-            {
-                OnLevelTimerEnd();
-                return;
-            }
-
+        
     }
-
+    void RunLevelTimer()
+    {
+        Debug.Log("RunLevelTimer Coroutine ran!");
+    }
 
     /// <summary>
     /// Returns the current level number
@@ -190,11 +193,5 @@ public class LevelManager : MonoBehaviour
     {
         return Mathf.RoundToInt(_currentLevelStats.CurrentLevelTime);
     }
-
-    public static int GetFinalTime()
-    {
-        return Mathf.RoundToInt(GameData.levelStats[0].CurrentLevelTime);
-    }
-
     
 }

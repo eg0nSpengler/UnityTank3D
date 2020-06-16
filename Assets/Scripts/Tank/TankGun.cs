@@ -24,12 +24,12 @@ public class TankGun : MonoBehaviour
 
     private AudioSource _audioSource;
 
-    private static int  _reloadTime;
-    private static float _gunCharge;
-    private static float _maxChargeTime; 
-    private static bool isReadyToFire; // Is the Tank Gun ready to fire?
-    private static bool isChargeCuePlayed; // Has the MAX CHARGE audio cue been played?
-    private static GUN_STATUS gunStatus;
+    private int  _reloadTime;
+    private float _gunCharge;
+    private float _maxChargeTime; 
+    private bool isReadyToFire; // Is the Tank Gun ready to fire?
+    private bool isChargeCuePlayed; // Has the MAX CHARGE audio cue been played?
+    private GUN_STATUS gunStatus;
 
     private enum GUN_STATUS
     {
@@ -78,8 +78,8 @@ public class TankGun : MonoBehaviour
             Debug.LogWarning("No Max Charge sound provided for TankGun!");
         }
 
-        _reloadTime = 3;
-        _maxChargeTime = 3.0f;
+        _reloadTime = 1;
+        _maxChargeTime = 2.0f;
         _gunCharge = 0.0f;
         isReadyToFire = true;
         isChargeCuePlayed = false;
@@ -138,8 +138,7 @@ public class TankGun : MonoBehaviour
                 if (isChargeCuePlayed == false) // Let's play the Audio Cue to notify the player we've reached MAX charge
                 {
                     isChargeCuePlayed = true;
-                    _audioSource.clip = maxChargeSound;
-                    _audioSource.Play();
+                    _audioSource.PlayOneShot(maxChargeSound);
                 }
             }
         }
@@ -149,8 +148,7 @@ public class TankGun : MonoBehaviour
     {
         if (isReadyToFire == true)
         {
-            _audioSource.clip = fireSound;
-            _audioSource.Play();
+            _audioSource.PlayOneShot(fireSound);
             _gunCharge = 0.0f;
             isChargeCuePlayed = false;
             Instantiate(projectile, gunTransform.position, gunTransform.rotation);
@@ -161,17 +159,16 @@ public class TankGun : MonoBehaviour
 
     /// <summary>
     /// A Coroutine that handles the "reloading" of the Tank Gun
-    /// Nothing too complex, we just wait for THREE seconds before setting the Tank Gun to READY
+    /// Nothing too complex, we just wait for X seconds before setting the Tank Gun to READY
     /// </summary>
     IEnumerator ReloadGun()
     {
         
         isReadyToFire = false;
-        yield return new WaitForSeconds(_reloadTime); // Wait for THREE seconds
+        yield return new WaitForSeconds(_reloadTime);
         UpdateGunStatus(GUN_STATUS.GUN_READY);
         isReadyToFire = true;
-        _audioSource.clip = rearmSound;
-        _audioSource.Play();
+        _audioSource.PlayOneShot(rearmSound);
     }
 
     /// <summary>
@@ -215,7 +212,7 @@ public class TankGun : MonoBehaviour
     /// Returns the current Gun Status in string format
     /// </summary>
     /// <returns>The current TankGun status, in string format</returns>
-    public static string GunStatusToString()
+    public string GunStatusToString()
     {
         switch(gunStatus)
         {

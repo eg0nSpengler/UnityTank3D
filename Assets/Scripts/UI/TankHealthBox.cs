@@ -5,9 +5,9 @@ using UnityEngine.UI;
 
 public class TankHealthBox : MonoBehaviour
 {
+    private TankActor _tankActor;
+    private HealthComponent _healthComp;
     private Image _panel;
-
-    public HealthComponent healthComponent;
 
     private float maxFillValue = 1.0f;
     private float minFillValue = 0.0f;
@@ -17,6 +17,8 @@ public class TankHealthBox : MonoBehaviour
     private void Awake()
     {
         _panel = GetComponent<Image>();
+        _tankActor = FindObjectOfType<TankActor>();
+        _healthComp = _tankActor.GetComponent<HealthComponent>();
 
         if (!_panel)
         {
@@ -24,9 +26,13 @@ public class TankHealthBox : MonoBehaviour
             _panel = gameObject.AddComponent<Image>();
         }
 
-        _panel.fillAmount = minFillValue;
+        if (!_tankActor)
+        {
+            Debug.LogError("Failed to find TankActor reference in TankHealthBox!");
+        }
 
-        HealthComponent.OnHealthModified += UpdateHealth;
+        _panel.fillAmount = minFillValue;
+        _healthComp.OnHealthModified += UpdateHealth;
 
     }
 
@@ -37,7 +43,7 @@ public class TankHealthBox : MonoBehaviour
 
     private void OnDisable()
     {
-        HealthComponent.OnHealthModified -= UpdateHealth;
+        _healthComp.OnHealthModified -= UpdateHealth;
     }
 
     // Update is called once per frame
@@ -48,14 +54,14 @@ public class TankHealthBox : MonoBehaviour
 
     void UpdateHealth()
     {
-        var hp = healthComponent.GetHealth();
+        var hp = _healthComp.GetHealth();
 
-        if (hp >= 10)
+        if (hp >= _healthComp.GetMaxHealth())
         {
             _panel.fillAmount = minFillValue;
         }
 
-        if (hp < 10)
+        if (hp < _healthComp.GetMaxHealth())
         {
             var amt = hp * fillAddValue;
 

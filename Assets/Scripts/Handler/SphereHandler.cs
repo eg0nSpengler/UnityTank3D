@@ -5,9 +5,13 @@ using UnityEngine;
 public class SphereHandler : MonoBehaviour
 {
     [Header("References")]
-    public AudioClip pickupSound;
-
-    private PickupComponent _pickupComp;
+    public AudioClip playerPickupSound;
+    public AudioClip monsterPickupSound;
+    
+    //A boolean that we set depending on who collects the pickup
+    //TRUE if the player
+    //FALSE if a monster
+    private bool _pickupCollector;
 
     public delegate void PickupCollected();
 
@@ -18,13 +22,17 @@ public class SphereHandler : MonoBehaviour
 
     private void Awake()
     {
-        if (!pickupSound)
+        if (!playerPickupSound)
         {
-            Debug.LogError("No Pickup sound provided for " + gameObject.name.ToString());
+            Debug.LogWarning("No Player Pickup sound provided for " + gameObject.name.ToString());
         }
 
-        _pickupComp = gameObject.AddComponent<PickupComponent>();
-        
+        if (!monsterPickupSound)
+        {
+            Debug.LogWarning("No Monster Pickup sound provided for " + gameObject.name.ToString());
+        }
+
+        _pickupCollector = false;
     }
 
     // Start is called before the first frame update
@@ -41,19 +49,44 @@ public class SphereHandler : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.name == "TankActor" )
+        if (other.gameObject.name == "TankActor")
         {
-            Debug.Log("Collision detected!");
-            OnSphereDestroyed();
+            _pickupCollector = true;
+            OnSphereDestroyed(_pickupCollector);
         }
-         
+
+        if (other.gameObject.name.Contains("Monster"))
+        {
+            _pickupCollector = false;
+            OnSphereDestroyed(_pickupCollector);
+        }
+
     }
 
-    private void OnSphereDestroyed()
+    private void OnSphereDestroyed(bool collector)
     {
-        AudioSource.PlayClipAtPoint(pickupSound, gameObject.transform.position);
+        if (collector == true)
+        {
+            AudioSource.PlayClipAtPoint(playerPickupSound, gameObject.transform.position);
+        }
+        else
+        {
+            AudioSource.PlayClipAtPoint(monsterPickupSound, gameObject.transform.position);
+        }
+
         gameObject.SetActive(false);
         OnPickupCollectedEvent();
+    }
+
+    /// <summary>
+    /// Returns a boolean value depending on who collects the Pickup
+    /// TRUE if the player
+    /// FALSE if a monster
+    /// </summary>
+    /// <returns></returns>
+    public bool GetPickupCollector()
+    {
+        return _pickupCollector;
     }
 
 }

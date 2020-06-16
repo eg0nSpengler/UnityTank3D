@@ -23,15 +23,13 @@ public class PickupManager : MonoBehaviour
     /// </summary>
     public static event PickupCollected OnPickupCollected;
 
-    /// <summary>
-    /// Called when the player score is updated at the end of a level
-    /// </summary>
-    public static event ScoreUpdated OnScoreUpdated;
 
     private static List<GameObject> _pickupList;
     private static List<Vector3> _pickupPosList;
+    private static List<bool> _pickupBoolList;
 
     private static Vector3 _lastCollectedPos;
+    private static bool _lastPickupBool;
     private static int _playerScore;
     private static int _numPickupsCollected;
     private static int _numPickupsLost;
@@ -41,6 +39,7 @@ public class PickupManager : MonoBehaviour
     {
         _pickupList = new List<GameObject>();
         _pickupPosList = new List<Vector3>();
+        _pickupBoolList = new List<bool>();
 
         foreach (var obj in FindObjectsOfType<GameObject>())
         {
@@ -61,6 +60,7 @@ public class PickupManager : MonoBehaviour
         _numPickupsCollected = 0;
         _numPickupsLost = 0;
         _lastCollectedPos = new Vector3(0.0f, 0.0f, 0.0f);
+        _lastPickupBool = false;
 
         Debug.Log("Pickup list contains " + _pickupList.Count + " pickups");
         SphereHandler.OnPickupCollectedEvent += UpdatePickupList;
@@ -89,8 +89,11 @@ public class PickupManager : MonoBehaviour
             //We know the pickup that was just collected if we find an inactive Pickup in our list
             if (pickup.activeInHierarchy == false)
             {
-                Debug.LogWarning("Found a disabled pickup!");
+                var pickupResult = pickup.GetComponent<SphereHandler>().GetPickupCollector();
+                Debug.Log(pickupResult.ToString());
+                 _lastPickupBool = pickupResult;
                 _lastCollectedPos = pickup.transform.position;
+                _pickupBoolList.Add(pickupResult);
                 _pickupList.Remove(pickup);
                 break;
             }
@@ -112,9 +115,7 @@ public class PickupManager : MonoBehaviour
     private void TallyScore()
     {
         _playerScore = _numPickupsCollected * 10000;
-
-        OnScoreUpdated();
-
+        
         Debug.Log("The final score is " + _playerScore.ToString());
         Debug.Log("The player has collected " + _numPickupsCollected.ToString() + " pickups");
     }
@@ -123,7 +124,7 @@ public class PickupManager : MonoBehaviour
     /// Returns the current Player Score
     /// </summary>
     /// <returns></returns>
-    public static int GetScore()
+    public static int GetPlayerScore()
     {
         return _playerScore;
     }
@@ -131,7 +132,6 @@ public class PickupManager : MonoBehaviour
     /// <summary>
     /// Returns the total number of Pickups in the current Level
     /// </summary>
-    /// <returns></returns>
     public static int GetNumPickupsInLevel()
     {
         return _pickupList.Count;
@@ -140,7 +140,6 @@ public class PickupManager : MonoBehaviour
     /// <summary>
     /// Returns the current number of Pickups collected by the Player
     /// </summary>
-    /// <returns></returns>
     public static int GetNumCollectedPickups()
     {
         return _numPickupsCollected; 
@@ -149,7 +148,6 @@ public class PickupManager : MonoBehaviour
     /// <summary>
     /// Returns the current number of Pickups failed to be collected by the Player
     /// </summary>
-    /// <returns></returns>
     public static int GetNumLostPickups()
     {
         return _numPickupsLost;
@@ -166,6 +164,21 @@ public class PickupManager : MonoBehaviour
         }
     }
 
+
+    /// <summary>
+    /// Returns the boolean value for each pickup in the level
+    /// TRUE if the player collected the pickup
+    /// FALSE if a monster collected the pickup
+    /// </summary>
+    /// <returns></returns>
+    public static IEnumerable<bool> GetPickupBoolList()
+    {
+        foreach (var result in _pickupBoolList)
+        {
+            yield return result;
+        }
+    }
+
     /// <summary>
     /// Returns the position of the most recently collected Pickup
     /// </summary>
@@ -173,5 +186,14 @@ public class PickupManager : MonoBehaviour
     public static Vector3 GetRecentCollectedPos()
     {
         return _lastCollectedPos;
+    }
+
+    /// <summary>
+    /// Returns the boolean result of the most recently collected Pickup
+    /// </summary>
+    /// <returns></returns>
+    public static bool GetRecentPickupBool()
+    {
+        return _lastPickupBool;
     }
 }

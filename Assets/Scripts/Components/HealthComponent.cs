@@ -7,7 +7,7 @@ public class HealthComponent : MonoBehaviour
     [Header("Variables")]
     public int currentHP;
 
-    private static int _maxHP;
+    private int _maxHP;
 
     public delegate void HealthModified();
     public delegate void HealthZero();
@@ -15,12 +15,12 @@ public class HealthComponent : MonoBehaviour
     /// <summary>
     /// Called whenever the health is modified (Damage taken/ healing/ etc.)
     /// </summary>
-    public static event HealthModified OnHealthModified;
+    public event HealthModified OnHealthModified;
 
     /// <summary>
     /// Called when the current HP reaches zero
     /// </summary>
-    public static event HealthZero OnHealthZero;
+    public event HealthZero OnHealthZero;
 
     private void Awake()
     {
@@ -73,9 +73,7 @@ public class HealthComponent : MonoBehaviour
         if (currentHP <= 0)
         {
             OnHealthZero();
-            gameObject.SetActive(false);
         }
-
         
     }
 
@@ -121,4 +119,5 @@ public class HealthComponent : MonoBehaviour
     {
         return _maxHP;
     }
+
 }

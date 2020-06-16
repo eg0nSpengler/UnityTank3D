@@ -2,52 +2,45 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// This just serves as a class to hold references to other components on our TankActor
+/// </summary>
 public class TankActor : MonoBehaviour
 {
+    public HealthComponent healthComp { get; private set; }
 
-    [Header("References")]
-    public AudioClip wallBumpAudio;
+    public int playerScore { get; private set; }
+    public int levelNum { get; private set; }
 
-    private AudioSource _audioSource;
-    private CharacterController _charController;
+    public int numPickupsCollected { get; private set; }
 
+    public int numPickupsLost { get; private set; }
+
+    private  int _numPickupsCollected;
 
     private void Awake()
     {
-        _audioSource = GetComponent<AudioSource>();
-        _charController = GetComponent<CharacterController>();
+        healthComp = GetComponent<HealthComponent>();
 
-        if (!_audioSource)
+        if (!healthComp)
         {
-            Debug.LogError("Failed to get Audio Source on " + gameObject.name.ToString() + ", creating one now...");
-            _audioSource = gameObject.AddComponent<AudioSource>();
+            Debug.LogError("Failed to get Health Component on " + gameObject.name.ToString() + ", creating one now...");
+            gameObject.AddComponent<HealthComponent>();
         }
 
-        if (!_charController)
-        {
-            Debug.LogError("Failed to get Character Controller on " + gameObject.name.ToString() + ", creating one now...");
-            _charController = gameObject.AddComponent<CharacterController>();
-        }
-    }
-    // Start is called before the first frame update
-    void Start()
-    {
-        
+        LevelPortal.OnLevelPortalEnabled += SaveTankData;
+        _numPickupsCollected = numPickupsCollected;
         
     }
 
-    // Update is called once per frame
-    void Update()
+
+    public void SaveTankData()
     {
-        
+        GameDataSerializer.SaveGameData(this);
     }
 
-    private void OnCollisionEnter(Collision collision)
+    public int GetTankPickups()
     {
-        if (collision.gameObject.tag == "Level")
-        {
-            Debug.Log("Colliding with level!");
-        }
+        return _numPickupsCollected;
     }
-
 }

@@ -106,4 +106,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2fc944d35949c6048bcc80add59158c7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pickupSound: {fileID: 8300000, guid: 51db81b9412c40248b19399666599754, type: 3}
+  playerPickupSound: {fileID: 8300000, guid: 51db81b9412c40248b19399666599754, type: 3}
+  monsterPickupSound: {fileID: 8300000, guid: d3640581d89f39c47bb80c66f76fc0a8, type: 3}

@@ -1,8 +1,27 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public static class GameData
+
+[System.Serializable]
+public class GameData
 {
-    public static List<LevelManager.LevelStats> levelStats = new List<LevelManager.LevelStats>();
+    public int playerScore;
+    public int playerHealth;
+    public int numPickupsCollected;
+    public int numPickupsLost;
+    public int numPickupsTotal;
+    public int levelNum;
+
+    public GameData(TankActor tankActor)
+    {
+        playerScore = PickupManager.GetPlayerScore();
+        playerHealth = tankActor.healthComp.currentHP;
+        numPickupsCollected = PickupManager.GetNumCollectedPickups();
+        numPickupsLost = PickupManager.GetNumLostPickups();
+        numPickupsTotal = PickupManager.GetNumPickupsInLevel();
+        levelNum = LevelManager.GetLevelNum();
+
+    }
 }

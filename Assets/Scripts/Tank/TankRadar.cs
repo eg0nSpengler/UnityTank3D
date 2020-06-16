@@ -31,12 +31,7 @@ public class TankRadar : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.tag == "Pickup")
-        {
-            Debug.Log(other.gameObject.name.ToString() + " has entered the TankRadar radius!");
-        }
-
-        OnPickupInRange();
+        
     }
 
 }

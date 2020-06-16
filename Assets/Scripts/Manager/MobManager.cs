@@ -13,22 +13,10 @@ public class MobManager : MonoBehaviour
         ProjectileHandler.OnDamageMobEvent += DamageMob;
     }
 
-    // Start is called before the first frame update
-    void Start()
-    {
-
-    }
-
     private void OnDisable()
     {
         ProjectileHandler.OnDamageMobEvent -= DamageMob;
     }
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
-
     
    private static void DamageMob(GameObject obj, int dmg)
     {
@@ -73,5 +61,6 @@ public class MobManager : MonoBehaviour
             Debug.Log(obj.name.ToString() + " has been healed for " + hp.ToString() + " hitpoints");
         }
     }
+
 
 }

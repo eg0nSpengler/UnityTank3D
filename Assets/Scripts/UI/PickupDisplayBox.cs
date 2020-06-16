@@ -19,11 +19,14 @@ public class PickupDisplayBox : MonoBehaviour
         _imgList = new List<Image>();
 
         PickupManager.OnPickupCollected += UpdatePickups;
+        LevelPortal.OnLevelPortalEnabled += SavePickups;
+        GameManager.OnGameStatePostBrief += DisplaySavedPickups;
 
     }
     // Start is called before the first frame update
     void Start()
     {
+
         for (var i = 0; i < PickupManager.GetNumPickupsInLevel(); i++)
         {
             Image imgInstance = Instantiate(pickupImage, _parentPanel.transform);
@@ -32,7 +35,6 @@ public class PickupDisplayBox : MonoBehaviour
         }
 
         imgListIter = _imgList.Count - 1;
-
         
     }
 
@@ -49,7 +51,39 @@ public class PickupDisplayBox : MonoBehaviour
 
     void UpdatePickups()
     {
-        _imgList[imgListIter].color = Color.green;
+        if (PickupManager.GetRecentPickupBool() == true)
+        {
+            _imgList[imgListIter].color = Color.green;
+        }
+        else
+        {
+            _imgList[imgListIter].color = Color.red;
+        }
+
         imgListIter--;
+    }
+
+    void SavePickups()
+    {
+        
+    }
+
+    void DisplaySavedPickups()
+    {
+        foreach (var img in _imgList)
+        {
+            foreach (var result in PickupManager.GetPickupBoolList())
+            {
+                if (result == true)
+                {
+                    _imgList[imgListIter].color = Color.green;
+                }
+                else
+                {
+                    _imgList[imgListIter].color = Color.red;
+                }
+            }
+        }
+        
     }
 }

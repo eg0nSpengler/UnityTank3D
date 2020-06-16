@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: LVL_1
   m_EditorClassIdentifier: 
   _levelName: Langston Research Facility
-  _levelNum: 1
-  _levelTime: 60
+  _levelNum: 0
+  _levelTime: 5
   _levelDescription: Your first assignment is to rescue a bunch of scientists who
     have barracaded themselves inside the Langston Research Facility. They were working
     on a new, clean fuel until some big oil corporations decided to buy Langston

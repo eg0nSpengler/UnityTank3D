@@ -18,17 +18,20 @@ public class ScoreBox : MonoBehaviour
 
         _score.color = Color.green;
         _score.text = "0";
-        PickupManager.OnScoreUpdated += UpdateScoreText;
+        UpdateScoreText();
+        GameManager.OnGameStatePostBrief += UpdateScoreText;
     }
 
     // Start is called before the first frame update
     void Start()
     {
+        
     }
 
     private void OnDisable()
     {
-        PickupManager.OnScoreUpdated -= UpdateScoreText;
+
+
     }
 
     // Update is called once per frame
@@ -39,6 +42,11 @@ public class ScoreBox : MonoBehaviour
 
     void UpdateScoreText()
     {
-        _score.text = PickupManager.GetScore().ToString();
+        var gmData = GameDataSerializer.LoadGameData(LevelManager.GetLevelNum());
+
+        if (gmData != null)
+        {
+            _score.text = gmData.playerScore.ToString();
+        }
     }
 }

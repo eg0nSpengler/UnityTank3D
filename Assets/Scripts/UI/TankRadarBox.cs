@@ -11,6 +11,8 @@ public class TankRadarBox : MonoBehaviour
     public Transform playerPosition;
     public SphereCollider playerRadarSphere;
 
+    private LevelPortal _levelPortal;
+
     /// <summary>
     /// A List of all the Pickup locations in the currently loaded level
     /// </summary>
@@ -27,13 +29,14 @@ public class TankRadarBox : MonoBehaviour
     /// <summary>
     /// The parent radar panel
     /// </summary>
-    public RectTransform _parentPanel;
+    private RectTransform _parentPanel;
 
     private void Awake()
     {
         _parentPanel = gameObject.GetComponent<RectTransform>();
         _pickupPositions = new List<Vector3>();
         _imgList = new List<Image>();
+        _levelPortal = FindObjectOfType<LevelPortal>();
 
         if (!RadarBlip)
         {
@@ -53,6 +56,12 @@ public class TankRadarBox : MonoBehaviour
             Debug.LogError("You probably forgot to assign it in the Inspector");
         }
 
+        if (_levelPortal == null)
+        {
+            Debug.LogError("No PortalActor found in the current scene!");
+            Debug.LogError("You may have forgotten to place a PortalActor instance!");
+        }
+
         TankRadar.OnPickupInRange += DrawRadarBlips;
         PickupManager.OnPickupCollected += UpdateRadarBlips;
         LevelPortal.OnLevelPortalEnabled += ShowPortalRadarBlip;
@@ -69,7 +78,7 @@ public class TankRadarBox : MonoBehaviour
         }
 
         // We reserve the last element in the list for the LevelPortal position
-        _pickupPositions.Add(LevelPortal.GetLevelPortalPosition());
+        _pickupPositions.Add(_levelPortal.transform.position);
 
         CreateBlips();
 

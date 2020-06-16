@@ -77,6 +77,15 @@ public class DetectionSphere : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         
+        // We detect a pickup in our radius
+        if(other.gameObject.tag == "Pickup")
+        {
+            if (InLineOfSight(other))
+            {
+                MoveToTarget(other);
+            }
+        }
+        
         if (other.gameObject.tag == "Mob" && other.gameObject.name == "TankActor")
         {
             //The mob is within our LoS
@@ -182,7 +191,6 @@ public class DetectionSphere : MonoBehaviour
     /// <param name="other"></param>
     private void SetPossibleTarget(Collider other)
     {
-        currentTarget = other.gameObject;
         currentTargetCollider = other.gameObject.GetComponent<Collider>();
         currentTarget = other.gameObject;
     }
@@ -209,5 +217,10 @@ public class DetectionSphere : MonoBehaviour
                _lastKnownPos = audioTargetCollider.transform.position;    
             }
         }
+    }
+
+    void AttackTarget(Collider other)
+    {
+       
     }
 }
