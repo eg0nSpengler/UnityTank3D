@@ -10,7 +10,8 @@ public class TankRadarBox : MonoBehaviour
     public Image RadarBlip;
     public Transform playerPosition;
     public SphereCollider playerRadarSphere;
-
+    private int _pickupOffSet; // A ptr offset to the last pickup pos element in the pickupPos container
+    private int _mobOffSet; // A ptr offset to the last mob pos element in the pickupPos container
     private LevelPortal _levelPortal;
 
     /// <summary>
@@ -20,9 +21,6 @@ public class TankRadarBox : MonoBehaviour
 
     /// <summary>
     /// A List of radar blips to draw on the radar panel
-    /// White Blip - Pickup
-    /// Red Blip - Enemy
-    /// Yellow Blip - Level Portal
     /// </summary>
     private List<Image> _imgList;
 
@@ -36,6 +34,8 @@ public class TankRadarBox : MonoBehaviour
         _parentPanel = gameObject.GetComponent<RectTransform>();
         _pickupPositions = new List<Vector3>();
         _imgList = new List<Image>();
+        _pickupOffSet = 0;
+        _mobOffSet = 0;
         _levelPortal = FindObjectOfType<LevelPortal>();
 
         if (!RadarBlip)
@@ -64,6 +64,7 @@ public class TankRadarBox : MonoBehaviour
 
         TankRadar.OnPickupInRange += DrawRadarBlips;
         PickupManager.OnPickupCollected += UpdateRadarBlips;
+        MobManager.OnMobDestroyed += UpdateRadarBlips;
         LevelPortal.OnLevelPortalEnabled += ShowPortalRadarBlip;
     }
 
@@ -76,6 +77,15 @@ public class TankRadarBox : MonoBehaviour
         {
             _pickupPositions.Add(pos);
         }
+        _pickupOffSet = _pickupPositions.Count - 1;
+
+        foreach (var pos in MobManager.GetMobPositions())
+        {
+            Debug.Log(pos.ToString());
+            _pickupPositions.Add(pos);
+        }
+
+        _mobOffSet = _pickupPositions.Count - 1;
 
         // We reserve the last element in the list for the LevelPortal position
         _pickupPositions.Add(_levelPortal.transform.position);
@@ -102,13 +112,30 @@ public class TankRadarBox : MonoBehaviour
     /// </summary>
     void CreateBlips()
     {
+        /// Blue Blip - Pickup
+        /// Red Blip - Enemy
+        /// Yellow Blip - Level Portal
+       
         //Minus one since the last element is the LevelPortal Position
         for (var i = 0; i < _pickupPositions.Count - 1; i++)
         {
             Image imgInstance = Instantiate(RadarBlip, _parentPanel.transform);
             imgInstance.rectTransform.anchoredPosition = _parentPanel.rect.center;
-            imgInstance.color = Color.white;
             _imgList.Add(imgInstance);
+        }
+
+        // Going backwards
+        // From the last pickup pos element to the first
+        for (var x = _pickupOffSet; x >= 0; x--)
+        {
+            _imgList[x].color = Color.cyan;
+        }
+
+        // Again going backwards
+        // From the last mob pos element to the first
+        for (var y = _mobOffSet; y > _pickupOffSet; y--)
+        {
+            _imgList[y].color = Color.red;
         }
 
         // While it isn't a pickup
@@ -156,19 +183,27 @@ public class TankRadarBox : MonoBehaviour
 
     void UpdateRadarBlips()
     {
-            // Looping through all of our pickup positions
-            for (var y = 0; y < _pickupPositions.Count; y++)
+        var pickupPos = PickupManager.GetRecentCollectedPos();
+        var mobPos = MobManager.GetRecentMobDestroyedPos();
+
+        // Looping through all of our pickup positions
+        for (var y = 0; y < _pickupPositions.Count; y++)
+        {
+            //If a position in our list matches the position of a recently destroyed mob, "remove" it from the radar
+            if (_pickupPositions[y] == mobPos)
             {
-                // If a position in our list matches the position of a recently collected pickup, "remove" it from the radar
-                if (_pickupPositions[y] == PickupManager.GetRecentCollectedPos())
-                {
-                    // I'd rather not explicitly delete the Image instance, so we just set the color to transparent
-                    // The Pickup Positions List and the Image List both share the same indexes (Element 0 in the pos List corresponds directly Element 0 in the img List and it's associated radar blip)
-                    // Hence why we can just use this same iterator for accessing the Image List
-                    _imgList[y].color = Color.clear;
-                    return;
-                }
+                _imgList[y].color = Color.clear;
             }
+
+            // If a position in our list matches the position of a recently collected pickup, "remove" it from the radar
+            if (_pickupPositions[y] == pickupPos)
+            {
+                // I'd rather not explicitly delete the Image instance, so we just set the color to transparent
+                // The Pickup Positions List and the Image List both share the same indexes (Element 0 in the pos List corresponds directly Element 0 in the img List and it's associated radar blip)
+                // Hence why we can just use this same iterator for accessing the Image List
+                _imgList[y].color = Color.clear;
+            }
+        }
     }
 
     void ShowPortalRadarBlip()
