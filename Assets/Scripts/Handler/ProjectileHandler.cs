@@ -5,7 +5,7 @@ using UnityEngine;
 public class ProjectileHandler : MonoBehaviour
 {
     [Header("Variables")]
-    public int damageAmount = 0;
+    public int damageAmount;
 
     private Rigidbody _rb;
 
@@ -26,6 +26,7 @@ public class ProjectileHandler : MonoBehaviour
             _rb = gameObject.AddComponent<Rigidbody>();
         }
 
+        damageAmount = 2;
     }
 
     // Start is called before the first frame update
@@ -47,16 +48,30 @@ public class ProjectileHandler : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        Debug.Log("Projectile has collied with " + collision.gameObject.name.ToString());
-        Destroy(gameObject);
-        if (collision.collider.gameObject.tag == "Mob")
+        //Destroy(gameObject);
+        /*if (collision.collider.gameObject.tag == "Mob")
         {
             OnDamageMobEvent(collision.collider.gameObject, damageAmount);
-        }
+        }*/
     }
 
-    
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.tag == TagStatics.GetMobTag())
+        {
+            Destroy(gameObject);
+        }
+        else if (other.gameObject.tag == "Level")
+        {
+            Destroy(gameObject);
+        }
 
+        if (other.gameObject.tag == TagStatics.GetMobTag() && other.gameObject.name != TagStatics.GetPlayerName())
+        {
+            OnDamageMobEvent(other.gameObject, damageAmount);
+        }
+
+    }
     private void OnDestroy()
     {
         Debug.Log(name.ToString() + " has been destroyed!");

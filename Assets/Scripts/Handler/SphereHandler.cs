@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class SphereHandler : MonoBehaviour
 {
-    [Header("References")]
+    [Header("Audio References")]
     public AudioClip playerPickupSound;
     public AudioClip monsterPickupSound;
     
@@ -49,7 +49,7 @@ public class SphereHandler : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.name == "TankActor")
+        if (other.gameObject.name == TagStatics.GetPlayerName())
         {
             _pickupCollector = true;
             OnSphereDestroyed(_pickupCollector);
