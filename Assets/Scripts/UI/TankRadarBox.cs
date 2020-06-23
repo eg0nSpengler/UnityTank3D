@@ -10,9 +10,6 @@ public class TankRadarBox : MonoBehaviour
     public Image RadarBlip;
     public Transform playerPosition;
     public SphereCollider playerRadarSphere;
-    private int _pickupOffSet; // A ptr offset to the last pickup pos element in the pickupPos container
-    private int _mobOffSet; // A ptr offset to the last mob pos element in the pickupPos container
-    private LevelPortal _levelPortal;
 
     /// <summary>
     /// A List of all the Pickup locations in the currently loaded level
@@ -28,6 +25,18 @@ public class TankRadarBox : MonoBehaviour
     /// The parent radar panel
     /// </summary>
     private RectTransform _parentPanel;
+
+    private LevelPortal _levelPortal;
+
+    /// <summary>
+    /// A ptr offset to the last pickup pos element in the pickupPos container
+    /// </summary>
+    private int _pickupOffSet;
+
+    /// <summary>
+    /// A ptr offset to the last mob pos element in the pickupPos container
+    /// </summary>
+    private int _mobOffSet; 
 
     private void Awake()
     {
@@ -63,8 +72,8 @@ public class TankRadarBox : MonoBehaviour
         }
 
         TankRadar.OnPickupInRange += DrawRadarBlips;
-        PickupManager.OnPickupCollected += UpdateRadarBlips;
-        MobManager.OnMobDestroyed += UpdateRadarBlips;
+        PickupManager.OnPickupCollected += RemoveRadarBlip;
+        MobManager.OnMobDestroyed += RemoveRadarBlip;
         LevelPortal.OnLevelPortalEnabled += ShowPortalRadarBlip;
     }
 
@@ -97,13 +106,15 @@ public class TankRadarBox : MonoBehaviour
     private void OnDisable()
     {
         TankRadar.OnPickupInRange -= DrawRadarBlips;
-        PickupManager.OnPickupCollected -= UpdateRadarBlips;
+        PickupManager.OnPickupCollected -= RemoveRadarBlip;
+        MobManager.OnMobDestroyed -= RemoveRadarBlip;
         LevelPortal.OnLevelPortalEnabled -= ShowPortalRadarBlip;
     }
 
     // Update is called once per frame
     void Update()
     {
+        UpdateRadarBlips();
         DrawRadarBlips();
     }
 
@@ -128,7 +139,7 @@ public class TankRadarBox : MonoBehaviour
         // From the last pickup pos element to the first
         for (var x = _pickupOffSet; x >= 0; x--)
         {
-            _imgList[x].color = Color.cyan;
+            _imgList[x].color = Color.white;
         }
 
         // Again going backwards
@@ -179,9 +190,10 @@ public class TankRadarBox : MonoBehaviour
                 }
             }        
         }
+
     }
 
-    void UpdateRadarBlips()
+    void RemoveRadarBlip()
     {
         var pickupPos = PickupManager.GetRecentCollectedPos();
         var mobPos = MobManager.GetRecentMobDestroyedPos();
@@ -203,6 +215,31 @@ public class TankRadarBox : MonoBehaviour
                 // Hence why we can just use this same iterator for accessing the Image List
                 _imgList[y].color = Color.clear;
             }
+        }
+    }
+
+    /// <summary>
+    /// This is for updating the radar blips for moving targets (Monsters, for example)
+    /// </summary>
+    void UpdateRadarBlips()
+    {
+        var newMobPos = new List<Vector3>();
+
+        newMobPos.AddRange(MobManager.GetMobPositions());
+
+        for (var x = 0; x < newMobPos.Count; x++)
+        {
+            //Using our mob offset again
+            for (var i = _mobOffSet; i > _pickupOffSet; i--)
+            {
+                _pickupPositions[i] = newMobPos[x];
+                
+                if (x == i)
+                {
+                    break;
+                }
+            }
+
         }
     }
 
