@@ -8,10 +8,9 @@ public class PickupDisplayBox : MonoBehaviour
     [Header("References")]
     public Image pickupImage;
 
+    private int imgListIter;
     private GameObject _parentPanel;
     private static List<Image> _imgList;
-
-    private int _imgListIter;
 
     private void Awake()
     {
@@ -35,15 +34,13 @@ public class PickupDisplayBox : MonoBehaviour
             _imgList.Add(imgInstance);
         }
 
-        _imgListIter = _imgList.Count - 1;
+        imgListIter = _imgList.Count - 1;
         
     }
 
     private void OnDisable()
     {
         PickupManager.OnPickupCollected -= UpdatePickups;
-        LevelPortal.OnLevelPortalEnabled -= SavePickups;
-        GameManager.OnGameStatePostBrief -= DisplaySavedPickups;
     }
 
     // Update is called once per frame
@@ -56,14 +53,14 @@ public class PickupDisplayBox : MonoBehaviour
     {
         if (PickupManager.GetRecentPickupBool() == true)
         {
-            _imgList[_imgListIter].color = Color.green;
+            _imgList[imgListIter].color = Color.green;
         }
         else
         {
-            _imgList[_imgListIter].color = Color.red;
+            _imgList[imgListIter].color = Color.red;
         }
 
-        _imgListIter--;
+        imgListIter--;
     }
 
     void SavePickups()
@@ -79,11 +76,11 @@ public class PickupDisplayBox : MonoBehaviour
             {
                 if (result == true)
                 {
-                    _imgList[_imgListIter].color = Color.green;
+                    _imgList[imgListIter].color = Color.green;
                 }
                 else
                 {
-                    _imgList[_imgListIter].color = Color.red;
+                    _imgList[imgListIter].color = Color.red;
                 }
             }
         }
