@@ -12,7 +12,8 @@ public class DetectionSphere : MonoBehaviour
 
     private SphereCollider _sphereCollider;
 
-    private float _sphereRadius = 5.0f;
+    private float _sphereRadius;
+    private bool IsTrackingTarget;
 
     public delegate void TargetClearLOS(GameObject obj);
     public delegate void TargetNoClearLOS(GameObject obj);
@@ -57,8 +58,8 @@ public class DetectionSphere : MonoBehaviour
     {
         _sphereCollider = GetComponent<SphereCollider>();
 
-        _sphereCollider.radius = _sphereRadius;
         _sphereCollider.isTrigger = true;
+        IsTrackingTarget = false;
 
         if (!_sphereCollider)
         {
@@ -84,7 +85,10 @@ public class DetectionSphere : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
-        SearchForTarget(currentTarget);
+        if (IsTrackingTarget == true)
+        {
+            SearchForTarget(currentTarget);
+        }
     }
 
     private void OnTriggerEnter(Collider other)
@@ -97,11 +101,13 @@ public class DetectionSphere : MonoBehaviour
             {
                 OnTargetClearLOS(other.gameObject);
                 OnTargetInRadius(other.gameObject);
+                IsTrackingTarget = true;
             }
             else
             {
                 OnTargetNoClearLOS(other.gameObject);
                 OnTargetInRadius(other.gameObject);
+                IsTrackingTarget = false;
             }
         }
 
@@ -112,11 +118,13 @@ public class DetectionSphere : MonoBehaviour
             {
                 OnTargetClearLOS(other.gameObject);
                 OnTargetInRadius(other.gameObject);
+                IsTrackingTarget = true;
             }
             else
             {
                 OnTargetInRadius(other.gameObject);
                 OnTargetNoClearLOS(other.gameObject);
+                IsTrackingTarget = false;
                 return;
             }
             currentTarget = other.gameObject;
@@ -137,6 +145,7 @@ public class DetectionSphere : MonoBehaviour
         {
             OnTargetExitRadius(other.gameObject);
             currentTarget = null;
+            IsTrackingTarget = false;
         }
     }
 

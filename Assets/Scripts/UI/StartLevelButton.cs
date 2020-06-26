@@ -4,8 +4,6 @@ using UnityEngine;
 using UnityEngine.UI;
 public class StartLevelButton : MonoBehaviour
 {
-    private Button _startButton;
-
     public delegate void StartLevel();
 
     /// <summary>
@@ -13,9 +11,12 @@ public class StartLevelButton : MonoBehaviour
     /// </summary>
     public static event StartLevel OnLevelStartEvent;
 
+    private Button _startButton;
+
     private void Awake()
     {
         _startButton = GetComponent<Button>();
+
         if (!_startButton)
         {
             Debug.LogError("Failed to get Button on StartLevelButton, creating one now...");

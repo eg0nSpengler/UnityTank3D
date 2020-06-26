@@ -10,6 +10,7 @@ public class ScoreBox : MonoBehaviour
     private void Awake()
     {
         _score = GetComponent<TextMeshProUGUI>();
+
         if (!_score)
         {
             Debug.LogError("Failed to get TextMeshProTextUI element on " + gameObject.name.ToString() + ", creating one now...");
@@ -18,7 +19,9 @@ public class ScoreBox : MonoBehaviour
 
         _score.color = Color.green;
         _score.text = "0";
+
         UpdateScoreText();
+
         GameManager.OnGameStatePostBrief += UpdateScoreText;
     }
 
@@ -30,8 +33,7 @@ public class ScoreBox : MonoBehaviour
 
     private void OnDisable()
     {
-
-
+        GameManager.OnGameStatePostBrief -= UpdateScoreText;
     }
 
     // Update is called once per frame

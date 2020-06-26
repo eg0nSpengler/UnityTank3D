@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
+/// <summary>
+/// This class holds all navigation related logic for AI Mobs
+/// </summary>
 public class NavComponent : MonoBehaviour
 {
     public delegate void DestinationBegin();
@@ -68,6 +71,8 @@ public class NavComponent : MonoBehaviour
         _detectionSphere.OnTargetExitRadius += MoveToLastKnownPos;
         _detectionSphere.OnHeardSound += MoveToAudible;
         _detectionSphere.OnTargetTracking += MoveToTarget;
+
+        OnDestinationBegin += UpdateDestStatus;
     }
 
     private void Start()
@@ -85,6 +90,8 @@ public class NavComponent : MonoBehaviour
         _detectionSphere.OnTargetExitRadius -= MoveToLastKnownPos;
         _detectionSphere.OnHeardSound -= MoveToAudible;
         _detectionSphere.OnTargetTracking -= MoveToTarget;
+
+        OnDestinationBegin -= UpdateDestStatus;
     }
 
     private void Update()
@@ -112,7 +119,7 @@ public class NavComponent : MonoBehaviour
     {
         _currentTarget = obj;
         _navAgent.SetDestination(obj.transform.position);
-        //OnDestinationBegin();
+        OnDestinationBegin();
     }
 
     /// <summary>
@@ -134,6 +141,7 @@ public class NavComponent : MonoBehaviour
     private void MoveToLastKnownPos(GameObject obj)
     {
         _navAgent.SetDestination(_lastKnownPos);
+        OnDestinationBegin();
     }
 
     /// <summary>
@@ -145,12 +153,11 @@ public class NavComponent : MonoBehaviour
         _navAgent.SetDestination(obj.transform.position);
         _currentTarget = obj;
         _lastKnownPos = obj.transform.position;
-        //OnDestinationBegin();
+        OnDestinationBegin();
     }
 
     IEnumerator CheckDist()
     {
-        Debug.Log("I've begun navigating to a destination...");
 
         // I don't know why but
         // As great as predicates are
@@ -166,6 +173,7 @@ public class NavComponent : MonoBehaviour
 
         yield return new WaitWhile(() => _navAgent.remainingDistance > _navAgent.stoppingDistance);
 
+        OnDestinationSuccess();
     }
 
     /// <summary>

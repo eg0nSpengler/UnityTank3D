@@ -11,6 +11,14 @@ public class TankMovement : MonoBehaviour
 
     [Header("Audio References")]
     public AudioClip boostSound;
+    private enum TANK_DIR
+    {
+        NONE,
+        FORWARD,
+        BACK,
+        ROTATE_LEFT,
+        ROTATE_RIGHT
+    }
 
     private int boostAmount;
     private bool isBoosting; // Are we currently boosting?
@@ -18,6 +26,7 @@ public class TankMovement : MonoBehaviour
 
     private CharacterController _charController;
     private AudioSource _audioSource;
+    private TANK_DIR _tankDir;
 
     private delegate void TankBoostBegin();
     private delegate void TankBoostEnd();
@@ -32,21 +41,17 @@ public class TankMovement : MonoBehaviour
     /// </summary>
     private static event TankBoostEnd OnTankBoostEnd;
 
-    private enum TANK_DIR
-    {
-        NONE,
-        FORWARD,
-        BACK,
-        ROTATE_LEFT,
-        ROTATE_RIGHT
-    }
-
-    private TANK_DIR _tankDir;
-
     private void Awake()
     {
         _charController = GetComponent<CharacterController>();
         _audioSource = GetComponent<AudioSource>();
+
+        isBoosting = false;
+        isMoving = false;
+        tankSpeed = 2;
+        rotationSpeed = 1;
+        boostAmount = 4;
+        _tankDir = TANK_DIR.NONE;
 
         if (!_charController)
         {
@@ -65,12 +70,6 @@ public class TankMovement : MonoBehaviour
             Debug.LogWarning("No Boost Sound provided for TankMovement!");
         }
 
-        isBoosting = false;
-        isMoving = false;
-        tankSpeed = 2;
-        rotationSpeed = 1;
-        boostAmount = 4;
-        _tankDir = TANK_DIR.NONE;
         OnTankBoostBegin += InvokeBoostSound;
         OnTankBoostEnd += EndBoostSound;
     }

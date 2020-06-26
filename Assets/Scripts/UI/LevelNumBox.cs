@@ -10,6 +10,7 @@ public class LevelNumBox : MonoBehaviour
     private void Awake()
     {
         _levelNum = GetComponent<TextMeshProUGUI>();
+        _levelNum.color = Color.green;
 
         if (!_levelNum)
         {
@@ -17,7 +18,6 @@ public class LevelNumBox : MonoBehaviour
             _levelNum = gameObject.AddComponent<TextMeshProUGUI>();
         }
 
-        _levelNum.color = Color.green;
 
     }
     // Start is called before the first frame update

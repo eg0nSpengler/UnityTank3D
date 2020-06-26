@@ -13,6 +13,7 @@ public class TankCube : MonoBehaviour
     private void Awake()
     {
         _meshRen = GetComponentInParent<MeshRenderer>();
+        _defaultMaterial = GetComponentInParent<MeshRenderer>().material;
 
         if (!_meshRen)
         {
@@ -20,7 +21,6 @@ public class TankCube : MonoBehaviour
             _meshRen = gameObject.AddComponent<MeshRenderer>();
         }
 
-        _defaultMaterial = GetComponentInParent<MeshRenderer>().material;
         
     }
 

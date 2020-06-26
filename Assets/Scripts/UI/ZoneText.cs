@@ -10,17 +10,19 @@ public class ZoneText : MonoBehaviour
 
     private TextMeshProUGUI _zoneText;
 
-    private string _zoneString = "Zone ";
+    private string _zoneString;
     
     void Awake()
     {
         _zoneText = GetComponent<TextMeshProUGUI>();
+
         if (!_zoneText)
         {
             Debug.LogError("Failed to get TextMeshProTextUI element on " + gameObject.name.ToString() + ", creating one now...");
             _zoneText = gameObject.AddComponent<TextMeshProUGUI>();
         }
 
+        _zoneString = "Zone ";
         _zoneText.color = Color.green;
 
     }

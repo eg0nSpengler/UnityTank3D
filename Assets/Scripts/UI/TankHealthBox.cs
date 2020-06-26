@@ -5,14 +5,15 @@ using UnityEngine.UI;
 
 public class TankHealthBox : MonoBehaviour
 {
-    private TankActor _tankActor;
+    public TankActor _tankActor;
+
     private HealthComponent _healthComp;
     private Image _panel;
 
-    private float maxFillValue = 1.0f;
-    private float minFillValue = 0.0f;
+    private float _maxFillValue;
+    private float _minFillValue;
     //The amount to add to the mask fill
-    private float fillAddValue = 0.10f;
+    private float _fillAddValue;
 
     private void Awake()
     {
@@ -31,7 +32,12 @@ public class TankHealthBox : MonoBehaviour
             Debug.LogError("Failed to find TankActor reference in TankHealthBox!");
         }
 
-        _panel.fillAmount = minFillValue;
+        _maxFillValue = 1.0f;
+        _minFillValue = 0.0f;
+        _fillAddValue = 0.10f;
+
+        _panel.fillAmount = _minFillValue;
+
         _healthComp.OnHealthModified += UpdateHealth;
 
     }
@@ -39,6 +45,7 @@ public class TankHealthBox : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        _panel.fillAmount = 1;
     }
 
     private void OnDisable()
@@ -58,12 +65,13 @@ public class TankHealthBox : MonoBehaviour
 
         if (hp >= _healthComp.GetMaxHealth())
         {
-            _panel.fillAmount = minFillValue;
+            _panel.fillAmount = _minFillValue;
         }
 
         if (hp < _healthComp.GetMaxHealth())
         {
-            var amt = hp * fillAddValue;
+            var amt = hp *- _fillAddValue;
+            Debug.Log(amt.ToString());
 
             _panel.fillAmount = _panel.fillAmount + amt;
         }

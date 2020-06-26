@@ -41,9 +41,15 @@ public class PickupManager : MonoBehaviour
         _pickupPosList = new List<Vector3>();
         _pickupBoolList = new List<bool>();
 
+        _playerScore = 0;
+        _numPickupsCollected = 0;
+        _numPickupsLost = 0;
+        _lastCollectedPos = new Vector3(0.0f, 0.0f, 0.0f);
+        _lastPickupBool = false;
+
         foreach (var obj in FindObjectsOfType<GameObject>())
         {
-            if (obj.tag == "Pickup")
+            if (obj.tag == TagStatics.GetPickupTag())
             {
                 _pickupPosList.Add(obj.transform.position);
                 _pickupList.Add(obj);
@@ -56,13 +62,9 @@ public class PickupManager : MonoBehaviour
             Debug.LogWarning("Did you forget to tag any Pickup prefab instances in the scene as Pickup?");
         }
 
-        _playerScore = 0;
-        _numPickupsCollected = 0;
-        _numPickupsLost = 0;
-        _lastCollectedPos = new Vector3(0.0f, 0.0f, 0.0f);
-        _lastPickupBool = false;
 
         Debug.Log("Pickup list contains " + _pickupList.Count + " pickups");
+
         SphereHandler.OnPickupCollectedEvent += UpdatePickupList;
 
     }

@@ -20,13 +20,14 @@ public class ProjectileHandler : MonoBehaviour
     {
         _rb = GetComponent<Rigidbody>();
 
+        damageAmount = 2;
+
         if (!_rb)
         {
             Debug.LogError("ProjectileHandler failed to get Rigidbody, creating one now.");
             _rb = gameObject.AddComponent<Rigidbody>();
         }
 
-        damageAmount = 2;
     }
 
     // Start is called before the first frame update

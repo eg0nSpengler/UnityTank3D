@@ -5,8 +5,9 @@ using TMPro;
 
 public class GunStatusBox : MonoBehaviour
 {
-    private TextMeshProUGUI _gunStatus;
     public TankGun _tankGun;
+
+    private TextMeshProUGUI _gunStatus;
 
     private void Awake()
     {

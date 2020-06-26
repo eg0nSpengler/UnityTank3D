@@ -22,6 +22,8 @@ public class SphereHandler : MonoBehaviour
 
     private void Awake()
     {
+        _pickupCollector = false;
+
         if (!playerPickupSound)
         {
             Debug.LogWarning("No Player Pickup sound provided for " + gameObject.name.ToString());
@@ -32,7 +34,6 @@ public class SphereHandler : MonoBehaviour
             Debug.LogWarning("No Monster Pickup sound provided for " + gameObject.name.ToString());
         }
 
-        _pickupCollector = false;
     }
 
     // Start is called before the first frame update

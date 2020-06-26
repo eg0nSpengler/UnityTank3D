@@ -10,6 +10,7 @@ public class LevelTimerBox : MonoBehaviour
     private void Awake()
     {
         _levelTime = GetComponent<TextMeshProUGUI>();
+        _levelTime.color = Color.green;
 
         if (!_levelTime)
         {
@@ -17,7 +18,6 @@ public class LevelTimerBox : MonoBehaviour
             _levelTime = gameObject.AddComponent<TextMeshProUGUI>();
         }
 
-        _levelTime.color = Color.green;
     }
     // Start is called before the first frame update
     void Start()

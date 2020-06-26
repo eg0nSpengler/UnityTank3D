@@ -10,6 +10,7 @@ public class AI_SimpleMob : MonoBehaviour
     private void Awake()
     {
         _audioSource = GetComponent<AudioSource>();
+
         if (!_audioSource)
 
         {
@@ -21,12 +22,6 @@ public class AI_SimpleMob : MonoBehaviour
 
     }
 
-    private void OnEnable()
-    {
-        
-    }
-
-
     private void Start()
     {
 
@@ -36,20 +31,6 @@ public class AI_SimpleMob : MonoBehaviour
     private void Update()
     {
         
-    }
-
-    private void OnCollisionEnter(Collision collision)
-    {
-
-    }
-
-    private void OnTriggerEnter(Collider other)
-    {
-        
-    }
-    private void OnDisable()
-    {
-
     }
 
     void DoMonsterDeath()
