@@ -1,0 +1,896 @@
+fileFormatVersion: 2
+guid: 8d7a820089fc3ba45a66f75460ab529b
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 3074085719843386987
+    second: Civvies_0
+  - first:
+      213: 7821764574475706720
+    second: Civvies_1
+  - first:
+      213: -1494104248314564858
+    second: Civvies_2
+  - first:
+      213: 3003512789090627158
+    second: Civvies_3
+  - first:
+      213: 3792606425004861468
+    second: Civvies_4
+  - first:
+      213: 6789902229620651119
+    second: Civvies_5
+  - first:
+      213: 2535469815208493526
+    second: Civvies_6
+  - first:
+      213: -6310423704324056599
+    second: Civvies_7
+  - first:
+      213: 1993396659401074018
+    second: Civvies_8
+  - first:
+      213: -239019303304015504
+    second: Civvies_9
+  - first:
+      213: -486962079767094345
+    second: Civvies_10
+  - first:
+      213: 3621301710771938698
+    second: Civvies_11
+  - first:
+      213: 4992540104635719015
+    second: Civvies_12
+  - first:
+      213: 8526582608269167677
+    second: Civvies_13
+  - first:
+      213: -5083378285768920343
+    second: Civvies_14
+  - first:
+      213: 7153102967433899239
+    second: Civvies_15
+  - first:
+      213: -8626490472747834169
+    second: Civvies_0
+  - first:
+      213: 8505706690396185855
+    second: Civvies_1
+  - first:
+      213: 3115191024358740991
+    second: Civvies_2
+  - first:
+      213: 8798765320503076345
+    second: Civvies_3
+  - first:
+      213: 6839510604306474191
+    second: Civvies_4
+  - first:
+      213: -530871918735432763
+    second: Civvies_5
+  - first:
+      213: 9140005385556981052
+    second: Civvies_6
+  - first:
+      213: -2850231641326846873
+    second: Civvies_7
+  - first:
+      213: 5484365142225900749
+    second: Civvies_8
+  - first:
+      213: -6073106228937501116
+    second: Civvies_9
+  - first:
+      213: -9069962129328078585
+    second: Civvies_10
+  - first:
+      213: 545242776137325206
+    second: Civvies_11
+  - first:
+      213: -655595881482196350
+    second: Civvies_12
+  - first:
+      213: -7782465578186033379
+    second: Civvies_13
+  - first:
+      213: 3018855043366944035
+    second: Civvies_14
+  - first:
+      213: 1066407807944546052
+    second: Civvies_15
+  - first:
+      213: 9090943064764636094
+    second: Civvies_16
+  - first:
+      213: 6239228891340222562
+    second: Civvies_17
+  - first:
+      213: 1821890827860684356
+    second: Civvies_18
+  - first:
+      213: 3801185044078465500
+    second: Civvies_19
+  - first:
+      213: -1146323729562422208
+    second: Civvies_20
+  - first:
+      213: -4415749552133636217
+    second: Civvies_21
+  - first:
+      213: 4166188842066397564
+    second: Civvies_22
+  - first:
+      213: -8339503682355602849
+    second: Civvies_23
+  - first:
+      213: 5870592823119994765
+    second: Civvies_24
+  - first:
+      213: 9084719651056909920
+    second: Civvies_16
+  - first:
+      213: 7253550605390077078
+    second: Civvies_17
+  - first:
+      213: -5885876408172819361
+    second: Civvies_18
+  - first:
+      213: -671585344039811232
+    second: Civvies_19
+  - first:
+      213: -3999724738612354746
+    second: Civvies_20
+  - first:
+      213: 2978048826267937800
+    second: Civvies_25
+  - first:
+      213: 4824818687370319705
+    second: Civvies_26
+  - first:
+      213: 285773911852995228
+    second: Civvies_27
+  - first:
+      213: 8840501258654457633
+    second: Civvies_28
+  - first:
+      213: -1156034628890799598
+    second: Civvies_29
+  - first:
+      213: 7000114523754825382
+    second: Civvies_30
+  - first:
+      213: -2900317512224614434
+    second: Civvies_31
+  - first:
+      213: -3434021059367313664
+    second: Civvies_32
+  - first:
+      213: -6316849217866258278
+    second: Civvies_33
+  - first:
+      213: -796925726522757909
+    second: Civvies_34
+  - first:
+      213: -1922745054706788772
+    second: Civvies_35
+  - first:
+      213: 6672180542065365716
+    second: Civvies_36
+  - first:
+      213: -1989964561526790645
+    second: Civvies_37
+  - first:
+      213: 5103190175684577009
+    second: Civvies_38
+  - first:
+      213: -7171013740045617204
+    second: Civvies_39
+  - first:
+      213: -7096159471016087560
+    second: Civvies_40
+  - first:
+      213: 8508726787923032466
+    second: Civvies_41
+  - first:
+      213: -5187588509468749839
+    second: Civvies_42
+  - first:
+      213: 4944990619856759350
+    second: Civvies_43
+  - first:
+      213: -892560366165009339
+    second: Civvies_44
+  - first:
+      213: -3922108821002311348
+    second: Civvies_45
+  - first:
+      213: -6350035441277451346
+    second: Civvies_46
+  - first:
+      213: -4204641529399313440
+    second: Civvies_47
+  - first:
+      213: -8525331293541317111
+    second: Civvies_48
+  - first:
+      213: -1895398259003178480
+    second: Civvies_49
+  - first:
+      213: 3366336603604713004
+    second: Civvies_50
+  - first:
+      213: 8739655097277905129
+    second: Civvies_51
+  - first:
+      213: 4833748127839296710
+    second: Civvies_52
+  - first:
+      213: 5512173768598088936
+    second: Civvies_53
+  - first:
+      213: 273637218670917806
+    second: Civvies_54
+  - first:
+      213: -1484776393811434696
+    second: Civvies_55
+  - first:
+      213: 7959970944870345471
+    second: Civvies_56
+  - first:
+      213: -2239426162917915223
+    second: Civvies_57
+  - first:
+      213: 7204126934851196659
+    second: Civvies_58
+  - first:
+      213: -7324324690966682715
+    second: Civvies_59
+  - first:
+      213: -8324385820354383066
+    second: Civvies_60
+  - first:
+      213: -3201431462309860969
+    second: Civvies_61
+  - first:
+      213: -6090448188767713167
+    second: Civvies_62
+  - first:
+      213: -1643467066300280933
+    second: Civvies_63
+  - first:
+      213: 1917014824399771677
+    second: Civvies_21
+  - first:
+      213: 3659638571689169576
+    second: Civvies_22
+  - first:
+      213: -3054375627759626349
+    second: Civvies_23
+  - first:
+      213: 8433043587386246278
+    second: Civvies_24
+  externalObjects: {}
+  serializedVersion: 11
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: -1
+    mipBias: -100
+    wrapU: 0
+    wrapV: 0
+    wrapW: 0
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  applyGammaDecoding: 0
+  platformSettings:
+  - serializedVersion: 3
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Civvies_0
+      rect:
+        serializedVersion: 2
+        x: 238
+        y: 207
+        width: 24
+        height: 25
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7c4e291ce9c884880800000000000000
+      internalID: -8626490472747834169
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Civvies_1
+      rect:
+        serializedVersion: 2
+        x: 315
+        y: 215
+        width: 29
+        height: 17
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ff46ab47b275a0670800000000000000
+      internalID: 8505706690396185855
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Civvies_2
+      rect:
+        serializedVersion: 2
+        x: 331
+        y: 230
+        width: 5
+        height: 4
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ff3536e4bb16b3b20800000000000000
+      internalID: 3115191024358740991
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Civvies_3
+      rect:
+        serializedVersion: 2
+        x: 13
+        y: 198
+        width: 23
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9f5ac9ee07e7b1a70800000000000000
+      internalID: 8798765320503076345
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Civvies_4
+      rect:
+        serializedVersion: 2
+        x: 89
+        y: 198
+        width: 31
+        height: 31
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fc4643748a2daee50800000000000000
+      internalID: 6839510604306474191
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Civvies_5
+      rect:
+        serializedVersion: 2
+        x: 163
+        y: 198
+        width: 24
+        height: 28
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5c36b867dc6f1a8f0800000000000000
+      internalID: -530871918735432763
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Civvies_6
+      rect:
+        serializedVersion: 2
+        x: 239
+        y: 199
+        width: 21
+        height: 5
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c35f74be872d7de70800000000000000
+      internalID: 9140005385556981052
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Civvies_7
+      rect:
+        serializedVersion: 2
+        x: 317
+        y: 199
+        width: 25
+        height: 6
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 76c72236c61f178d0800000000000000
+      internalID: -2850231641326846873
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Civvies_8
+      rect:
+        serializedVersion: 2
+        x: 389
+        y: 199
+        width: 31
+        height: 23
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: dc4d8e81a016c1c40800000000000000
+      internalID: 5484365142225900749
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Civvies_9
+      rect:
+        serializedVersion: 2
+        x: 463
+        y: 198
+        width: 32
+        height: 12
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 446d7fcbf0ef7bba0800000000000000
+      internalID: -6073106228937501116
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Civvies_10
+      rect:
+        serializedVersion: 2
+        x: 13
+        y: 91
+        width: 23
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 70187238f75012280800000000000000
+      internalID: -9069962129328078585
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Civvies_11
+      rect:
+        serializedVersion: 2
+        x: 88
+        y: 91
+        width: 32
+        height: 31
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 69a53048a67119700800000000000000
+      internalID: 545242776137325206
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Civvies_12
+      rect:
+        serializedVersion: 2
+        x: 163
+        y: 91
+        width: 32
+        height: 31
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 28a6b00f40bd6e6f0800000000000000
+      internalID: -655595881482196350
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Civvies_13
+      rect:
+        serializedVersion: 2
+        x: 238
+        y: 103
+        width: 32
+        height: 20
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d1734873ac02ff390800000000000000
+      internalID: -7782465578186033379
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Civvies_14
+      rect:
+        serializedVersion: 2
+        x: 314
+        y: 101
+        width: 31
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 32d7848daa025e920800000000000000
+      internalID: 3018855043366944035
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Civvies_15
+      rect:
+        serializedVersion: 2
+        x: 391
+        y: 96
+        width: 26
+        height: 19
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 407dc325044acce00800000000000000
+      internalID: 1066407807944546052
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Civvies_16
+      rect:
+        serializedVersion: 2
+        x: 241
+        y: 91
+        width: 26
+        height: 6
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 06ef145c368631e70800000000000000
+      internalID: 9084719651056909920
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Civvies_17
+      rect:
+        serializedVersion: 2
+        x: 317
+        y: 91
+        width: 24
+        height: 5
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 69c589a38d9c9a460800000000000000
+      internalID: 7253550605390077078
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Civvies_18
+      rect:
+        serializedVersion: 2
+        x: 392
+        y: 91
+        width: 24
+        height: 4
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f5cc10b679a215ea0800000000000000
+      internalID: -5885876408172819361
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Civvies_19
+      rect:
+        serializedVersion: 2
+        x: 464
+        y: 91
+        width: 30
+        height: 11
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 067062410bc0ea6f0800000000000000
+      internalID: -671585344039811232
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Civvies_20
+      rect:
+        serializedVersion: 2
+        x: 168
+        y: 57
+        width: 66
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6412babaa8f1e78c0800000000000000
+      internalID: -3999724738612354746
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Civvies_21
+      rect:
+        serializedVersion: 2
+        x: 237
+        y: 57
+        width: 28
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d18918573da9a9a10800000000000000
+      internalID: 1917014824399771677
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Civvies_22
+      rect:
+        serializedVersion: 2
+        x: 168
+        y: 35
+        width: 171
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8a2d9df24e5a9c230800000000000000
+      internalID: 3659638571689169576
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Civvies_23
+      rect:
+        serializedVersion: 2
+        x: 260
+        y: 12
+        width: 39
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 397d6c0ac8dac95d0800000000000000
+      internalID: -3054375627759626349
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Civvies_24
+      rect:
+        serializedVersion: 2
+        x: 300
+        y: 12
+        width: 39
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6840b896670380570800000000000000
+      internalID: 8433043587386246278
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    physicsShape: []
+    bones: []
+    spriteID: c679e91b5820e334fab8d17a8ef4c26c
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+  spritePackingTag: 
+  pSDRemoveMatte: 0
+  pSDShowRemoveMatteOption: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
