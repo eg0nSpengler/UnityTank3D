@@ -17,7 +17,7 @@ public class GameData
     public GameData(TankActor tankActor)
     {
         playerScore = PickupManager.GetPlayerScore();
-        playerHealth = tankActor.healthComp.currentHP;
+        playerHealth = tankActor.healthComp.CurrentHP;
         numPickupsCollected = PickupManager.GetNumCollectedPickups();
         numPickupsLost = PickupManager.GetNumLostPickups();
         numPickupsTotal = PickupManager.GetNumPickupsInLevel();

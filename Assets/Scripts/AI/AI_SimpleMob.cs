@@ -19,7 +19,6 @@ public class AI_SimpleMob : MonoBehaviour
         }
 
         gameObject.GetComponent<HealthComponent>().OnHealthZero += DoMonsterDeath;
-
     }
 
     private void Start()
@@ -35,15 +34,8 @@ public class AI_SimpleMob : MonoBehaviour
 
     void DoMonsterDeath()
     {
-        StartCoroutine(MonsterDeath());
-    }
-
-    IEnumerator MonsterDeath()
-    {
-        _audioSource.Play();
-        yield return new WaitForSeconds(_audioSource.clip.length); // Just to make sure the clip plays completely before disabling the gameobject
         gameObject.SetActive(false);
+        AudioSource.PlayClipAtPoint(_audioSource.clip, gameObject.transform.position);
     }
-
 
 }

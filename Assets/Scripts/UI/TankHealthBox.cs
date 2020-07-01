@@ -61,14 +61,14 @@ public class TankHealthBox : MonoBehaviour
 
     void UpdateHealth()
     {
-        var hp = _healthComp.GetHealth();
+        var hp = _healthComp.CurrentHP;
 
-        if (hp >= _healthComp.GetMaxHealth())
+        if (hp >= _healthComp.MaxHP)
         {
             _panel.fillAmount = _minFillValue;
         }
 
-        if (hp < _healthComp.GetMaxHealth())
+        if (hp < _healthComp.MaxHP)
         {
             var amt = hp *- _fillAddValue;
             Debug.Log(amt.ToString());

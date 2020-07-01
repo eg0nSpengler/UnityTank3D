@@ -27,7 +27,7 @@ public class MobManager : MonoBehaviour
         {
             if (mob.tag == TagStatics.GetMobTag() && mob.name != TagStatics.GetPlayerName())
             {
-                _mobList.Add(mob);
+
                 if (mob.GetComponent<HealthComponent>() != null)
                 {
                     mob.GetComponent<HealthComponent>().OnHealthZero += UpdateMobList;
@@ -36,9 +36,12 @@ public class MobManager : MonoBehaviour
                 {
                     Debug.LogError("Failed to get a Health Component on " + mob.gameObject.name.ToString());
                 }
+
+                _mobList.Add(mob);
             }
         }
 
+       
         Debug.Log("The MobList in MobManager contains " + _mobList.Count.ToString() + " mob(s)");
 
         if (_mobList.Count <= 0)
@@ -49,6 +52,7 @@ public class MobManager : MonoBehaviour
         ProjectileHandler.OnDamageMobEvent += DamageMob;
         AI_MeleeAttack.OnDamageMobEvent += DamageMob;
     }
+
 
     private void OnDisable()
     {
@@ -107,8 +111,6 @@ public class MobManager : MonoBehaviour
 
     private void UpdateMobList()
     {
-        Debug.Log("UpdateMobList called!");
-
         // Again
         // We do a container copy because modifying a container while iterating over it is again...
         // A GIGANTIC NO-NO
@@ -117,9 +119,7 @@ public class MobManager : MonoBehaviour
         // UNLESS YA WANNA FIGHT
         foreach (var mob in _mobList.ToArray())
         {
-            // Like in the PickupManager class
-            // We know if a mob is "dead" if it's disabled in scene
-            if (mob.gameObject.activeInHierarchy == false)
+            if (mob.GetComponent<HealthComponent>().IsDead == true)
             {
                 _lastDestroyedPos = mob.transform.position;
                 _mobList.Remove(mob);
@@ -147,7 +147,6 @@ public class MobManager : MonoBehaviour
     /// <returns></returns>
     public static Vector3 GetRecentMobDestroyedPos()
     {
-        Debug.Log(_lastDestroyedPos.ToString());
         return _lastDestroyedPos;
     }
 

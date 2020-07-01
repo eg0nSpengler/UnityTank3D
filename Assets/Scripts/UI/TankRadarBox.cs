@@ -104,7 +104,6 @@ public class TankRadarBox : MonoBehaviour
         // We then add all the current MobPositions to the list
         foreach (var pos in MobManager.GetMobPositions())
         {
-            Debug.Log(pos.ToString());
             _pickupPositions.Add(pos);
         }
 
@@ -132,6 +131,7 @@ public class TankRadarBox : MonoBehaviour
         UpdateRadarBlips();
         DrawRadarBlips();
     }
+
 
     /// <summary>
     /// Creates the radar "contacts" and adds them to the radar panel
@@ -248,14 +248,15 @@ public class TankRadarBox : MonoBehaviour
             for (var i = _mobOffSet; i > _pickupOffSet; i--)
             {
                 _pickupPositions[i] = newMobPos[x];
-                
-                if (x == i)
+               
+                if (x != i)
                 {
                     break;
                 }
             }
 
         }
+
     }
 
     void ShowPortalRadarBlip()

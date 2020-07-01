@@ -4,10 +4,6 @@ using UnityEngine;
 
 public class HealthComponent : MonoBehaviour
 {
-    [Header("Variables")]
-    public int currentHP;
-
-
     public delegate void HealthModified();
     public delegate void HealthZero();
 
@@ -21,11 +17,38 @@ public class HealthComponent : MonoBehaviour
     /// </summary>
     public event HealthZero OnHealthZero;
 
-    private int _maxHP;
+    // Did I ever tell you how much I hate writing backing fields?
+
+    /// <summary>
+    /// The current HP of the mob
+    /// </summary>
+    public int CurrentHP
+    {
+        get { return _currentHP;}
+        set { _currentHP = value; }
+    }
+
+    /// <summary>
+    /// Is the mob dead?
+    /// </summary>
+    public bool IsDead { protected set; get; }
+
+
+    /// <summary>
+    /// The maximum HP of the mob
+    /// </summary>
+    public int MaxHP { protected set; get; }
+
+    /// <summary>
+    /// The current HP of the mob
+    /// </summary>
+    [SerializeField]
+    private int _currentHP;
 
     private void Awake()
     {
-        _maxHP = currentHP;   
+        MaxHP = CurrentHP;
+        IsDead = false;
 
         if (gameObject.tag != TagStatics.GetMobTag())
         {
@@ -54,27 +77,28 @@ public class HealthComponent : MonoBehaviour
     /// <param name="dmg"></param>
     public void TakeDamage(int dmg)
     {
-        if (currentHP <= 0)
+        if (CurrentHP <= 0)
         {
-            Debug.LogWarning("Cannot call TakeDamage on " + gameObject.name.ToString() + " current HP is " + currentHP.ToString());
+            Debug.LogWarning("Cannot call TakeDamage on " + gameObject.name.ToString() + " current HP is " + CurrentHP.ToString());
             return;
         }
         else
         {
-            if (currentHP - dmg < 0)
+            if (CurrentHP - dmg < 0)
             {
-                currentHP = 0;
+                CurrentHP = 0;
             }
             else
             {
-                currentHP -= dmg;    
-                OnHealthModified();
+                CurrentHP -= dmg;    
+                //OnHealthModified();
             }
 
         }
 
-        if (currentHP <= 0)
+        if (CurrentHP <= 0)
         {
+            IsDead = true;
             OnHealthZero();
         }
 
@@ -86,41 +110,23 @@ public class HealthComponent : MonoBehaviour
     /// <param name="hp"></param>
     public void Heal(int hp)
     {
-        if (currentHP >= _maxHP)
+        if (CurrentHP >= MaxHP)
         {
-            Debug.LogWarning("Cannot call Heal on " + gameObject.name.ToString() + " current HP is at maximum value of " + _maxHP.ToString());
+            Debug.LogWarning("Cannot call Heal on " + gameObject.name.ToString() + " current HP is at maximum value of " + MaxHP.ToString());
         }
         else
         {
-            if (currentHP + hp > _maxHP)
+            if (CurrentHP + hp > MaxHP)
             {
-                currentHP = _maxHP;
+                CurrentHP = MaxHP;
             }
             else
             {
-                currentHP += hp;
+                CurrentHP += hp;
                 OnHealthModified();
             }
         }
 
-    }
-
-    /// <summary>
-    /// Returns the current Health
-    /// </summary>
-    /// <returns></returns>
-    public int GetHealth()
-    {
-        return currentHP;
-    }
-
-    /// <summary>
-    /// Returns the max Health
-    /// </summary>
-    /// <returns></returns>
-    public int GetMaxHealth()
-    {
-        return _maxHP;
     }
 
 }

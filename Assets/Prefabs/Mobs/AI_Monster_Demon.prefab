@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 1203513396642795893}
   - component: {fileID: 900222086530891860}
   - component: {fileID: 9109779868765497116}
+  - component: {fileID: 8442344840670341369}
   m_Layer: 8
   m_Name: AIComponents
   m_TagString: Untagged
@@ -86,6 +87,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damageAmount: 2
+--- !u!114 &8442344840670341369
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5805712196907954825}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b1f71e1db0f7bb14ca890c3f74d55c6f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &9044654900837335400
 GameObject:
   m_ObjectHideFlags: 0
@@ -101,8 +114,7 @@ GameObject:
   - component: {fileID: 837280005138847513}
   - component: {fileID: 4599979767832232032}
   - component: {fileID: 1446434041}
-  - component: {fileID: 1446434048}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: AI_Monster_Demon
   m_TagString: Mob
   m_Icon: {fileID: 0}
@@ -318,7 +330,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 704b1335183b21348b3f660352c660b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentHP: 1
+  _currentHP: 2
 --- !u!114 &1446434041
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -329,17 +341,5 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0f080aefe32efe04d951823b4626716a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &1446434048
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9044654900837335400}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b1f71e1db0f7bb14ca890c3f74d55c6f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 

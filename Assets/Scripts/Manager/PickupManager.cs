@@ -53,6 +53,7 @@ public class PickupManager : MonoBehaviour
             {
                 _pickupPosList.Add(obj.transform.position);
                 _pickupList.Add(obj);
+                obj.GetComponent<SphereHandler>().OnPickupCollectedEvent += UpdatePickupList;
             }
         }
 
@@ -65,7 +66,6 @@ public class PickupManager : MonoBehaviour
 
         Debug.Log("Pickup list contains " + _pickupList.Count + " pickups");
 
-        SphereHandler.OnPickupCollectedEvent += UpdatePickupList;
 
     }
 
@@ -77,7 +77,13 @@ public class PickupManager : MonoBehaviour
 
     private void OnDisable()
     {
-        SphereHandler.OnPickupCollectedEvent -= UpdatePickupList;
+        foreach (var obj in FindObjectsOfType<GameObject>())
+        {
+            if (obj.tag == TagStatics.GetPickupTag())
+            {
+                obj.GetComponent<SphereHandler>().OnPickupCollectedEvent -= UpdatePickupList;
+            }
+        }
     }
 
     private void UpdatePickupList()
@@ -87,12 +93,10 @@ public class PickupManager : MonoBehaviour
         //Anyways, here we just loop over each pickup in the pickup list
         foreach (var pickup in _pickupList.ToArray()) 
         {
-            //When a pickup is collected, it sets itself to be inactive in the scene
-            //We know the pickup that was just collected if we find an inactive Pickup in our list
-            if (pickup.activeInHierarchy == false)
+
+            if (pickup.GetComponent<SphereHandler>().IsCollected == true)
             {
                 var pickupResult = pickup.GetComponent<SphereHandler>().GetPickupCollector();
-                Debug.Log(pickupResult.ToString());
                  _lastPickupBool = pickupResult;
                 _lastCollectedPos = pickup.transform.position;
                 _pickupBoolList.Add(pickupResult);

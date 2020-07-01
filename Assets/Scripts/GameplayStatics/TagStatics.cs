@@ -13,7 +13,6 @@ public class TagStatics
     /// </summary>
     private static string _playerName = "TankActor";
 
-
     //**TAGS**//
 
     /// <summary>
