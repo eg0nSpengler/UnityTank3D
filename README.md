@@ -1,5 +1,5 @@
 # UnityTank3D
-A clone of iD's *Hovertank 3D* made in Unity3D.
+A clone of iD's *Hovertank 3D* made in [Unity3D](https://unity.com/).
 
 A personal project by Anthony Brown.
 
@@ -28,14 +28,19 @@ I did this primarily for future employment purposes, so I won't really lose slee
 
 ## References
 
-Game Audio
-
- - Hovertank 3D Audio
-	 - https://youtu.be/P7juV9zo5Tk
-	 - https://youtu.be/cquMrfmLkJ0
+### Game Audio
+ - https://youtu.be/P7juV9zo5Tk
+ -  https://youtu.be/cquMrfmLkJ0
 
 > 	 *I deliberately cut the audio from 240-360p YouTube videos to get
 > that extra crispy bitcrushed audio goodness.*
+
+### Sprites
+https://www.spriters-resource.com/pc_computer/hovertank3d/
+
+The sprite sheets themselves were cut from the game by a user named [Dunkelschwamm](https://www.spriters-resource.com/submitter/Dunkelschwamm/)
+
+A quick Google search also revealed that *Dunkelschwamm* is a notable member of the Wolfenstein 3D modding community, check em' out [here](https://wl6.fandom.com/wiki/Dunkelschwamm)
 
 
 
