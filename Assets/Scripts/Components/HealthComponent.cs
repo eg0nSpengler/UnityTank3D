@@ -7,12 +7,13 @@ public class HealthComponent : MonoBehaviour
     [Header("Variables")]
     public int currentHP;
 
+    private int _maxHP;
 
     public delegate void HealthModified();
     public delegate void HealthZero();
 
     /// <summary>
-    /// Called whenever the health is modified (Damage taken/healing/etc)
+    /// Called whenever the health is modified (Damage taken/ healing/ etc.)
     /// </summary>
     public event HealthModified OnHealthModified;
 
@@ -21,17 +22,14 @@ public class HealthComponent : MonoBehaviour
     /// </summary>
     public event HealthZero OnHealthZero;
 
-    private int _maxHP;
-
     private void Awake()
     {
-        _maxHP = currentHP;   
-
-        if (gameObject.tag != TagStatics.GetMobTag())
+        if (gameObject.tag != "Mob")
         {
             Debug.LogWarning(gameObject.name.ToString() + " has a HealthComponent but is not tagged as a Mob!");
         }
 
+        _maxHP = currentHP;   
     }
 
     // Start is called before the first frame update
@@ -68,7 +66,6 @@ public class HealthComponent : MonoBehaviour
             else
             {
                 currentHP -= dmg;    
-                OnHealthModified();
             }
 
         }
@@ -77,7 +74,7 @@ public class HealthComponent : MonoBehaviour
         {
             OnHealthZero();
         }
-
+        
     }
 
     /// <summary>
@@ -99,10 +96,10 @@ public class HealthComponent : MonoBehaviour
             else
             {
                 currentHP += hp;
-                OnHealthModified();
             }
         }
 
+        OnHealthModified();
     }
 
     /// <summary>

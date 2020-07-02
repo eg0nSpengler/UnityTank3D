@@ -23,6 +23,8 @@ public class GameManager : MonoBehaviour
     /// </summary>
     public static event GameStatePostBrief OnGameStatePostBrief;
 
+    private static GAME_STATE _gameState;
+
     public enum GAME_STATE 
     {
         STATE_NONE,
@@ -32,9 +34,6 @@ public class GameManager : MonoBehaviour
         STATE_POSTBRIEFING,
         STATE_GAME_OVER
     }
-
-    private static GAME_STATE _gameState;
-
 
     private void Awake()
     {

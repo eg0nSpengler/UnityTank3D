@@ -14,6 +14,7 @@ public class TankGun : MonoBehaviour
     public AudioClip rearmSound; // An audio cue which is played when the gun has finished reloading
     public AudioClip maxChargeSound; // A audio cue which is played when the gun reaches maximum charge
     
+
     public delegate void GunStatusUpdated();
 
     /// <summary>
@@ -44,12 +45,6 @@ public class TankGun : MonoBehaviour
         gunTransform = GetComponent<Transform>();
         _audioSource = GetComponentInParent<AudioSource>();
         
-        _reloadTime = 1;
-        _maxChargeTime = 2.0f;
-        _gunCharge = 0.0f;
-        isReadyToFire = true;
-        isChargeCuePlayed = false;
-        gunStatus = GUN_STATUS.GUN_READY;
 
         if (!gunTransform)
         {
@@ -82,6 +77,14 @@ public class TankGun : MonoBehaviour
         {
             Debug.LogWarning("No Max Charge sound provided for TankGun!");
         }
+
+        _reloadTime = 1;
+        _maxChargeTime = 2.0f;
+        _gunCharge = 0.0f;
+        isReadyToFire = true;
+        isChargeCuePlayed = false;
+        gunStatus = GUN_STATUS.GUN_READY;
+        
 
     }
 

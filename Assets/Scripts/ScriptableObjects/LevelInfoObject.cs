@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class LevelInfoObject : MonoBehaviour
 {
+
     [SerializeField]
     private LevelInfo _levelInfo;
 

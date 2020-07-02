@@ -4,9 +4,11 @@ using UnityEngine;
 
 public class MenuRollingDoor : MonoBehaviour
 {
-    [Header("Audio References")]
+
+    [Header("References")]
     public AudioClip DoorOpenSound;
     public AudioClip DoorCloseSound;
+
 
     public delegate void GameStart();
 

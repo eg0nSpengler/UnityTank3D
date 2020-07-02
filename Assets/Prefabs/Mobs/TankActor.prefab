@@ -29,7 +29,7 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 970099956827774400}
+  m_Father: {fileID: 2808160856049747289}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!135 &1648888105
@@ -87,7 +87,7 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 970099956827774400}
+  m_Father: {fileID: 2808160856049747289}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!135 &466611818
@@ -99,7 +99,7 @@ SphereCollider:
   m_GameObject: {fileID: 2744399113787950131}
   m_Material: {fileID: 0}
   m_IsTrigger: 1
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 2
   m_Radius: 5
   m_Center: {x: 0, y: 0, z: 0}
@@ -123,7 +123,7 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 970099956827774400}
+  - component: {fileID: 2808160856049747289}
   - component: {fileID: 2808160856049747294}
   - component: {fileID: 2808160856049747295}
   - component: {fileID: 1490929744}
@@ -139,7 +139,7 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &970099956827774400
+--- !u!4 &2808160856049747289
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -154,7 +154,6 @@ Transform:
   - {fileID: 2808160856782971845}
   - {fileID: 3963820730155211444}
   - {fileID: 1648888103}
-  - {fileID: 7417291254730877697}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: -90.00001, z: 0}
@@ -375,8 +374,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c6c1b366a4b401a4194936e1dafd2c96, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hitSound: {fileID: 8300000, guid: 0d4c83a47ed815d4f87c7548be1771ea, type: 3}
-  deathSound: {fileID: 8300000, guid: 5fb4fc9ef01f8ec4e8d705ec8d5430b5, type: 3}
 --- !u!1 &2808160856073899264
 GameObject:
   m_ObjectHideFlags: 0
@@ -406,7 +403,7 @@ Transform:
   m_LocalPosition: {x: 0, y: 0.179, z: 0.218}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 970099956827774400}
+  m_Father: {fileID: 2808160856049747289}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!20 &2808160856073899269
@@ -488,7 +485,7 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 1.769}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 970099956827774400}
+  m_Father: {fileID: 2808160856049747289}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &195028379
@@ -509,60 +506,3 @@ MonoBehaviour:
   fireSound: {fileID: 8300000, guid: e734a4043cd02204da15a11d0d5f24bb, type: 3}
   rearmSound: {fileID: 8300000, guid: e80a67a3afb21594eaeed8676420ec02, type: 3}
   maxChargeSound: {fileID: 8300000, guid: 1c28de642b39eb84895c29749c82561c, type: 3}
---- !u!1 &6888420289623258304
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 7417291254730877697}
-  - component: {fileID: 1906641565392869276}
-  m_Layer: 8
-  m_Name: TankFade
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!224 &7417291254730877697
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6888420289623258304}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0, y: 0, z: 0}
-  m_Children: []
-  m_Father: {fileID: 970099956827774400}
-  m_RootOrder: 4
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
-  m_Pivot: {x: 0, y: 0}
---- !u!223 &1906641565392869276
-Canvas:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6888420289623258304}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_RenderMode: 0
-  m_Camera: {fileID: 0}
-  m_PlaneDistance: 100
-  m_PixelPerfect: 0
-  m_ReceivesEvents: 1
-  m_OverrideSorting: 0
-  m_OverridePixelPerfect: 0
-  m_SortingBucketNormalizedSize: 0
-  m_AdditionalShaderChannelsFlag: 0
-  m_SortingLayerID: 0
-  m_SortingOrder: 0
-  m_TargetDisplay: 0

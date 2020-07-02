@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class LevelPortal : MonoBehaviour
 {
+    private AudioSource _audioSource;
+    private Vector3 _portalPos;
 
     public delegate void PlayerEnteredPortal();
     public delegate void LevelPortalEnabled();
@@ -18,16 +20,10 @@ public class LevelPortal : MonoBehaviour
     /// </summary>
     public static event LevelPortalEnabled OnLevelPortalEnabled;
 
-    private AudioSource _audioSource;
-    private Vector3 _portalPos;
-
     private void Awake()
     {
 
         _audioSource = GetComponent<AudioSource>();
-
-        _audioSource.volume = 0.2f;
-        _portalPos = gameObject.transform.position;
 
         if (!_audioSource)
         {
@@ -35,6 +31,8 @@ public class LevelPortal : MonoBehaviour
             _audioSource = gameObject.AddComponent<AudioSource>();
         }
 
+        _audioSource.volume = 0.2f;
+        _portalPos = gameObject.transform.position;
     }
 
     private void OnEnable()
@@ -63,7 +61,7 @@ public class LevelPortal : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.name == TagStatics.GetPlayerName())
+        if (other.gameObject.name == "TankActor")
         {
             OnPlayerEnterPortalEvent();
         }

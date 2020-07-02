@@ -14,6 +14,8 @@ public class LevelManager : MonoBehaviour
     [Header("Audio References")]
     public AudioClip lowTimeSound;
 
+    private AudioSource _audioSource;
+
     public enum LEVEL_TYPE
     {
         LEVEL_NONE,
@@ -42,22 +44,20 @@ public class LevelManager : MonoBehaviour
         
     }
 
-    public delegate void LevelTimerEnd();
-
-    /// <summary>
-    /// Called when the Level Timer reaches the end of its countdown
-    /// </summary>
-    public static event LevelTimerEnd OnLevelTimerEnd;
-
-    private AudioSource _audioSource;
-
     private static int _levelIter;
+
 
     private static List<string> _sceneList;
     private static List<string> _levelList;
 
     private static LevelStats _currentLevelStats;
 
+    public delegate void LevelTimerEnd();
+
+    /// <summary>
+    /// Called when the Level Timer reaches the end of its countdown
+    /// </summary>
+    public static event LevelTimerEnd OnLevelTimerEnd;
 
 
     private void Awake()

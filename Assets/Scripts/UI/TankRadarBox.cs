@@ -8,12 +8,8 @@ public class TankRadarBox : MonoBehaviour
 
     [Header("References")]
     public Image RadarBlip;
+    public Transform playerPosition;
     public SphereCollider playerRadarSphere;
-
-    /// <summary>
-    /// The player's position in the level
-    /// </summary>
-    private Transform _playerPosition;
 
     /// <summary>
     /// A List of all the Pickup locations in the currently loaded level
@@ -51,24 +47,16 @@ public class TankRadarBox : MonoBehaviour
         _mobOffSet = 0;
         _levelPortal = FindObjectOfType<LevelPortal>();
 
-        //Getting the Player transform
-        foreach (var transForm in FindObjectsOfType<Transform>())
-        {
-            if (transForm.gameObject.name == TagStatics.GetPlayerName())
-            {
-                _playerPosition = transForm;
-            }
-        }
-
         if (!RadarBlip)
         {
             Debug.LogError("No RadarBlip image set in TankRadarBox!");
             Debug.LogError("You probably forgot to assign one in the Inspector");
         }
 
-        if (!_playerPosition)
+        if (!playerPosition)
         {
             Debug.LogError("No PlayerPosition set in TankRadarBox!");
+            Debug.LogError("You probably forgot to assign it in the Inspector");
         }
 
         if (!playerRadarSphere)
@@ -93,22 +81,19 @@ public class TankRadarBox : MonoBehaviour
     void Start()
     { 
         // For the PickupPosition List, we add all the pickup positions in the scene to the list
+
         foreach (var pos in PickupManager.GetPickupPositions())
         {
             _pickupPositions.Add(pos);
         }
-
-        //Setting our pickupOffset to point to the last pickup position in the list
         _pickupOffSet = _pickupPositions.Count - 1;
 
-        // We then add all the current MobPositions to the list
         foreach (var pos in MobManager.GetMobPositions())
         {
             Debug.Log(pos.ToString());
             _pickupPositions.Add(pos);
         }
 
-        //Like before except here, we're setting it to the last mob position in the list
         _mobOffSet = _pickupPositions.Count - 1;
 
         // We reserve the last element in the list for the LevelPortal position
@@ -138,7 +123,7 @@ public class TankRadarBox : MonoBehaviour
     /// </summary>
     void CreateBlips()
     {
-        /// White Blip - Pickup
+        /// Blue Blip - Pickup
         /// Red Blip - Enemy
         /// Yellow Blip - Level Portal
        
@@ -190,9 +175,9 @@ public class TankRadarBox : MonoBehaviour
                 // It works, that's all that matters.
 
                 var currentPos = _pickupPositions[i];
-                var radarPos = currentPos - _playerPosition.position;
-                var dist = Vector3.Distance(_playerPosition.position, currentPos);
-                var deltay = Mathf.Atan2(radarPos.x, radarPos.z) * Mathf.Rad2Deg - 270 - _playerPosition.eulerAngles.y;
+                var radarPos = currentPos - playerPosition.position;
+                var dist = Vector3.Distance(playerPosition.position, currentPos);
+                var deltay = Mathf.Atan2(radarPos.x, radarPos.z) * Mathf.Rad2Deg - 270 - playerPosition.eulerAngles.y;
                 radarPos.x = dist * Mathf.Cos(deltay * Mathf.Deg2Rad) * -1;
                 radarPos.z = dist * Mathf.Sin(deltay * Mathf.Deg2Rad);
                 var radarVec = new Vector3(radarPos.x, radarPos.z, 0.0f);
