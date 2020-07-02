@@ -70,7 +70,6 @@ public class PickupManager : MonoBehaviour
         PlayerScore = 0;
         NumPickupsCollected = 0;
         NumPickupsLost = 0;
-        NumPickupsInLevel = _pickupList.Count;
         LastCollectedPos = new Vector3(0.0f, 0.0f, 0.0f);
         LastPickupBool = false;
 
@@ -83,6 +82,8 @@ public class PickupManager : MonoBehaviour
                 obj.GetComponent<SphereHandler>().OnPickupCollectedEvent += UpdatePickupList;
             }
         }
+
+        NumPickupsInLevel = _pickupList.Count;
 
         if(_pickupList.Count <= 0)
         {
@@ -99,7 +100,7 @@ public class PickupManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-
+        
     }
 
     private void OnDisable()
@@ -115,7 +116,6 @@ public class PickupManager : MonoBehaviour
 
     private void UpdatePickupList()
     {
-        
         //This container copy is done because modifying a container while iterating over it is a giant NO-NO
         //Anyways, here we just loop over each pickup in the pickup list
         foreach (var pickup in _pickupList.ToArray()) 
@@ -133,9 +133,9 @@ public class PickupManager : MonoBehaviour
         }
 
         NumPickupsCollected++;
+        OnPickupCollected();
 
         Debug.Log("The Pickup list now contains " + _pickupList.Count.ToString() + " pickups");
-        OnPickupCollected();
 
         if (_pickupList.Count <= 0)
         {

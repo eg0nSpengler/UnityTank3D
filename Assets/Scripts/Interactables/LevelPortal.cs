@@ -23,7 +23,7 @@ public class LevelPortal : MonoBehaviour
     /// <summary>
     /// The position of the LevelPortal in the Scene
     /// </summary>
-    public Vector3 PortalPos { private set; get; }
+    public static Vector3 PortalPos { private set; get; }
 
     private void Awake()
     {
@@ -36,7 +36,7 @@ public class LevelPortal : MonoBehaviour
         }
 
         _audioSource.volume = 0.2f;
-        PortalPos  = gameObject.transform.position;
+        PortalPos = gameObject.transform.position;
     }
 
     private void OnEnable()

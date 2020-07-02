@@ -27,7 +27,6 @@ public class PickupDisplayBox : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-
         for (var i = 0; i < PickupManager.NumPickupsInLevel; i++)
         {
             Image imgInstance = Instantiate(pickupImage, _parentPanel.transform);
