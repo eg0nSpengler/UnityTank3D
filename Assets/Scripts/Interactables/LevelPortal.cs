@@ -19,22 +19,24 @@ public class LevelPortal : MonoBehaviour
     public static event LevelPortalEnabled OnLevelPortalEnabled;
 
     private AudioSource _audioSource;
-    private Vector3 _portalPos;
+
+    /// <summary>
+    /// The position of the LevelPortal in the Scene
+    /// </summary>
+    public Vector3 PortalPos { private set; get; }
 
     private void Awake()
     {
-
         _audioSource = GetComponent<AudioSource>();
-
-        _audioSource.volume = 0.2f;
-        _portalPos = gameObject.transform.position;
 
         if (!_audioSource)
         {
-            Debug.LogError("No Audio Source on " + gameObject.name.ToString() + ", creating one now...");
+            Debug.LogError("No Audio Source on " + gameObject.name.ToString() + ", creating one now");
             _audioSource = gameObject.AddComponent<AudioSource>();
         }
 
+        _audioSource.volume = 0.2f;
+        PortalPos  = gameObject.transform.position;
     }
 
     private void OnEnable()
@@ -77,12 +79,4 @@ public class LevelPortal : MonoBehaviour
         _audioSource.Play();
     }
 
-    /// <summary>
-    /// Returns the position of the Level Portal
-    /// </summary>
-    /// <returns>The Level Portal position, in Vector3 format</returns>
-    public Vector3 GetLevelPortalPosition()
-    {
-        return _portalPos;
-    }
 }

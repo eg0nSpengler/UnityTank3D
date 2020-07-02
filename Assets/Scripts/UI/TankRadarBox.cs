@@ -210,8 +210,8 @@ public class TankRadarBox : MonoBehaviour
 
     void RemoveRadarBlip()
     {
-        var pickupPos = PickupManager.GetRecentCollectedPos();
-        var mobPos = MobManager.GetRecentMobDestroyedPos();
+        var pickupPos = PickupManager.LastCollectedPos;
+        var mobPos = MobManager.LastDestroyedPos;
 
         // Looping through all of our pickup positions
         for (var y = 0; y < _pickupPositions.Count; y++)

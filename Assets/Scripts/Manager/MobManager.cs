@@ -15,13 +15,17 @@ public class MobManager : MonoBehaviour
     /// </summary>
     public static event MobDestroyed OnMobDestroyed;
 
+    /// <summary>
+    /// The position of the most recent destroyed Mob in the level
+    /// </summary>
+    public static Vector3 LastDestroyedPos { private set; get; }
+
     private static List<GameObject> _mobList;
-    private static Vector3 _lastDestroyedPos;
 
     private void Awake()
     {
         _mobList = new List<GameObject>();
-        _lastDestroyedPos = new Vector3(0.0f, 0.0f, 0.0f);
+        LastDestroyedPos = new Vector3(0.0f, 0.0f, 0.0f);
 
         foreach (var mob in FindObjectsOfType<GameObject>())
         {
@@ -121,7 +125,7 @@ public class MobManager : MonoBehaviour
         {
             if (mob.GetComponent<HealthComponent>().IsDead == true)
             {
-                _lastDestroyedPos = mob.transform.position;
+                LastDestroyedPos = mob.transform.position;
                 _mobList.Remove(mob);
                 Debug.Log("The Mob list now contains " + _mobList.Count.ToString() + " mob(s)");
             }
@@ -139,15 +143,6 @@ public class MobManager : MonoBehaviour
         {
             yield return mob.transform.position;
         }
-    }
-
-    /// <summary>
-    /// Returns the position of the most recently destroyed mob
-    /// </summary>
-    /// <returns></returns>
-    public static Vector3 GetRecentMobDestroyedPos()
-    {
-        return _lastDestroyedPos;
     }
 
 }

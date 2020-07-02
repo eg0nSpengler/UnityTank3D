@@ -20,13 +20,13 @@ public class TankMovement : MonoBehaviour
         ROTATE_RIGHT
     }
 
-    private int boostAmount;
-    private bool isBoosting; // Are we currently boosting?
-    private bool isMoving; // Is the Tank currently moving?
-
     private CharacterController _charController;
     private AudioSource _audioSource;
     private TANK_DIR _tankDir;
+
+    private int _boostAmount;
+    private bool _isBoosting; // Are we currently boosting?
+    private bool _isMoving; // Is the Tank currently moving?
 
     private delegate void TankBoostBegin();
     private delegate void TankBoostEnd();
@@ -46,11 +46,11 @@ public class TankMovement : MonoBehaviour
         _charController = GetComponent<CharacterController>();
         _audioSource = GetComponent<AudioSource>();
 
-        isBoosting = false;
-        isMoving = false;
+        _isBoosting = false;
+        _isMoving = false;
         tankSpeed = 2;
         rotationSpeed = 1;
-        boostAmount = 4;
+        _boostAmount = 4;
         _tankDir = TANK_DIR.NONE;
 
         if (!_charController)
@@ -88,12 +88,12 @@ public class TankMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (isMoving == true)
+        if (_isMoving == true)
         {
             MoveTank(_tankDir);
         }
 
-        if (isBoosting == true)
+        if (_isBoosting == true)
         {
             BoostTank();
         }
@@ -132,7 +132,7 @@ public class TankMovement : MonoBehaviour
 
     void BoostTank()
     {
-        _charController.SimpleMove((transform.forward * tankSpeed * boostAmount));
+        _charController.SimpleMove((transform.forward * tankSpeed * _boostAmount));
         
     }
 
@@ -140,59 +140,59 @@ public class TankMovement : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.W) == true)
         {
-            isMoving = true;
+            _isMoving = true;
             MoveTank(TANK_DIR.FORWARD);
         }
 
         if (Input.GetKeyUp(KeyCode.W) == true)
         {
-            isMoving = false;
+            _isMoving = false;
         }
 
         if (Input.GetKeyDown(KeyCode.S) == true)
         {
-            isMoving = true;
+            _isMoving = true;
             MoveTank(TANK_DIR.BACK);
         }
 
         if (Input.GetKeyUp(KeyCode.S) == true)
         {
-            isMoving = false;
+            _isMoving = false;
             
         }
 
         if (Input.GetKeyDown(KeyCode.A) == true)
         {
-            isMoving = true;
+            _isMoving = true;
             MoveTank(TANK_DIR.ROTATE_LEFT);
         }
 
         if (Input.GetKeyUp(KeyCode.A) == true)
         {
-            isMoving = false;
+            _isMoving = false;
         }
 
         if (Input.GetKeyDown(KeyCode.D) == true)
         {
-            isMoving = true;
+            _isMoving = true;
             MoveTank(TANK_DIR.ROTATE_RIGHT);
         }
 
         if (Input.GetKeyUp(KeyCode.D) == true)
         {
-            isMoving = false;
+            _isMoving = false;
         }
 
         if (Input.GetKeyDown(KeyCode.LeftAlt))
         {
-            if (isBoosting == true)
+            if (_isBoosting == true)
             {
-                isBoosting = false;
+                _isBoosting = false;
                 OnTankBoostEnd();
             }
             else
             {
-                isBoosting = true;
+                _isBoosting = true;
                 OnTankBoostBegin();
             }
         }
@@ -200,7 +200,7 @@ public class TankMovement : MonoBehaviour
 
     void InvokeBoostSound()
     {
-        if (isBoosting == true)
+        if (_isBoosting == true)
         {
             InvokeRepeating("PlayBoostSound", 0.0f, _audioSource.clip.length);
         }

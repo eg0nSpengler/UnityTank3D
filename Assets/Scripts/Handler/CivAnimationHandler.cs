@@ -8,7 +8,7 @@ public class CivAnimationHandler : MonoBehaviour
     private Animator _animator;
     private SphereHandler _sphereHandler;
     private Rigidbody _rb;
-    
+   
 
     /// <summary>
     /// An array of animation clips used by our Animator
@@ -29,27 +29,27 @@ public class CivAnimationHandler : MonoBehaviour
     private void Awake()
     {
         _animator = GetComponent<Animator>();
+        _sphereHandler = GetComponent<SphereHandler>();
+        _rb = GetComponent<Rigidbody>();
 
 
         if (!_animator)
         {
-            Debug.LogError("Failed to get Animator on " + gameObject.name.ToString() + " creating one now");
+            Debug.LogError("Failed to get Animator on " + gameObject.name.ToString() + ", creating one now");
             _animator = gameObject.AddComponent<Animator>();
         }
 
-        _sphereHandler = GetComponent<SphereHandler>();
 
         if (!_sphereHandler)
         {
-            Debug.LogError("Failed to get SphereHandler on " + gameObject.name.ToString() + " creating one now");
+            Debug.LogError("Failed to get SphereHandler on " + gameObject.name.ToString() + ", creating one now");
             _sphereHandler = gameObject.AddComponent<SphereHandler>();
         }
 
-        _rb = GetComponent<Rigidbody>();
 
         if (!_rb)
         {
-            Debug.LogError("Failed to get Rigidbody on " + gameObject.name.ToString() + " creating one now");
+            Debug.LogError("Failed to get Rigidbody on " + gameObject.name.ToString() + ", creating one now");
             _rb = gameObject.AddComponent<Rigidbody>();
         }
 

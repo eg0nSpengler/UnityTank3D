@@ -13,7 +13,11 @@ public class DetectionSphere : MonoBehaviour
     private SphereCollider _sphereCollider;
 
     private float _sphereRadius;
-    private bool IsTrackingTarget;
+
+    /// <summary>
+    /// Are we currently tracking a target?
+    /// </summary>
+    private bool _isTrackingTarget;
 
     public delegate void TargetClearLOS(GameObject obj);
     public delegate void TargetNoClearLOS(GameObject obj);
@@ -59,7 +63,7 @@ public class DetectionSphere : MonoBehaviour
         _sphereCollider = GetComponent<SphereCollider>();
 
         _sphereCollider.isTrigger = true;
-        IsTrackingTarget = false;
+        _isTrackingTarget = false;
 
         if (!_sphereCollider)
         {
@@ -85,7 +89,7 @@ public class DetectionSphere : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
-        if (IsTrackingTarget == true)
+        if (_isTrackingTarget == true)
         {
             SearchForTarget(currentTarget);
         }
@@ -101,13 +105,13 @@ public class DetectionSphere : MonoBehaviour
             {
                 OnTargetClearLOS(other.gameObject);
                 OnTargetInRadius(other.gameObject);
-                IsTrackingTarget = true;
+                _isTrackingTarget = true;
             }
             else
             {
                 OnTargetNoClearLOS(other.gameObject);
                 OnTargetInRadius(other.gameObject);
-                IsTrackingTarget = false;
+                _isTrackingTarget = false;
             }
         }
 
@@ -118,13 +122,13 @@ public class DetectionSphere : MonoBehaviour
             {
                 OnTargetClearLOS(other.gameObject);
                 OnTargetInRadius(other.gameObject);
-                IsTrackingTarget = true;
+                _isTrackingTarget = true;
             }
             else
             {
                 OnTargetInRadius(other.gameObject);
                 OnTargetNoClearLOS(other.gameObject);
-                IsTrackingTarget = false;
+                _isTrackingTarget = false;
                 return;
             }
             currentTarget = other.gameObject;
@@ -145,7 +149,7 @@ public class DetectionSphere : MonoBehaviour
         {
             OnTargetExitRadius(other.gameObject);
             currentTarget = null;
-            IsTrackingTarget = false;
+            _isTrackingTarget = false;
         }
     }
 

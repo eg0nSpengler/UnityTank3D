@@ -44,7 +44,7 @@ public class ScoreBox : MonoBehaviour
 
     void UpdateScoreText()
     {
-        var gmData = GameDataSerializer.LoadGameData(LevelManager.GetLevelNum());
+        var gmData = GameDataSerializer.LoadGameData(LevelManager.CurrentLevelStats.CurrentLevelNum);
 
         if (gmData != null)
         {

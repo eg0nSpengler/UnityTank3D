@@ -16,12 +16,12 @@ public class GameData
 
     public GameData(TankActor tankActor)
     {
-        playerScore = PickupManager.GetPlayerScore();
+        playerScore = PickupManager.PlayerScore;
         playerHealth = tankActor.healthComp.CurrentHP;
-        numPickupsCollected = PickupManager.GetNumCollectedPickups();
-        numPickupsLost = PickupManager.GetNumLostPickups();
-        numPickupsTotal = PickupManager.GetNumPickupsInLevel();
-        levelNum = LevelManager.GetLevelNum();
+        numPickupsCollected = PickupManager.NumPickupsCollected;
+        numPickupsLost = PickupManager.NumPickupsLost;
+        numPickupsTotal = PickupManager.NumPickupsInLevel;
+        levelNum = LevelManager.CurrentLevelStats.CurrentLevelNum;
 
     }
 }

@@ -34,12 +34,11 @@ public class NavComponent : MonoBehaviour
     /// </summary>
     public event NavToTarget OnNavToTarget;
 
+    private NavMeshAgent _navAgent;
+    private DetectionSphere _detectionSphere;
+    private NavMeshPath _navMeshPath;
     private GameObject _currentTarget;
     private Vector3 _lastKnownPos;
-    private DetectionSphere _detectionSphere;
-
-    private NavMeshAgent _navAgent;
-    private NavMeshPath _navMeshPath;
 
     private float _pathElapsed; //For NavMeshPath debugging purposes
 
@@ -48,19 +47,21 @@ public class NavComponent : MonoBehaviour
         _navAgent = GetComponentInParent<NavMeshAgent>();
         _detectionSphere = GetComponent<DetectionSphere>();
 
-        _pathElapsed = 0.0f;
         _navMeshPath = new NavMeshPath();
+        _currentTarget = null;
         _lastKnownPos = new Vector3(0.0f, 0.0f, 0.0f);
+
+        _pathElapsed = 0.0f;
 
         if (!_navAgent)
         {
-            Debug.LogError("Failed to get NavMeshAgent on " + gameObject.name.ToString() + ", creating one now...");
+            Debug.LogError("Failed to get NavMeshAgent on " + gameObject.name.ToString() + ", creating one now");
             _navAgent = gameObject.AddComponent<NavMeshAgent>();
         }
 
         if (!_detectionSphere)
         {
-            Debug.LogError("Failed to get DetectionSphere on " + gameObject.name.ToString() + ", creating one now...");
+            Debug.LogError("Failed to get DetectionSphere on " + gameObject.name.ToString() + ", creating one now");
             _detectionSphere = gameObject.AddComponent<DetectionSphere>();
         }
 

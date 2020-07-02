@@ -6,7 +6,6 @@ using UnityEngine.AI;
 public class AI_SimpleMob : MonoBehaviour
 {
     private AudioSource _audioSource;
-
     private void Awake()
     {
         _audioSource = GetComponent<AudioSource>();
@@ -14,7 +13,7 @@ public class AI_SimpleMob : MonoBehaviour
         if (!_audioSource)
 
         {
-            Debug.LogError("Failed to get Audio Source on " + gameObject.name.ToString() + ", creating one now...");
+            Debug.LogError("Failed to get Audio Source on " + gameObject.name.ToString() + ", creating one now");
             _audioSource = gameObject.AddComponent<AudioSource>();
         }
 

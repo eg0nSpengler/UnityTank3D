@@ -8,10 +8,6 @@ public class SphereHandler : MonoBehaviour
     public AudioClip playerPickupSound;
     public AudioClip monsterPickupSound;
     
-    /// <summary>
-    /// Has this pickup been collected?
-    /// </summary>
-    public bool IsCollected { protected set; get; }
 
     public delegate void PickupCollected();
     public delegate void PickupDie();
@@ -26,22 +22,29 @@ public class SphereHandler : MonoBehaviour
     /// </summary>
     public event PickupDie OnPickupDieEvent;
 
+    /// <summary>
+    /// Has this pickup been collected?
+    /// </summary>
+    public bool IsCollected { private set; get; }
+
+    /// <summary>
+    /// A boolean that we set depending on who collects the pickup
+    /// <para>TRUE if the player</para>
+    /// <para>FALSE if a monster (Or if the player shot the pickup)</para>
+    /// </summary>
+    public bool PickupCollector {private set; get; }
 
     private CivAnimationHandler _animHandler;
     private CapsuleCollider _capsuleCollider;
 
-    //A boolean that we set depending on who collects the pickup
-    //TRUE if the player
-    //FALSE if a monster
-    private bool _pickupCollector;
 
     private void Awake()
     {
         _animHandler = GetComponent<CivAnimationHandler>();
         _capsuleCollider = GetComponent<CapsuleCollider>();
 
-        _pickupCollector = false;
         IsCollected = false;
+        PickupCollector = false;
 
         if (!playerPickupSound)
         {
@@ -55,14 +58,14 @@ public class SphereHandler : MonoBehaviour
 
         if (!_animHandler)
         {
-            Debug.LogError("Failed to get CivAnimationHandler on " + gameObject.name.ToString() + " creating one now");
+            Debug.LogError("Failed to get CivAnimationHandler on " + gameObject.name.ToString() + ", creating one now");
             _animHandler = gameObject.AddComponent<CivAnimationHandler>();
         }
 
 
         if (!_capsuleCollider)
         {
-            Debug.LogError("Failed to get CapsuleCollider on " + gameObject.name.ToString() + " creating one now");
+            Debug.LogError("Failed to get CapsuleCollider on " + gameObject.name.ToString() + ", creating one now");
             _capsuleCollider = gameObject.AddComponent<CapsuleCollider>();
         }
 
@@ -92,24 +95,24 @@ public class SphereHandler : MonoBehaviour
 
         if (other.gameObject.name == TagStatics.GetPlayerName())
         {
-            _pickupCollector = true;
+            PickupCollector = true;
             IsCollected = true;
-            OnSphereDestroyed(_pickupCollector);
+            OnSphereDestroyed(PickupCollector);
         }
 
         if (other.gameObject.name.Contains("Monster"))
         {
-            _pickupCollector = false;
+            PickupCollector = false;
             IsCollected = true;
-            OnSphereDestroyed(_pickupCollector);
+            OnSphereDestroyed(PickupCollector);
         }
 
         if (other.gameObject.name.Contains("Projectile"))
         {
-            _pickupCollector = false;
+            PickupCollector = false;
             IsCollected = true;
             OnPickupDieEvent();
-            OnSphereDestroyed(_pickupCollector);
+            OnSphereDestroyed(PickupCollector);
         }
 
     }
@@ -128,17 +131,6 @@ public class SphereHandler : MonoBehaviour
 
             OnPickupCollectedEvent();
 
-    }
-
-    /// <summary>
-    /// Returns a boolean value depending on who collects the Pickup
-    /// TRUE if the player
-    /// FALSE if a monster
-    /// </summary>
-    /// <returns></returns>
-    public bool GetPickupCollector()
-    {
-        return _pickupCollector;
     }
 
     private void HandleDeathAnim()

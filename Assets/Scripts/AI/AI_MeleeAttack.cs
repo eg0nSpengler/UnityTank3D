@@ -16,17 +16,18 @@ public class AI_MeleeAttack : MonoBehaviour
 
     private NavComponent _navComponent;
     private GameObject _targetToAttack;
-    private bool HasAttacked;
+
+    private bool _hasAttacked;
 
     private void Awake()
     {
         _navComponent = GetComponent<NavComponent>();
         damageAmount = 2;
-        HasAttacked = false;
+        _hasAttacked = false;
 
         if(!_navComponent)
         {
-            Debug.Log("Failed to get Nav Component " + gameObject.name.ToString() + " creating one now.");
+            Debug.Log("Failed to get Nav Component " + gameObject.name.ToString() + ", creating one now");
             _navComponent = gameObject.AddComponent<NavComponent>();
         }
 
@@ -63,10 +64,10 @@ public class AI_MeleeAttack : MonoBehaviour
 
         if (_targetToAttack)
         {
-            if (HasAttacked == false)
+            if (_hasAttacked == false)
             {
                 OnDamageMobEvent(_targetToAttack, damageAmount);
-                HasAttacked = true;
+                _hasAttacked = true;
             }
             else
             {
@@ -78,7 +79,7 @@ public class AI_MeleeAttack : MonoBehaviour
     IEnumerator AttackTimer()
     {
         yield return new WaitForSeconds(3);
-        HasAttacked = false;
+        _hasAttacked = false;
     }
 
 }

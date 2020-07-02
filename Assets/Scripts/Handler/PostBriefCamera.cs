@@ -22,13 +22,13 @@ public class PostBriefCamera : MonoBehaviour
 
         if (!_camera)
         {
-            Debug.LogError("Failed to get Camera on " + gameObject.name.ToString() + ", creating one now...");
+            Debug.LogError("Failed to get Camera on " + gameObject.name.ToString() + ", creating one now");
             _camera = gameObject.AddComponent<Camera>();
         }
 
         if (!_transPoint1)
         {
-            Debug.LogError("Failed to get Transform on " + gameObject.name.ToString() + ", using parent Transform as fallback...");
+            Debug.LogError("Failed to get Transform on " + gameObject.name.ToString() + ", using parent Transform as fallback");
             _transPoint1 = GetComponent<Transform>();
         }
 

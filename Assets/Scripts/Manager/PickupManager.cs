@@ -28,12 +28,38 @@ public class PickupManager : MonoBehaviour
     private static List<Vector3> _pickupPosList;
     private static List<bool> _pickupBoolList;
 
-    private static Vector3 _lastCollectedPos;
-    private static bool _lastPickupBool;
-    private static int _playerScore;
-    private static int _numPickupsCollected;
-    private static int _numPickupsLost;
+    /// <summary>
+    /// The position of the most recent collected Pickup in the Level
+    /// </summary>
+    public static Vector3 LastCollectedPos { private set; get; }
 
+    /// <summary>
+    /// A boolean for the most recent collected Pickup in the Level
+    /// <para>TRUE if collected by the Player</para>
+    /// <para>FALSE if collected by a Monster (or shot by the Player)</para>
+    /// </summary>
+    public static bool LastPickupBool { private set; get; }
+
+    /// <summary>
+    /// The current Player score
+    /// </summary>
+    public static int PlayerScore { private set; get; }
+
+    /// <summary>
+    /// The number of pickups collected by the Player
+    /// </summary>
+    public static int NumPickupsCollected { private set; get; }
+
+    /// <summary>
+    /// The number of pickups lost by the Player
+    /// <para>Monsters consuming pickups or the Player shooting a pickup will count towards this</para>
+    /// </summary>
+    public static int NumPickupsLost { private set; get; }
+
+    /// <summary>
+    /// The number of pickups currently in the Level
+    /// </summary>
+    public static int NumPickupsInLevel { private set; get; }
 
     private void Awake()
     {
@@ -41,11 +67,12 @@ public class PickupManager : MonoBehaviour
         _pickupPosList = new List<Vector3>();
         _pickupBoolList = new List<bool>();
 
-        _playerScore = 0;
-        _numPickupsCollected = 0;
-        _numPickupsLost = 0;
-        _lastCollectedPos = new Vector3(0.0f, 0.0f, 0.0f);
-        _lastPickupBool = false;
+        PlayerScore = 0;
+        NumPickupsCollected = 0;
+        NumPickupsLost = 0;
+        NumPickupsInLevel = _pickupList.Count;
+        LastCollectedPos = new Vector3(0.0f, 0.0f, 0.0f);
+        LastPickupBool = false;
 
         foreach (var obj in FindObjectsOfType<GameObject>())
         {
@@ -96,16 +123,16 @@ public class PickupManager : MonoBehaviour
 
             if (pickup.GetComponent<SphereHandler>().IsCollected == true)
             {
-                var pickupResult = pickup.GetComponent<SphereHandler>().GetPickupCollector();
-                 _lastPickupBool = pickupResult;
-                _lastCollectedPos = pickup.transform.position;
+                var pickupResult = pickup.GetComponent<SphereHandler>().PickupCollector;
+                 LastPickupBool = pickupResult;
+                LastCollectedPos = pickup.transform.position;
                 _pickupBoolList.Add(pickupResult);
                 _pickupList.Remove(pickup);
                 break;
             }
         }
 
-        _numPickupsCollected++;
+        NumPickupsCollected++;
 
         Debug.Log("The Pickup list now contains " + _pickupList.Count.ToString() + " pickups");
         OnPickupCollected();
@@ -120,43 +147,10 @@ public class PickupManager : MonoBehaviour
 
     private void TallyScore()
     {
-        _playerScore = _numPickupsCollected * 10000;
+        PlayerScore = NumPickupsCollected * 10000;
         
-        Debug.Log("The final score is " + _playerScore.ToString());
-        Debug.Log("The player has collected " + _numPickupsCollected.ToString() + " pickups");
-    }
-
-    /// <summary>
-    /// Returns the current Player Score
-    /// </summary>
-    /// <returns></returns>
-    public static int GetPlayerScore()
-    {
-        return _playerScore;
-    }
-
-    /// <summary>
-    /// Returns the total number of Pickups in the current Level
-    /// </summary>
-    public static int GetNumPickupsInLevel()
-    {
-        return _pickupList.Count;
-    }
-
-    /// <summary>
-    /// Returns the current number of Pickups collected by the Player
-    /// </summary>
-    public static int GetNumCollectedPickups()
-    {
-        return _numPickupsCollected; 
-    }
-
-    /// <summary>
-    /// Returns the current number of Pickups failed to be collected by the Player
-    /// </summary>
-    public static int GetNumLostPickups()
-    {
-        return _numPickupsLost;
+        Debug.Log("The final score is " + PlayerScore.ToString());
+        Debug.Log("The player has collected " + NumPickupsCollected.ToString() + " pickups");
     }
 
     /// <summary>
@@ -173,8 +167,8 @@ public class PickupManager : MonoBehaviour
 
     /// <summary>
     /// Returns the boolean value for each pickup in the level
-    /// TRUE if the player collected the pickup
-    /// FALSE if a monster collected the pickup
+    /// <para>TRUE if the player collected the pickup</para>
+    /// <para>FALSE if a monster collected the pickup (Or if the player shot a pickup) </para>
     /// </summary>
     /// <returns></returns>
     public static IEnumerable<bool> GetPickupBoolList()
@@ -185,21 +179,4 @@ public class PickupManager : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// Returns the position of the most recently collected Pickup
-    /// </summary>
-    /// <returns></returns>
-    public static Vector3 GetRecentCollectedPos()
-    {
-        return _lastCollectedPos;
-    }
-
-    /// <summary>
-    /// Returns the boolean result of the most recently collected Pickup
-    /// </summary>
-    /// <returns></returns>
-    public static bool GetRecentPickupBool()
-    {
-        return _lastPickupBool;
-    }
 }

@@ -28,7 +28,7 @@ public class PickupDisplayBox : MonoBehaviour
     void Start()
     {
 
-        for (var i = 0; i < PickupManager.GetNumPickupsInLevel(); i++)
+        for (var i = 0; i < PickupManager.NumPickupsInLevel; i++)
         {
             Image imgInstance = Instantiate(pickupImage, _parentPanel.transform);
             imgInstance.color = Color.white;
@@ -54,7 +54,7 @@ public class PickupDisplayBox : MonoBehaviour
 
     void UpdatePickups()
     {
-        if (PickupManager.GetRecentPickupBool() == true)
+        if (PickupManager.LastPickupBool == true)
         {
             _imgList[_imgListIter].color = Color.green;
         }

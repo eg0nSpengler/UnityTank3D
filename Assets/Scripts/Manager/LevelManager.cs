@@ -28,12 +28,18 @@ public class LevelManager : MonoBehaviour
         private static int _currentLevelNum;
         private static float _currentLevelTime;
 
+        /// <summary>
+        /// The current level number
+        /// </summary>
         public int CurrentLevelNum
         {
             get => _currentLevelNum;
             set => _currentLevelNum = value;
         }
-
+        
+        /// <summary>
+        /// The current level time
+        /// </summary>
         public float CurrentLevelTime
         {
             get => _currentLevelTime;            
@@ -56,7 +62,10 @@ public class LevelManager : MonoBehaviour
     private static List<string> _sceneList;
     private static List<string> _levelList;
 
-    private static LevelStats _currentLevelStats;
+    /// <summary>
+    /// The current stats for the loaded level
+    /// </summary>
+    public static LevelStats CurrentLevelStats { private set; get; }
 
 
 
@@ -66,7 +75,7 @@ public class LevelManager : MonoBehaviour
         _levelList = new List<string>();
         _audioSource = GetComponent<AudioSource>();
 
-        _currentLevelStats = new LevelStats();
+        CurrentLevelStats = new LevelStats();
 
         var sceneCount = UnityEngine.SceneManagement.SceneManager.sceneCountInBuildSettings;
 
@@ -85,14 +94,14 @@ public class LevelManager : MonoBehaviour
 
         if (levelInfo)
         {
-            _currentLevelStats.CurrentLevelNum = levelInfo.GetLevelNum;
-            _currentLevelStats.CurrentLevelTime = levelInfo.GetLevelTime;
+            CurrentLevelStats.CurrentLevelNum = levelInfo.GetLevelNum;
+            CurrentLevelStats.CurrentLevelTime = levelInfo.GetLevelTime;
         }
         else
         {
             Debug.LogWarning("No LevelInfo provided for LevelManager...");
-            _currentLevelStats.CurrentLevelNum = 0;
-            _currentLevelStats.CurrentLevelTime = 0;
+            CurrentLevelStats.CurrentLevelNum = 0;
+            CurrentLevelStats.CurrentLevelTime = 0;
         }
 
         if (!lowTimeSound)
@@ -155,7 +164,7 @@ public class LevelManager : MonoBehaviour
 
     private void SaveLevelInfo()
     {
-        _currentLevelStats.CurrentLevelNum = levelInfo.GetLevelNum;
+        CurrentLevelStats.CurrentLevelNum = levelInfo.GetLevelNum;
         
     }
 
@@ -174,24 +183,8 @@ public class LevelManager : MonoBehaviour
     void RunLevelTimer()
     {
         Debug.Log("RunLevelTimer Coroutine ran!");
+        
     }
 
-    /// <summary>
-    /// Returns the current level number
-    /// </summary>
-    /// <returns></returns>
-    public static int GetLevelNum()
-    {
-        return _currentLevelStats.CurrentLevelNum;
-    }
-
-    /// <summary>
-    /// Returns the current level time
-    /// </summary>
-    /// <returns></returns>
-    public static int GetLevelTime()
-    {
-        return Mathf.RoundToInt(_currentLevelStats.CurrentLevelTime);
-    }
     
 }

@@ -28,7 +28,7 @@ public class LevelTimerBox : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        _levelTime.text = LevelManager.GetLevelTime().ToString();
+        _levelTime.text = LevelManager.CurrentLevelStats.CurrentLevelTime.ToString();
     }
 
 }

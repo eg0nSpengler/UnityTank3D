@@ -31,13 +31,13 @@ public class HealthComponent : MonoBehaviour
     /// <summary>
     /// Is the mob dead?
     /// </summary>
-    public bool IsDead { protected set; get; }
+    public bool IsDead { private set; get; }
 
 
     /// <summary>
     /// The maximum HP of the mob
     /// </summary>
-    public int MaxHP { protected set; get; }
+    public int MaxHP { private set; get; }
 
     /// <summary>
     /// The current HP of the mob

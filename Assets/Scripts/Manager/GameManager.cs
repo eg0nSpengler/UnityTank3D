@@ -33,8 +33,10 @@ public class GameManager : MonoBehaviour
         STATE_GAME_OVER
     }
 
-    private static GAME_STATE _gameState;
-
+    /// <summary>
+    /// The current GameState
+    /// </summary>
+    public static GAME_STATE GameState { private set; get; }
 
     private void Awake()
     {
@@ -59,32 +61,24 @@ public class GameManager : MonoBehaviour
         LevelManager.OnLevelTimerEnd -= PauseGame;
         //PickupManager.OnAllPickupsCollectedEvent -= SaveData;
     }
-    /// <summary>
-    /// Returns the current GameState
-    /// </summary>
-    /// <returns>GAME_STATE</returns>
-    public static GAME_STATE GetGameState()
-    {
-        return _gameState;
-    }
 
     private void StartGame()
     {
         LevelManager.LoadLevel(LevelManager.LEVEL_TYPE.LEVEL_PRE_BRIEFING);
-        _gameState = GAME_STATE.STATE_PREBRIEFING;
+        GameState = GAME_STATE.STATE_PREBRIEFING;
     }
 
     private void PlayGame()
     {
         LevelManager.LoadLevel(LevelManager.LEVEL_TYPE.LEVEL_PLAY);
-        _gameState = GAME_STATE.STATE_PLAYING;
+        GameState = GAME_STATE.STATE_PLAYING;
         OnGameStatePlayEvent();
     }
 
     private void PauseGame()
     {
         LevelManager.LoadLevel(LevelManager.LEVEL_TYPE.LEVEL_POST_BRIEFING);
-        _gameState = GAME_STATE.STATE_POSTBRIEFING;
+        GameState = GAME_STATE.STATE_POSTBRIEFING;
         OnGameStatePostBrief();
     }
 

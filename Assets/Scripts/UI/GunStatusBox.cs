@@ -11,8 +11,8 @@ public class GunStatusBox : MonoBehaviour
 
     private void Awake()
     {
-        _gunStatus = GetComponent<TextMeshProUGUI>();
         _tankGun = FindObjectOfType<TankGun>();
+        _gunStatus = GetComponent<TextMeshProUGUI>();
 
         if (!_gunStatus)
         {

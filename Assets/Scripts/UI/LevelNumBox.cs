@@ -23,7 +23,7 @@ public class LevelNumBox : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        _levelNum.text = "0" + LevelManager.GetLevelNum().ToString();
+        _levelNum.text = "0" + LevelManager.CurrentLevelStats.CurrentLevelNum.ToString();
     }
 
     // Update is called once per frame

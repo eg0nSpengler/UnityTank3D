@@ -19,7 +19,7 @@ public class PickupsLostText : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        _txt.text += " " + GameDataSerializer.LoadGameData(LevelManager.GetLevelNum()).numPickupsLost;
+        _txt.text += " " + GameDataSerializer.LoadGameData(LevelManager.CurrentLevelStats.CurrentLevelNum).numPickupsLost;
     }
 
     // Update is called once per frame
