@@ -28,6 +28,9 @@ I mean for the dozen or so people that'll read this, go right ahead.
 
 I did this primarily for future employment purposes, so I won't really lose sleep if someone decides to clone this git and use the code for whatever they wish.
 
+## Note
+The most recently updated version always resides within the dev branch, take a peek!
+
 ## References
 
 ### Game Audio
