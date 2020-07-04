@@ -8,12 +8,7 @@ public class CivAnimationHandler : MonoBehaviour
     private Animator _animator;
     private SphereHandler _sphereHandler;
     private Rigidbody _rb;
-   
 
-    /// <summary>
-    /// An array of animation clips used by our Animator
-    /// </summary>
-    private AnimationClip[] _animClips;
 
     //This is to get our IsDead param from our Animator
     private int _isDeadHash;
@@ -53,9 +48,6 @@ public class CivAnimationHandler : MonoBehaviour
             _rb = gameObject.AddComponent<Rigidbody>();
         }
 
-
-        _animClips = _animator.runtimeAnimatorController.animationClips;
-
         _isDeadHash = Animator.StringToHash("IsDead");
 
         _sphereHandler.OnPickupDieEvent += HandleDeathAnim;
@@ -79,7 +71,7 @@ public class CivAnimationHandler : MonoBehaviour
 
     void HandleDeathAnim()
     {
-        //We set the IsDead param to true in the Animator, trigging the death animation
+        //We set the IsDead param to true in the Animator, triggering the death animation
         _animator.SetTrigger(_isDeadHash);
 
          _rb.useGravity = true;

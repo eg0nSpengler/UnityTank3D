@@ -36,12 +36,14 @@ public class SphereHandler : MonoBehaviour
 
     private CivAnimationHandler _animHandler;
     private CapsuleCollider _capsuleCollider;
+    private Rigidbody _rb;
 
 
     private void Awake()
     {
         _animHandler = GetComponent<CivAnimationHandler>();
         _capsuleCollider = GetComponent<CapsuleCollider>();
+        _rb = GetComponent<Rigidbody>();
 
         IsCollected = false;
         PickupCollector = false;
@@ -69,6 +71,11 @@ public class SphereHandler : MonoBehaviour
             _capsuleCollider = gameObject.AddComponent<CapsuleCollider>();
         }
 
+        if (!_rb)
+        {
+            Debug.LogError("Failed to get Rigidbody on " + gameObject.name.ToString() + ", creating one now");
+            _rb = gameObject.AddComponent<Rigidbody>();
+        }
         _animHandler.OnDeathAnimPlay += HandleDeathAnim;
 
     }
@@ -92,27 +99,31 @@ public class SphereHandler : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-
-        if (other.gameObject.name == TagStatics.GetPlayerName())
+        if (IsCollected == false)
         {
-            PickupCollector = true;
-            IsCollected = true;
-            OnSphereDestroyed(PickupCollector);
-        }
+            if (other.gameObject.name == TagStatics.GetPlayerName())
+            {
+                PickupCollector = true;
+                IsCollected = true;
+                OnSphereDestroyed(PickupCollector);
+            }
 
-        if (other.gameObject.name.Contains("Monster"))
-        {
-            PickupCollector = false;
-            IsCollected = true;
-            OnSphereDestroyed(PickupCollector);
-        }
+            if (other.gameObject.name.Contains("Monster"))
+            {
+                PickupCollector = false;
+                IsCollected = true;
+                OnPickupDieEvent();
+                OnSphereDestroyed(PickupCollector);
+            }
 
-        if (other.gameObject.name.Contains("Projectile"))
-        {
-            PickupCollector = false;
-            IsCollected = true;
-            OnPickupDieEvent();
-            OnSphereDestroyed(PickupCollector);
+            if (other.gameObject.name.Contains("Projectile"))
+            {
+                PickupCollector = false;
+                IsCollected = true;
+                OnPickupDieEvent();
+                OnSphereDestroyed(PickupCollector);
+            }
+            
         }
 
     }
@@ -140,13 +151,17 @@ public class SphereHandler : MonoBehaviour
 
     IEnumerator DeathAnimCoroutine()
     {
-        // This is done so that the civilian falls to the floor 
-        // And doesn't just float in mid-air
+        // This is done so that the civilian falls to the floor and doesn't just float in mid air
         _capsuleCollider.isTrigger = false;
         _capsuleCollider.height = 0.20f;
+        _capsuleCollider.center = new Vector3(_capsuleCollider.center.x, 0.03f, _capsuleCollider.center.y);
         _capsuleCollider.direction = Vector3Int.right.x;
 
-        yield return new WaitForSeconds(3f);
-        gameObject.SetActive(false);
+        yield return new WaitForSeconds(1f);
+
+        // So we can walk through corpses
+        _capsuleCollider.isTrigger = true;
+        _rb.useGravity = false;
+        _rb.freezeRotation = true;
     }
 }
