@@ -69,7 +69,7 @@ public class ProjectileHandler : MonoBehaviour
 
         if (other.gameObject.tag == TagStatics.GetMobTag() && other.gameObject.name != TagStatics.GetPlayerName())
         {
-            OnDamageMobEvent(other.gameObject, damageAmount);
+            OnDamageMobEvent?.Invoke(other.gameObject, damageAmount);
         }
 
     }

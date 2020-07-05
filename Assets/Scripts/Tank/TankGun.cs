@@ -202,7 +202,7 @@ public class TankGun : MonoBehaviour
                 break;
         }
 
-        OnGunStatusUpdate();
+        OnGunStatusUpdate?.Invoke();
     }
 
     /// <summary>

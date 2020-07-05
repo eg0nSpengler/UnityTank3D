@@ -131,7 +131,7 @@ public class MobManager : MonoBehaviour
             }
         }
 
-        OnMobDestroyed();
+        OnMobDestroyed?.Invoke();
     }
     /// <summary>
     /// Returns each Mob Position in the level
@@ -143,6 +143,7 @@ public class MobManager : MonoBehaviour
         {
             yield return mob.transform.position;
         }
+            
     }
 
 }

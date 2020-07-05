@@ -41,7 +41,7 @@ public class LevelPortal : MonoBehaviour
 
     private void OnEnable()
     {
-        OnLevelPortalEnabled();
+        OnLevelPortalEnabled?.Invoke();
     }
 
     private void OnDisable()
@@ -67,7 +67,7 @@ public class LevelPortal : MonoBehaviour
     {
         if (other.gameObject.name == TagStatics.GetPlayerName())
         {
-            OnPlayerEnterPortalEvent();
+            OnPlayerEnterPortalEvent?.Invoke();
         }
        
     }

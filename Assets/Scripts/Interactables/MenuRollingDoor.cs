@@ -80,8 +80,8 @@ public class MenuRollingDoor : MonoBehaviour
 
     private void OnMouseDown()
     {
-        
-        OnGameStartEvent();
+
+        OnGameStartEvent?.Invoke();
         
     }
 

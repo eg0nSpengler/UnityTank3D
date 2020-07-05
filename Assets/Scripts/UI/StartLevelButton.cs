@@ -37,7 +37,7 @@ public class StartLevelButton : MonoBehaviour
 
     private void HandleMouse()
     {
-        OnLevelStartEvent();
+        OnLevelStartEvent?.Invoke();
     }
 
    

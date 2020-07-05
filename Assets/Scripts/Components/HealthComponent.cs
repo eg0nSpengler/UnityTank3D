@@ -90,8 +90,9 @@ public class HealthComponent : MonoBehaviour
             }
             else
             {
-                CurrentHP -= dmg;    
-                //OnHealthModified();
+                CurrentHP -= dmg;
+
+                OnHealthModified?.Invoke();
             }
 
         }
@@ -99,8 +100,9 @@ public class HealthComponent : MonoBehaviour
         if (CurrentHP <= 0)
         {
             IsDead = true;
-            OnHealthZero();
+            OnHealthZero?.Invoke();
         }
+
 
     }
 
@@ -123,7 +125,7 @@ public class HealthComponent : MonoBehaviour
             else
             {
                 CurrentHP += hp;
-                OnHealthModified();
+                OnHealthModified?.Invoke();
             }
         }
 

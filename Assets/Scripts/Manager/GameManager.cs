@@ -72,14 +72,14 @@ public class GameManager : MonoBehaviour
     {
         LevelManager.LoadLevel(LevelManager.LEVEL_TYPE.LEVEL_PLAY);
         GameState = GAME_STATE.STATE_PLAYING;
-        OnGameStatePlayEvent();
+        OnGameStatePlayEvent?.Invoke();
     }
 
     private void PauseGame()
     {
         LevelManager.LoadLevel(LevelManager.LEVEL_TYPE.LEVEL_POST_BRIEFING);
         GameState = GAME_STATE.STATE_POSTBRIEFING;
-        OnGameStatePostBrief();
+        OnGameStatePostBrief?.Invoke();
     }
 
 }

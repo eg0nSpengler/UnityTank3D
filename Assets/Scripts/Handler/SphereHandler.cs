@@ -112,7 +112,7 @@ public class SphereHandler : MonoBehaviour
             {
                 PickupCollector = false;
                 IsCollected = true;
-                OnPickupDieEvent();
+                OnPickupDieEvent?.Invoke();
                 OnSphereDestroyed(PickupCollector);
             }
 
@@ -120,7 +120,7 @@ public class SphereHandler : MonoBehaviour
             {
                 PickupCollector = false;
                 IsCollected = true;
-                OnPickupDieEvent();
+                OnPickupDieEvent?.Invoke();
                 OnSphereDestroyed(PickupCollector);
             }
             
@@ -140,7 +140,7 @@ public class SphereHandler : MonoBehaviour
                 AudioSource.PlayClipAtPoint(monsterPickupSound, gameObject.transform.position);
             }
 
-            OnPickupCollectedEvent();
+            OnPickupCollectedEvent?.Invoke();
 
     }
 

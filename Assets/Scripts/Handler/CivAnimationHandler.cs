@@ -76,6 +76,6 @@ public class CivAnimationHandler : MonoBehaviour
 
          _rb.useGravity = true;
 
-        OnDeathAnimPlay();
+        OnDeathAnimPlay?.Invoke();
     }
 }

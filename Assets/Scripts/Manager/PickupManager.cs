@@ -23,9 +23,21 @@ public class PickupManager : MonoBehaviour
     /// </summary>
     public static event PickupCollected OnPickupCollected;
 
-
+    /// <summary>
+    /// A list of pickups in the level
+    /// </summary>
     private static List<GameObject> _pickupList;
+
+    /// <summary>
+    /// A list of pickup positions in the level (used primarily for the Radar)
+    /// </summary>
     private static List<Vector3> _pickupPosList;
+
+    /// <summary>
+    /// A list of boolean vals corresponding to each pickup in the level
+    /// <para>TRUE means the pickup was collected by the Player</para>
+    /// <para>FALSE means that a monster collected it or the Player shot it</para>
+    /// </summary>
     private static List<bool> _pickupBoolList;
 
     /// <summary>
@@ -124,6 +136,18 @@ public class PickupManager : MonoBehaviour
             if (pickup.GetComponent<SphereHandler>().IsCollected == true)
             {
                 var pickupResult = pickup.GetComponent<SphereHandler>().PickupCollector;
+
+                if (pickupResult == true)
+                {
+                    //Player collected the pickup
+                    NumPickupsCollected++;
+                }
+                else
+                {
+                    //Monster got the pickup or the player shot it
+                    NumPickupsLost++;
+                }
+
                  LastPickupBool = pickupResult;
                 LastCollectedPos = pickup.transform.position;
                 _pickupBoolList.Add(pickupResult);
@@ -132,15 +156,14 @@ public class PickupManager : MonoBehaviour
             }
         }
 
-        NumPickupsCollected++;
-        OnPickupCollected();
+        OnPickupCollected?.Invoke();
 
         Debug.Log("The Pickup list now contains " + _pickupList.Count.ToString() + " pickups");
 
         if (_pickupList.Count <= 0)
         {
             TallyScore();
-            OnAllPickupsCollectedEvent();
+            OnAllPickupsCollectedEvent?.Invoke();
         }
 
     }
