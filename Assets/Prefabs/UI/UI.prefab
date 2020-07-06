@@ -259,6 +259,45 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1056359792
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3192120474423653862}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 25946d196ac5b5643a9ca4e527d38289, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  GunRearming: {fileID: -8355878931891455547, guid: 4fc49812b2d888447be128d1a3990023,
+    type: 3}
+  GunReady: {fileID: 799499406603659676, guid: 4fc49812b2d888447be128d1a3990023, type: 3}
+  GunCharging: {fileID: -7801491425260804980, guid: 4fc49812b2d888447be128d1a3990023,
+    type: 3}
+  GunMaxPower: {fileID: 7436860926580171409, guid: 4fc49812b2d888447be128d1a3990023,
+    type: 3}
+  _tankGun: {fileID: 0}
+--- !u!114 &1749875033
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3192120474616860836}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 55429459d1dab9e439df0174fa47b3a7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _tankActor: {fileID: 0}
+  TankHealthFull: {fileID: -5356235205854507632, guid: 4fc49812b2d888447be128d1a3990023,
+    type: 3}
+  TankHealthHalf: {fileID: 7000286213710170695, guid: 4fc49812b2d888447be128d1a3990023,
+    type: 3}
+  TankHealthLow: {fileID: -3265510624760232496, guid: 4fc49812b2d888447be128d1a3990023,
+    type: 3}
 --- !u!114 &1781609938
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -412,9 +451,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   RadarBlip: {fileID: 1436557453300790516, guid: ef868cae453a8d34eba82bedf40e9424,
     type: 3}
-  playerPosition: {fileID: 0}
   playerRadarSphere: {fileID: 0}
-  _parentPanel: {fileID: 0}
 --- !u!1001 &8091356257288476299
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -561,6 +598,80 @@ PrefabInstance:
       propertyPath: healthComponent
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 6631256940831155043, guid: eaf807e2e53e777469fddb0c2b87e822,
+        type: 3}
+      propertyPath: m_Color.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6631256940831155043, guid: eaf807e2e53e777469fddb0c2b87e822,
+        type: 3}
+      propertyPath: m_Color.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6631256940831155043, guid: eaf807e2e53e777469fddb0c2b87e822,
+        type: 3}
+      propertyPath: m_Color.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6631256941074728493, guid: eaf807e2e53e777469fddb0c2b87e822,
+        type: 3}
+      propertyPath: m_Color.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6631256941074728493, guid: eaf807e2e53e777469fddb0c2b87e822,
+        type: 3}
+      propertyPath: m_Color.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6631256941074728493, guid: eaf807e2e53e777469fddb0c2b87e822,
+        type: 3}
+      propertyPath: m_Color.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6631256941707086402, guid: eaf807e2e53e777469fddb0c2b87e822,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -0.00008392334
+      objectReference: {fileID: 0}
+    - target: {fileID: 6631256941707086402, guid: eaf807e2e53e777469fddb0c2b87e822,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -0.000023365
+      objectReference: {fileID: 0}
+    - target: {fileID: 6631256941707086402, guid: eaf807e2e53e777469fddb0c2b87e822,
+        type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0.00016784668
+      objectReference: {fileID: 0}
+    - target: {fileID: 6631256941707086402, guid: eaf807e2e53e777469fddb0c2b87e822,
+        type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 23.999664
+      objectReference: {fileID: 0}
+    - target: {fileID: 6631256941707086407, guid: eaf807e2e53e777469fddb0c2b87e822,
+        type: 3}
+      propertyPath: GunRearming
+      value: 
+      objectReference: {fileID: -8355878931891455547, guid: 4fc49812b2d888447be128d1a3990023,
+        type: 3}
+    - target: {fileID: 6631256941707086407, guid: eaf807e2e53e777469fddb0c2b87e822,
+        type: 3}
+      propertyPath: GunReady
+      value: 
+      objectReference: {fileID: 799499406603659676, guid: 4fc49812b2d888447be128d1a3990023,
+        type: 3}
+    - target: {fileID: 6631256941707086407, guid: eaf807e2e53e777469fddb0c2b87e822,
+        type: 3}
+      propertyPath: GunCharging
+      value: 
+      objectReference: {fileID: -7801491425260804980, guid: 4fc49812b2d888447be128d1a3990023,
+        type: 3}
+    - target: {fileID: 6631256941707086407, guid: eaf807e2e53e777469fddb0c2b87e822,
+        type: 3}
+      propertyPath: GunMaxPower
+      value: 
+      objectReference: {fileID: 7436860926580171409, guid: 4fc49812b2d888447be128d1a3990023,
+        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: eaf807e2e53e777469fddb0c2b87e822, type: 3}
 --- !u!1 &3192120474923866144 stripped
@@ -572,6 +683,18 @@ GameObject:
 --- !u!224 &3192120474923866145 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 6631256940331060906, guid: eaf807e2e53e777469fddb0c2b87e822,
+    type: 3}
+  m_PrefabInstance: {fileID: 8091356257288476299}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &3192120474423653862 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6631256940831155053, guid: eaf807e2e53e777469fddb0c2b87e822,
+    type: 3}
+  m_PrefabInstance: {fileID: 8091356257288476299}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &3192120474616860836 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6631256941074728495, guid: eaf807e2e53e777469fddb0c2b87e822,
     type: 3}
   m_PrefabInstance: {fileID: 8091356257288476299}
   m_PrefabAsset: {fileID: 0}

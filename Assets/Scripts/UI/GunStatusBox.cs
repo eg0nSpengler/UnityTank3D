@@ -1,30 +1,43 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using TMPro;
+using UnityEngine.UI;
 
 public class GunStatusBox : MonoBehaviour
 {
+    [Header("Sprite References")]
+    public Sprite GunRearming;
+    public Sprite GunReady;
+    public Sprite GunCharging;
+    public Sprite GunMaxPower;
+
     public TankGun _tankGun;
 
-    private TextMeshProUGUI _gunStatus;
+    private Image _panel;
 
     private void Awake()
     {
         _tankGun = FindObjectOfType<TankGun>();
-        _gunStatus = GetComponent<TextMeshProUGUI>();
+        _panel = GetComponent<Image>();
 
-        if (!_gunStatus)
-        {
-            Debug.LogError("Failed to get TextMeshProTextUI element on " + gameObject.name.ToString() + ", creating one now...");
-            _gunStatus = gameObject.AddComponent<TextMeshProUGUI>();
-        }
-
-        if(!_tankGun)
+        if (!_tankGun)
         {
             Debug.LogError("No TankGun found in the current scene!");
             Debug.LogError("You may have forgotten to place a TankActor instance!");
         }
+
+        if (!GunRearming || !GunReady || !GunCharging || !GunMaxPower)
+        {
+            Debug.LogWarning("GunStatusBox is missing a Sprite reference!");
+        }
+
+        if (!_panel)
+        {
+            Debug.LogError("Failed to get Panel on GunStatusBox, creating one now");
+            _panel = gameObject.AddComponent<Image>();
+        }
+
+        _panel.preserveAspect = true;
 
         TankGun.OnGunStatusUpdate += UpdateGunStatusText;
     }
@@ -42,33 +55,30 @@ public class GunStatusBox : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
     }
 
     void UpdateGunStatusText()
     {
-        _gunStatus.text = _tankGun.GunStatusToString();
-        switch (_gunStatus.text.ToString())
+        switch (_tankGun.GunStatusToString())
         {
-
             case "GUN READY":
-                _gunStatus.color = Color.green;
+                _panel.sprite = GunReady;
+                break;
+            case "CHARGING":
+                _panel.sprite = GunCharging;
                 break;
 
             case "REARMING":
-                _gunStatus.color = Color.red;
-                break;
-
-            case "CHARGING":
-                _gunStatus.color = Color.cyan;
+                _panel.sprite = GunRearming;
                 break;
 
             case "MAX CHARGE":
-                _gunStatus.color = Color.magenta;
+                _panel.sprite = GunMaxPower;
                 break;
 
-            default:
-                _gunStatus.color = Color.green;
+            default: Debug.LogWarning("UpdateGunStatus failed to get valid GunState");
+                Debug.LogWarning("Double check the string comparisons");
+                _panel.sprite = GunReady;
                 break;
         }
     }

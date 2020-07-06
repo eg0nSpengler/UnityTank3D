@@ -29,7 +29,7 @@ public class PickupDisplayBox : MonoBehaviour
     {
         for (var i = 0; i < PickupManager.NumPickupsInLevel; i++)
         {
-            Image imgInstance = Instantiate(pickupImage, _parentPanel.transform);
+            var imgInstance = Instantiate(pickupImage, _parentPanel.transform);
             imgInstance.color = Color.white;
             _imgList.Add(imgInstance);
         }
@@ -78,11 +78,11 @@ public class PickupDisplayBox : MonoBehaviour
             {
                 if (result == true)
                 {
-                    _imgList[_imgListIter].color = Color.green;
+                    
                 }
                 else
                 {
-                    _imgList[_imgListIter].color = Color.red;
+
                 }
             }
         }

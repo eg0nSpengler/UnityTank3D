@@ -7,13 +7,13 @@ public class TankHealthBox : MonoBehaviour
 {
     public TankActor _tankActor;
 
+    [Header("Tank Sprite References")]
+    public Sprite TankHealthFull;
+    public Sprite TankHealthHalf;
+    public Sprite TankHealthLow;
+
     private HealthComponent _healthComp;
     private Image _panel;
-
-    private float _maxFillValue;
-    private float _minFillValue;
-    //The amount to add to the mask fill
-    private float _fillAddValue;
 
     private void Awake()
     {
@@ -32,11 +32,10 @@ public class TankHealthBox : MonoBehaviour
             Debug.LogError("Failed to find TankActor reference in TankHealthBox!");
         }
 
-        _maxFillValue = 1.0f;
-        _minFillValue = 0.0f;
-        _fillAddValue = 0.10f;
-
-        _panel.fillAmount = _minFillValue;
+        if (!TankHealthFull || !TankHealthHalf || !TankHealthLow)
+        {
+            Debug.LogWarning("TankHealthBox is missing a Sprite reference!");
+        }
 
         _healthComp.OnHealthModified += UpdateHealth;
 
@@ -45,7 +44,7 @@ public class TankHealthBox : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        _panel.fillAmount = 1;
+        _panel.sprite = TankHealthFull;
     }
 
     private void OnDisable()
@@ -65,15 +64,19 @@ public class TankHealthBox : MonoBehaviour
 
         if (hp >= _healthComp.MaxHP)
         {
-            _panel.fillAmount = _minFillValue;
+            _panel.sprite = TankHealthFull;
         }
 
         if (hp < _healthComp.MaxHP)
         {
-            var amt = hp *- _fillAddValue;
-            Debug.Log(amt.ToString());
-
-            _panel.fillAmount = _panel.fillAmount + amt;
+            if (hp == 20)
+            {
+                _panel.sprite = TankHealthHalf;
+            }
+            else
+            {
+                _panel.sprite = TankHealthLow;
+            }
         }
     }
 }
