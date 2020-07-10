@@ -5,7 +5,6 @@ A personal project by Anthony Brown.
 
 ![enter image description here](https://upload.wikimedia.org/wikipedia/en/a/af/Hovertank_3D_title_screen.jpg)
 
-[![# Hovertank3D Unity Clone Progress Video - July 2nd 2020](https://img.youtube.com/vi/xUSCJ5oxIfA/0.jpg)](https://youtu.be/xUSCJ5oxIfA)
 # Info
 
  - *What is Hovertank 3D?*
