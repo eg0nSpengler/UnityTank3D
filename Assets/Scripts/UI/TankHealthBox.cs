@@ -30,6 +30,7 @@ public class TankHealthBox : MonoBehaviour
         if (!_tankActor)
         {
             Debug.LogError("Failed to find TankActor reference in TankHealthBox!");
+            Debug.LogError("This is deliberate if you are currently within the POST-BRIEFING scene");
         }
 
         if (!TankHealthFull || !TankHealthHalf || !TankHealthLow)
@@ -37,7 +38,9 @@ public class TankHealthBox : MonoBehaviour
             Debug.LogWarning("TankHealthBox is missing a Sprite reference!");
         }
 
+
         _healthComp.OnHealthModified += UpdateHealth;
+        
 
     }
 
@@ -60,6 +63,13 @@ public class TankHealthBox : MonoBehaviour
 
     void UpdateHealth()
     {
+        if (!_tankActor)
+        {
+            _panel.sprite = TankHealthFull;
+            Debug.LogWarning("Panel Sprite is currently set to TankHealthFull in TankHealthBox");
+            Debug.LogError("This is deliberate if you are currently within the POST-BRIEFING scene");
+        }
+
         var hp = _healthComp.CurrentHP;
 
         if (hp >= _healthComp.MaxHP)

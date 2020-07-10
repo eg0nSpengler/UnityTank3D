@@ -236,20 +236,22 @@ public class TankRadarBox : MonoBehaviour
     /// <summary>
     /// This is for updating the radar blips for moving targets (Monsters, for example)
     /// </summary>
+    
     void UpdateRadarBlips()
     {
         var newMobPos = new List<Vector3>();
 
         newMobPos.AddRange(MobManager.GetMobPositions());
 
+        //TODO - Fix monster blips past mob elem 0 not updating
         for (var x = 0; x < newMobPos.Count; x++)
         {
             //Using our mob offset again
             for (var i = _mobOffSet; i > _pickupOffSet; i--)
             {
                 _pickupPositions[i] = newMobPos[x];
-               
-                if (x != i)
+
+                if (i != x)
                 {
                     break;
                 }

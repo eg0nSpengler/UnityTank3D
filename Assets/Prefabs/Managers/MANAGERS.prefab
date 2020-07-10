@@ -85,6 +85,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bc14a7affda4d5d4ab6061d838e9ee9c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  PickupScoreSound: {fileID: 8300000, guid: ed5ebb59b5bd795478f9867afcc7b5ee, type: 3}
+  TimeScoreSound: {fileID: 8300000, guid: 36b7f818049111742b16b503ddc337ed, type: 3}
+  TimeScoreEndSound: {fileID: 8300000, guid: 2f33457fcc95a224abc42e15c2361c67, type: 3}
+  GuitarRiffSound: {fileID: 8300000, guid: 0fc76fbf26cfbab45b911f85741603aa, type: 3}
 --- !u!82 &3016061593557578414
 AudioSource:
   m_ObjectHideFlags: 0
