@@ -17,7 +17,7 @@ The engine used in Hovertank 3D would later be used for the Wolfenstein 3D games
 
 - *Why do a clone of Hovertank 3D?*
 
-I wanted to quickly get back into learning Unity3D again after having not used it for the past few years.
+I wanted to quickly get back into learning Unity3D again after a short hiatus.
 
 The game logic in Hovertank 3D isn't overly complex either, so I knew it would be excellent practice.
 
