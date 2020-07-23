@@ -13,15 +13,18 @@ public class GameData
     public int numPickupsLost;
     public int numPickupsTotal;
     public int levelNum;
+    public int finalLevelTime;
+    public IEnumerable<bool> pickupBool;
 
-    public GameData(TankActor tankActor)
+    public GameData(TankActor.TankStats tankStats)
     {
-        playerScore = PickupManager.PlayerScore;
-        playerHealth = tankActor.healthComp.CurrentHP;
-        numPickupsCollected = PickupManager.NumPickupsCollected;
-        numPickupsLost = PickupManager.NumPickupsLost;
-        numPickupsTotal = PickupManager.NumPickupsInLevel;
-        levelNum = LevelManager.CurrentLevelStats.CurrentLevelNum;
+        playerScore = tankStats.PlayerScore;
+        numPickupsCollected = tankStats.NumPickupsCollected;
+        numPickupsLost = tankStats.NumPickupsLost;
+        numPickupsTotal = tankStats.NumPickupsTotal;
+        levelNum = tankStats.LevelNum;
+        pickupBool = tankStats.PickupBool;
+        finalLevelTime = tankStats.FinalLevelTime;
 
     }
 }
