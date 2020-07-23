@@ -5,33 +5,52 @@ using UnityEngine;
 /// <summary>
 /// This just serves as a class to hold references to other components on our TankActor
 /// </summary>
+/// 
+[RequireComponent(typeof(AudioSource))]
+[RequireComponent(typeof(CharacterController))]
+[RequireComponent(typeof(Rigidbody))]
+[RequireComponent(typeof(AudioSource))]
+[RequireComponent(typeof(TankMovement))]
+[RequireComponent(typeof(TankActor))]
+[RequireComponent(typeof(HealthComponent))]
 public class TankActor : MonoBehaviour
 {
     [Header("Audio References")]
     public AudioClip hitSound;
     public AudioClip deathSound;
 
-    public HealthComponent healthComp { get; private set; }
+    public class TankStats
+    {
+        public int PlayerScore { get; set; }
+        public int LevelNum { get; set; }
 
-    public int playerScore { get; private set; }
-    public int levelNum { get; private set; }
+        public int NumPickupsCollected { get; set; }
 
-    public int numPickupsCollected { get; private set; }
+        public int NumPickupsLost { get; set; }
 
-    public int numPickupsLost { get; private set; }
+        public int NumPickupsTotal { get; set; }
+
+        public int FinalLevelTime { get; set; }
+
+        public List<bool> PickupBool;
+    }
+
+    public HealthComponent HealthComp { get; private set; }
+
 
     private AudioSource _audioSource;
 
-    private  int _numPickupsCollected;
+    private TankStats _tankStats;
+
 
     private void Awake()
     {
-        healthComp = GetComponent<HealthComponent>();
+        HealthComp = GetComponent<HealthComponent>();
         _audioSource = GetComponent<AudioSource>();
+        _tankStats = new TankStats();
+        _tankStats.PickupBool = new List<bool>();
 
-        _numPickupsCollected = numPickupsCollected;
-
-        if (!healthComp)
+        if (!HealthComp)
         {
             Debug.LogError("Failed to get Health Component on " + gameObject.name.ToString() + ", creating one now");
             gameObject.AddComponent<HealthComponent>();
@@ -53,27 +72,56 @@ public class TankActor : MonoBehaviour
             Debug.LogWarning("No Death Sound provided for TankActor!");
         }
 
-        LevelPortal.OnLevelPortalEnabled += SaveTankData;
-        healthComp.OnHealthModified += PlayHitSound;
-        healthComp.OnHealthZero += PlayDeathSound;
     }
 
+    private void Start()
+    {
+        
+    }
+
+    private void Update()
+    {
+        if(Input.GetKeyDown(KeyCode.PageUp))
+        {
+            TeleportToPortal();
+        }
+    }
+
+    private void OnEnable()
+    {
+        FindObjectOfType<LevelPortal>().OnLevelPortalEnabled += SaveTankData;
+        //LevelTimerBox.OnLevelTimerScoreEnd += SaveTankData;
+        HealthComp.OnHealthModified += PlayHitSound;
+        HealthComp.OnHealthZero += PlayDeathSound;
+        GameManager.OnGameStateGameOver += PlayDeathSound;
+    }
 
     private void OnDisable()
     {
-        LevelPortal.OnLevelPortalEnabled -= SaveTankData;
-        healthComp.OnHealthModified -= PlayHitSound;
-        healthComp.OnHealthZero -= PlayDeathSound;
+        FindObjectOfType<LevelPortal>().OnLevelPortalEnabled -= SaveTankData;
+        HealthComp.OnHealthModified -= PlayHitSound;
+        HealthComp.OnHealthZero -= PlayDeathSound;
+        GameManager.OnGameStateGameOver -= PlayDeathSound;
     }
 
     public void SaveTankData()
     {
-        GameDataSerializer.SaveGameData(this);
-    }
+        Debug.Log("Saving Tank Data! at " + Time.time.ToString());
 
-    public int GetTankPickups()
-    {
-        return _numPickupsCollected;
+        _tankStats.PlayerScore = PickupManager.PlayerScore;
+        _tankStats.LevelNum = LevelManager.CurrentLevelStats.CurrentLevelNum;
+        _tankStats.LevelNum++;
+        _tankStats.NumPickupsCollected = PickupManager.NumPickupsCollected;
+        _tankStats.NumPickupsLost = PickupManager.NumPickupsLost;
+        _tankStats.FinalLevelTime = LevelTimerBox.FinalLevelTime;
+
+
+        foreach (var pk in PickupManager.GetPickupBoolList())
+        {
+            _tankStats.PickupBool.Add(pk);
+        }
+
+        GameDataSerializer.SaveGameData(_tankStats);
     }
 
     void PlayHitSound()
@@ -86,5 +134,15 @@ public class TankActor : MonoBehaviour
     {
         _audioSource.clip = deathSound;
         _audioSource.Play();
+    }
+
+    /// <summary>
+    /// A cheat method to place the player at the position of the LevelPortal
+    /// </summary>
+    void TeleportToPortal()
+    {
+        var portalPos = FindObjectOfType<LevelPortal>().gameObject.transform.position;
+
+        gameObject.transform.position = portalPos;
     }
 }

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(MeshRenderer))]
 public class TankCube : MonoBehaviour
 {
     [Header("References")]
@@ -26,12 +27,6 @@ public class TankCube : MonoBehaviour
 
     // Start is called before the first frame update
     void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
     {
         
     }

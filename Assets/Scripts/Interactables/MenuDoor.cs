@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
+[RequireComponent(typeof(AudioSource))]
 public class MenuDoor : MonoBehaviour
 {
     [Header("Audio References")]
@@ -46,12 +47,6 @@ public class MenuDoor : MonoBehaviour
     void Start()
     {
         
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-       
     }
 
     private void OnMouseEnter()

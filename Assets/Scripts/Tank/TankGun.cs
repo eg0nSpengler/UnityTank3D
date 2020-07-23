@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+
 public class TankGun : MonoBehaviour
 {
 
@@ -104,14 +105,17 @@ public class TankGun : MonoBehaviour
 
     void HandleInput()
     {
-        if (Input.GetKey(KeyCode.LeftControl) == true)
+        if (gameObject.GetComponentInParent<HealthComponent>().IsDead == false)
         {
-            ChargeGun();
-        }
+            if (Input.GetKey(KeyCode.LeftControl) == true)
+            {
+                ChargeGun();
+            }
 
-        if (Input.GetKeyUp(KeyCode.LeftControl) == true)
-        {
-            FireGun();
+            if (Input.GetKeyUp(KeyCode.LeftControl) == true)
+            {
+                FireGun();
+            }
         }
     }
 

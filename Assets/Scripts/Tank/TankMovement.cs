@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
+[RequireComponent(typeof(CharacterController))]
+[RequireComponent(typeof(AudioSource))]
 public class TankMovement : MonoBehaviour
 {
     [Header("Variables")]
@@ -70,8 +72,6 @@ public class TankMovement : MonoBehaviour
             Debug.LogWarning("No Boost Sound provided for TankMovement!");
         }
 
-        OnTankBoostBegin += InvokeBoostSound;
-        OnTankBoostEnd += EndBoostSound;
     }
 
     // Start is called before the first frame update
@@ -80,6 +80,11 @@ public class TankMovement : MonoBehaviour
 
     }
 
+    private void OnEnable()
+    {
+        OnTankBoostBegin += InvokeBoostSound;
+        OnTankBoostEnd += EndBoostSound;
+    }
     private void OnDisable()
     {
         OnTankBoostBegin -= InvokeBoostSound;
@@ -106,94 +111,103 @@ public class TankMovement : MonoBehaviour
     }
 
     void MoveTank(TANK_DIR dir)
-    {   
-        switch(dir)
-        {
-            case TANK_DIR.FORWARD: _charController.SimpleMove(transform.forward * tankSpeed);
-                                    _tankDir = TANK_DIR.FORWARD;
-                                    break;
+    {
+            switch (dir)
+            {
+                case TANK_DIR.FORWARD:
+                    _charController.SimpleMove(transform.forward * tankSpeed);
+                    _tankDir = TANK_DIR.FORWARD;
+                    break;
 
-            case TANK_DIR.BACK: _charController.SimpleMove((transform.forward * -1) * tankSpeed);
-                                 _tankDir = TANK_DIR.BACK;
-                                break;
+                case TANK_DIR.BACK:
+                    _charController.SimpleMove((transform.forward * -1) * tankSpeed);
+                    _tankDir = TANK_DIR.BACK;
+                    break;
 
-            case TANK_DIR.ROTATE_LEFT: transform.Rotate(Vector3.down * rotationSpeed);
-                                        _tankDir = TANK_DIR.ROTATE_LEFT;
-                                        break;
+                case TANK_DIR.ROTATE_LEFT:
+                    transform.Rotate(Vector3.down * rotationSpeed);
+                    _tankDir = TANK_DIR.ROTATE_LEFT;
+                    break;
 
-            case TANK_DIR.ROTATE_RIGHT: transform.Rotate(Vector3.up * rotationSpeed);
-                                        _tankDir = TANK_DIR.ROTATE_RIGHT;
-                                        break;
-            default: break;
+                case TANK_DIR.ROTATE_RIGHT:
+                    transform.Rotate(Vector3.up * rotationSpeed);
+                    _tankDir = TANK_DIR.ROTATE_RIGHT;
+                    break;
+                default: break;
 
-        }
-        
+            }
     }
 
     void BoostTank()
     {
-        _charController.SimpleMove((transform.forward * tankSpeed * _boostAmount));
+        if (gameObject.GetComponent<HealthComponent>().IsDead == false)
+        {
+            _charController.SimpleMove((transform.forward * tankSpeed * _boostAmount));
+        }
         
     }
 
     void HandleInput()
     {
-        if (Input.GetKeyDown(KeyCode.W) == true)
+        if (gameObject.GetComponent<HealthComponent>().IsDead == false)
         {
-            _isMoving = true;
-            MoveTank(TANK_DIR.FORWARD);
-        }
-
-        if (Input.GetKeyUp(KeyCode.W) == true)
-        {
-            _isMoving = false;
-        }
-
-        if (Input.GetKeyDown(KeyCode.S) == true)
-        {
-            _isMoving = true;
-            MoveTank(TANK_DIR.BACK);
-        }
-
-        if (Input.GetKeyUp(KeyCode.S) == true)
-        {
-            _isMoving = false;
-            
-        }
-
-        if (Input.GetKeyDown(KeyCode.A) == true)
-        {
-            _isMoving = true;
-            MoveTank(TANK_DIR.ROTATE_LEFT);
-        }
-
-        if (Input.GetKeyUp(KeyCode.A) == true)
-        {
-            _isMoving = false;
-        }
-
-        if (Input.GetKeyDown(KeyCode.D) == true)
-        {
-            _isMoving = true;
-            MoveTank(TANK_DIR.ROTATE_RIGHT);
-        }
-
-        if (Input.GetKeyUp(KeyCode.D) == true)
-        {
-            _isMoving = false;
-        }
-
-        if (Input.GetKeyDown(KeyCode.LeftAlt))
-        {
-            if (_isBoosting == true)
+            if (Input.GetKeyDown(KeyCode.W) == true)
             {
-                _isBoosting = false;
-                OnTankBoostEnd?.Invoke();
+                _isMoving = true;
+                MoveTank(TANK_DIR.FORWARD);
             }
-            else
+
+            if (Input.GetKeyUp(KeyCode.W) == true)
             {
-                _isBoosting = true;
-                OnTankBoostBegin?.Invoke();
+                _isMoving = false;
+            }
+
+            if (Input.GetKeyDown(KeyCode.S) == true)
+            {
+                _isMoving = true;
+                MoveTank(TANK_DIR.BACK);
+            }
+
+            if (Input.GetKeyUp(KeyCode.S) == true)
+            {
+                _isMoving = false;
+
+            }
+
+            if (Input.GetKeyDown(KeyCode.A) == true)
+            {
+                _isMoving = true;
+                MoveTank(TANK_DIR.ROTATE_LEFT);
+            }
+
+            if (Input.GetKeyUp(KeyCode.A) == true)
+            {
+                _isMoving = false;
+            }
+
+            if (Input.GetKeyDown(KeyCode.D) == true)
+            {
+                _isMoving = true;
+                MoveTank(TANK_DIR.ROTATE_RIGHT);
+            }
+
+            if (Input.GetKeyUp(KeyCode.D) == true)
+            {
+                _isMoving = false;
+            }
+
+            if (Input.GetKeyDown(KeyCode.LeftAlt))
+            {
+                if (_isBoosting == true)
+                {
+                    _isBoosting = false;
+                    OnTankBoostEnd?.Invoke();
+                }
+                else
+                {
+                    _isBoosting = true;
+                    OnTankBoostBegin?.Invoke();
+                }
             }
         }
     }

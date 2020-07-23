@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 
 /// <summary>
-/// A class to hold static strings for all Mob tags/names in the game
+/// A class to hold static strings for all Gameobject tags/names in the game
 /// </summary>
 public class TagStatics
 {
@@ -24,6 +24,12 @@ public class TagStatics
     /// The tag assigned to Mob prefabs
     /// </summary>
     private static string _mobTag = "Mob";
+
+    /// <summary>
+    /// The tag assigned to Level geometry meshes
+    /// </summary>
+    private static string _levelTag = "Level";
+
 
     /// <summary>
     /// Returns the name currently assigned to the Player
@@ -50,6 +56,16 @@ public class TagStatics
     public static string GetMobTag()
     {
         return _mobTag;
+    }
+    
+    
+    /// <summary>
+    /// Returns the tag currently assigned to Level geometry/meshes
+    /// </summary>
+    /// <returns></returns>
+    public static string GetLevelTag()
+    {
+        return _levelTag;
     }
         
 }

@@ -6,6 +6,8 @@ using UnityEngine.UI;
 /// <summary>
 /// This is for handling the fade to white when the Player dies
 /// </summary>
+/// 
+[RequireComponent(typeof(HealthComponent))]
 public class TankFade : MonoBehaviour
 {
     [Header("References")]
@@ -35,7 +37,6 @@ public class TankFade : MonoBehaviour
             Debug.LogWarning("No DeathImage set on TankFade!");
         }
 
-        _healthComp.OnHealthZero += DoDeathFade;
     }
 
     // Start is called before the first frame update
@@ -44,13 +45,19 @@ public class TankFade : MonoBehaviour
         
     }
 
-    // Update is called once per frame
-    void Update()
+    private void OnEnable()
     {
-        
+        _healthComp.OnHealthZero += DoDeathFade;
+        GameManager.OnGameStateGameOver += DoDeathFade;
     }
 
-    void DoDeathFade()
+    private void OnDisable()
+    {
+        _healthComp.OnHealthZero -= DoDeathFade;
+        GameManager.OnGameStateGameOver -= DoDeathFade;
+    }
+
+    public void DoDeathFade()
     {
         StartCoroutine(DeathFade());
     }

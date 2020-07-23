@@ -62,47 +62,41 @@ public class HealthComponent : MonoBehaviour
     {
     }
 
-
-
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
-
-
     /// <summary>
     /// Damages the Mob for X amount of health
     /// </summary>
     /// <param name="dmg"></param>
     public void TakeDamage(int dmg)
     {
-        if (CurrentHP <= 0)
+        if (IsDead == false)
         {
-            Debug.LogWarning("Cannot call TakeDamage on " + gameObject.name.ToString() + " current HP is " + CurrentHP.ToString());
-            return;
-        }
-        else
-        {
-            if (CurrentHP - dmg < 0)
+
+            if (CurrentHP <= 0)
             {
-                CurrentHP = 0;
+                Debug.LogWarning("Cannot call TakeDamage on " + gameObject.name.ToString() + " current HP is " + CurrentHP.ToString());
+                return;
             }
             else
             {
-                CurrentHP -= dmg;
+                if (CurrentHP - dmg < 0)
+                {
+                    CurrentHP = 0;
+                }
+                else
+                {
+                    CurrentHP -= dmg;
 
-                OnHealthModified?.Invoke();
+                    OnHealthModified?.Invoke();
+                }
+
             }
 
+            if (CurrentHP <= 0)
+            {
+                IsDead = true;
+                OnHealthZero?.Invoke();
+            }
         }
-
-        if (CurrentHP <= 0)
-        {
-            IsDead = true;
-            OnHealthZero?.Invoke();
-        }
-
 
     }
 
@@ -112,23 +106,25 @@ public class HealthComponent : MonoBehaviour
     /// <param name="hp"></param>
     public void Heal(int hp)
     {
-        if (CurrentHP >= MaxHP)
+        if (IsDead == false)
         {
-            Debug.LogWarning("Cannot call Heal on " + gameObject.name.ToString() + " current HP is at maximum value of " + MaxHP.ToString());
-        }
-        else
-        {
-            if (CurrentHP + hp > MaxHP)
+            if (CurrentHP >= MaxHP)
             {
-                CurrentHP = MaxHP;
+                Debug.LogWarning("Cannot call Heal on " + gameObject.name.ToString() + " current HP is at maximum value of " + MaxHP.ToString());
             }
             else
             {
-                CurrentHP += hp;
-                OnHealthModified?.Invoke();
+                if (CurrentHP + hp > MaxHP)
+                {
+                    CurrentHP = MaxHP;
+                }
+                else
+                {
+                    CurrentHP += hp;
+                    OnHealthModified?.Invoke();
+                }
             }
         }
-
     }
 
 }
