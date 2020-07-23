@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+
 public class TankHealthBox : MonoBehaviour
 {
     public TankActor _tankActor;
@@ -37,10 +38,7 @@ public class TankHealthBox : MonoBehaviour
         {
             Debug.LogWarning("TankHealthBox is missing a Sprite reference!");
         }
-
-
-        _healthComp.OnHealthModified += UpdateHealth;
-        
+   
 
     }
 
@@ -50,16 +48,16 @@ public class TankHealthBox : MonoBehaviour
         _panel.sprite = TankHealthFull;
     }
 
+    private void OnEnable()
+    {
+        _healthComp.OnHealthModified += UpdateHealth;
+    }
+
     private void OnDisable()
     {
         _healthComp.OnHealthModified -= UpdateHealth;
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 
     void UpdateHealth()
     {

@@ -29,11 +29,6 @@ public class StartLevelButton : MonoBehaviour
         _startButton.onClick.AddListener(HandleMouse);
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 
     private void HandleMouse()
     {

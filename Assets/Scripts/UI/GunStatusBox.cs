@@ -39,8 +39,6 @@ public class GunStatusBox : MonoBehaviour
 
         _panel.preserveAspect = true;
 
-        TankGun.OnGunStatusUpdate += UpdateGunStatusText;
-        GameManager.OnGameStatePostBrief += ShowDefaultGunStatus;
     }
     // Start is called before the first frame update
     void Start()
@@ -48,15 +46,17 @@ public class GunStatusBox : MonoBehaviour
         UpdateGunStatusText();
     }
 
+
+    private void OnEnable()
+    {
+        TankGun.OnGunStatusUpdate += UpdateGunStatusText;
+        GameManager.OnGameStatePostBrief += ShowDefaultGunStatus;
+    }
+
     private void OnDisable()
     {
         TankGun.OnGunStatusUpdate -= UpdateGunStatusText;
         GameManager.OnGameStatePostBrief -= ShowDefaultGunStatus;
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
     }
 
     void UpdateGunStatusText()

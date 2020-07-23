@@ -23,21 +23,35 @@ public class ZoneText : MonoBehaviour
         }
 
         _zoneString = "Zone ";
-        _zoneText.color = Color.green;
+        _zoneText.color = Color.white;
 
     }
     // Start is called before the first frame update
     void Start()
     {
+        var currLvlInfo = LevelManager.GetLevelInfo();
+        var lvlNum = currLvlInfo.GetLevelNum;
+
+        //This is done because internally, the level numbers are for container/iteration purposes
+        //We just add one to the current level number to represent the zone number
+
+        if (lvlNum == 0)
+        {
+            lvlNum = 1;
+        }
+        else
+        {
+            lvlNum++;
+        }
 
         switch (gameObject.name.ToString())
         {
             case "TITLE":
-                _zoneText.text = _zoneString += lvlInfo.GetLevelNum + ": " + lvlInfo.GetLevelName;
+                _zoneText.text = _zoneString += lvlNum + ": " + currLvlInfo.GetLevelName;
                 break;
 
             case "DESCRIPTION":
-                _zoneText.text = lvlInfo.GetLevelDesc;
+                _zoneText.text = currLvlInfo.GetLevelDesc;
                 break;
 
             default:
@@ -45,11 +59,6 @@ public class ZoneText : MonoBehaviour
 
         }
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    
 
 }

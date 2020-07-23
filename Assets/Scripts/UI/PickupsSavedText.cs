@@ -24,9 +24,4 @@ public class PickupsSavedText : MonoBehaviour
         _txt.text += " " + gmData.numPickupsCollected;
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }

@@ -7,7 +7,6 @@ public class MoneyManHandler : MonoBehaviour
 {
     [Header("Sprite References")]
     public Sprite MoneyManPissed;
-    public Sprite MoneyManPissedGun;
 
     private Image _img;
 
@@ -21,28 +20,21 @@ public class MoneyManHandler : MonoBehaviour
             _img = gameObject.AddComponent<Image>();
         }
 
-        if (!MoneyManPissed || !MoneyManPissedGun)
+        if (!MoneyManPissed)
         {
             Debug.LogWarning(gameObject.name.ToString() + " is missing an image reference!");
         }
 
+    }
+
+    private void OnEnable()
+    {
         PickupDisplayBox.OnPickupScoreBad += ShowPissedMan;
     }
 
     private void OnDisable()
     {
         PickupDisplayBox.OnPickupScoreBad -= ShowPissedMan;
-    }
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 
     void ShowPissedMan()

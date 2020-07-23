@@ -24,9 +24,4 @@ public class PickupsLostText : MonoBehaviour
         _txt.text += " " + gmData.numPickupsLost;
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
 }

@@ -23,13 +23,21 @@ public class LevelNumBox : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        _levelNum.text = "0" + LevelManager.CurrentLevelStats.CurrentLevelNum.ToString();
+        var currLvlInfo = LevelManager.GetLevelInfo();
+
+        //This is done because internally, the level numbers are for container/iteration purposes
+        //We just add one to the current level number to represent the zone number
+
+        if (currLvlInfo.GetLevelNum == 0)
+        {
+            _levelNum.text = currLvlInfo.GetLevelNum + "1";
+        }
+        else
+        {
+            var lvlNum = currLvlInfo.GetLevelNum + 1;
+            _levelNum.text = "0" + lvlNum.ToString();
+        }
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
     
 }

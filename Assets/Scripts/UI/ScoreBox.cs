@@ -20,7 +20,6 @@ public class ScoreBox : MonoBehaviour
         _score.color = Color.green;
 
 
-        GameManager.OnGameStatePostBrief += UpdateScoreText;
     }
 
     // Start is called before the first frame update
@@ -29,25 +28,29 @@ public class ScoreBox : MonoBehaviour
         UpdateScoreText();
     }
 
+    private void OnEnable()
+    {
+        GameManager.OnGameStatePostBrief += UpdateScoreText;
+        LevelTimerBox.OnLevelTimerScoreEnd += UpdateScoreText;
+    }
+
     private void OnDisable()
     {
         GameManager.OnGameStatePostBrief -= UpdateScoreText;
+        LevelTimerBox.OnLevelTimerScoreEnd -= UpdateScoreText;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (GameManager.GameState == GameManager.GAME_STATE.STATE_POSTBRIEFING)
-        {
-            var end = GameDataSerializer._gameDataList.Count - 1;
-            var gmData = GameDataSerializer.LoadGameData(end);
-
-            _score.text = gmData.playerScore.ToString();
-        }
+        var end = GameDataSerializer._gameDataList.Count - 1;
+        var gmData = GameDataSerializer.LoadGameData(end);
+        _score.text = gmData.playerScore.ToString();
     }
 
     void UpdateScoreText()
     {
+        Debug.Log("UpdateScoreText called at " + Time.time.ToString());
         var end = GameDataSerializer._gameDataList.Count - 1;
         var gmData = GameDataSerializer.LoadGameData(end);
 

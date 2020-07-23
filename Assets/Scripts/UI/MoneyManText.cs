@@ -5,80 +5,59 @@ using TMPro;
 
 public class MoneyManText : MonoBehaviour
 {
-    private TextMeshProUGUI _text;
+    [Header("Text References")]
+    public TextMeshProUGUI SaviorText;
+    public TextMeshProUGUI TimeText;
+    public TextMeshProUGUI SectorText;
 
     private void Awake()
     {
-        _text = GetComponent<TextMeshProUGUI>();
 
-        if (!_text)
+        if (!SaviorText | !TimeText | !SectorText)
         {
-            Debug.LogError("Failed to get Text Mesh Pro Text on " + gameObject.name.ToString() + " , creating one now");
-            _text = gameObject.AddComponent<TextMeshProUGUI>();
+            Debug.LogError("MoneyManText is missing a Text Reference!");
         }
 
-
-        _text.text = " ";
-        
-        PickupDisplayBox.OnPickupScoreGood += DisplayGoodText;
-        PickupDisplayBox.OnPickupScoreBad += DisplayBadText;
+        SaviorText.text = " ";
+        TimeText.text = " ";
+        SectorText.text = " ";
+        SaviorText.color = Color.white;
+        TimeText.color = Color.white;
+        SectorText.color = Color.white;
 
     }
+
+    private void OnEnable()
+    {
+        PickupDisplayBox.OnPickupScoreGood += DisplayPickupText;
+        LevelTimerBox.OnLevelTimerScoreBegin += DisplayTimeText;
+        LevelTimerBox.OnLevelTimerScoreEnd += DisplaySectorText;
+    
+    }
+
     private void OnDisable()
     {
-        PickupDisplayBox.OnPickupScoreGood -= DisplayGoodText;
-        PickupDisplayBox.OnPickupScoreBad -= DisplayBadText;        
+        PickupDisplayBox.OnPickupScoreGood -= DisplayPickupText;
+        LevelTimerBox.OnLevelTimerScoreBegin -= DisplayTimeText;
+        LevelTimerBox.OnLevelTimerScoreEnd -= DisplaySectorText;
     }
 
-    private void Start()
+
+    private void DisplayPickupText()
     {
-        
+        SaviorText.text = "Savior reward...";
     }
 
-    void DisplayGoodText()
+    private void DisplayTimeText()
     {
-        StartCoroutine(GoodTextCoroutine());
+        TimeText.text = "Time bonus...";
     }
 
-    void DisplayBadText()
+    private void DisplaySectorText()
     {
-        StartCoroutine(BadTextCoroutine());
+        SectorText.text = "GO TO NEXT SECTOR";
     }
-
-    IEnumerator GoodTextCoroutine()
-    {
-        string[] nameList = { "champ", "buster", "pal", "stud", "dude" };
-
-        var goodText = "Nice goin' " + nameList[Random.Range(0, nameList.Length)].ToString();
-
-        while (_text.text.Length < goodText.Length)
-        {
-            foreach (var c in goodText)
-            {
-                _text.text += c;
-                yield return new WaitForSeconds(0.1f);
-            }
-        }
-
-        _text.color = Color.green;
-    }
-    IEnumerator BadTextCoroutine()
-    {
-        string[] awardList = { "being bad", "being dumb", "being incompetent", "being stupid" };
-
-        var badText = "I should give you an award right now for " + awardList[Random.Range(0, awardList.Length)].ToString();
-
-        while (_text.text.Length < badText.Length)
-        {
-            foreach(var c in badText)
-            {
-                _text.text += c;
-                yield return new WaitForSeconds(0.1f);
-            }
-        }
-
-        _text.color = Color.red;
-    }
+    
 
 
 }

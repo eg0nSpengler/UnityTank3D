@@ -47,13 +47,11 @@ public class PickupDisplayBox : MonoBehaviour
 
         _imgList = new List<Image>();
 
-        PickupManager.OnPickupCollected += UpdatePickups;
-        GameManager.OnGameStatePostBrief += DisplaySavedPickups;
-
     }
     // Start is called before the first frame update
     void Start()
     {
+
         if (GameManager.GameState == GameManager.GAME_STATE.STATE_POSTBRIEFING)
         {
             DisplaySavedPickups();
@@ -63,19 +61,21 @@ public class PickupDisplayBox : MonoBehaviour
         {
             PopulatePickupBox();
         }
+
+    }
+
+    private void OnEnable()
+    {
+        PickupManager.OnPickupCollected += UpdatePickups;
+        GameManager.OnGameStatePostBrief += DisplaySavedPickups;
+        Debug.Log("PickupDisplaybox created at " + Time.time.ToString());
     }
 
     private void OnDisable()
     {
         PickupManager.OnPickupCollected -= UpdatePickups;
         GameManager.OnGameStatePostBrief -= DisplaySavedPickups;
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        Debug.Log("PickupDisplaybox destroyed at " + Time.time.ToString());
     }
 
     void PopulatePickupBox()
@@ -87,7 +87,7 @@ public class PickupDisplayBox : MonoBehaviour
             _imgList.Add(imgInstance);
         }
 
-        _imgListIter = _imgList.Count - 1;
+        _imgListIter = 0;
     }
 
     void UpdatePickups()
@@ -101,7 +101,7 @@ public class PickupDisplayBox : MonoBehaviour
             _imgList[_imgListIter].color = Color.red;
         }
 
-        _imgListIter--;
+        _imgListIter++;
     }
 
     void DisplaySavedPickups()
@@ -143,14 +143,43 @@ public class PickupDisplayBox : MonoBehaviour
 
     IEnumerator HandlePickupScore()
     {
-        var civMultipler = 10000;
+        var civMultipler = 10000; // The amount of points to grant for each civvie saved
         var end = GameDataSerializer._gameDataList.Count - 1;
         var gmData = GameDataSerializer.LoadGameData(end);
         var currScore = gmData.playerScore;
         var totalPickups = gmData.numPickupsCollected + gmData.numPickupsLost;
 
+        //This is just to pre-calculate the score so we can decide
+        //If we should display the "Savior bonus" text
+        var pScore = gmData.playerScore;
+
         foreach (var img in _imgList)
         {
+            if (img.color == Color.green)
+            {
+                pScore += civMultipler;    
+            }
+        }
+
+        var half = totalPickups / 2;
+
+        // The player only saved a whopping 1 civilian or less
+        if (pScore == currScore + civMultipler || pScore == currScore)
+        {
+            OnPickupScoreBad?.Invoke();
+        }
+
+        // The player saves >= half of the civilians in a level
+        if (pScore >= currScore + (civMultipler * half))
+        {
+            OnPickupScoreGood?.Invoke();
+        }
+
+        // Here we calculate for the actual score that will be serialized
+        foreach (var img in _imgList)
+        {
+            // Very simple
+            // If the image is green, we know it's a civvie we collected
             if (img.color == Color.green)
             {
                 yield return new WaitForSeconds(0.40f);
@@ -161,21 +190,17 @@ public class PickupDisplayBox : MonoBehaviour
 
         }
 
-        var half = totalPickups / 2;
-
-        // The player only saved a whopping 1 civilian or less
-        if (gmData.playerScore == currScore + civMultipler || gmData.playerScore == currScore)
-        {
-            OnPickupScoreBad?.Invoke();
-        }
-
-        // The player saves >= half of the civilians in a level
-        if (gmData.playerScore >= currScore + (civMultipler * half))
-        {
-            OnPickupScoreGood?.Invoke();
-        }
-
         OnPickupScoreEnd?.Invoke();
+
+        // I call the coroutine in the scope of this class
+        // Because for some odd reason the coroutine becomes null or simply doesn't call at all
+        // When I call it from within the scope of the LevelTimerBox class itself
+        // Mind boggling because there are other MonoBehaviours in this game
+        // That call their coroutines just fine in response to raised events
+        // I've tried nearly everything I can think of
+        // This is something I'd rather not do, but for now this shall suffice
+        StartCoroutine(LevelTimerBox.HandleTimeScore());
+
     }
 
 }
