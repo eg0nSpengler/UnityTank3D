@@ -9,11 +9,17 @@ public class MobManager : MonoBehaviour
 {
 
     public delegate void MobDestroyed();
+    public delegate void PlayerMobDestroyed();
 
     /// <summary>
     /// Called when a mob is "destroyed" and disabled in scene
     /// </summary>
     public static event MobDestroyed OnMobDestroyed;
+
+    /// <summary>
+    /// Called when the player dies or is "destroyed" in scene
+    /// </summary>
+    public static event PlayerMobDestroyed OnPlayerMobDestroyed;
 
     /// <summary>
     /// The position of the most recent destroyed Mob in the level
@@ -29,7 +35,7 @@ public class MobManager : MonoBehaviour
 
         foreach (var mob in FindObjectsOfType<GameObject>())
         {
-            if (mob.tag == TagStatics.GetMobTag() && mob.name != TagStatics.GetPlayerName())
+            if (mob.tag == TagStatics.GetMobTag())
             {
 
                 if (mob.GetComponent<HealthComponent>() != null)
@@ -40,7 +46,6 @@ public class MobManager : MonoBehaviour
                 {
                     Debug.LogError("Failed to get a Health Component on " + mob.gameObject.name.ToString());
                 }
-
                 _mobList.Add(mob);
             }
         }
@@ -53,10 +58,13 @@ public class MobManager : MonoBehaviour
             Debug.LogWarning("MobManger didn't find any valid Mobs within the current scene");
         }
 
+    }
+
+    private void OnEnable()
+    {
         ProjectileHandler.OnDamageMobEvent += DamageMob;
         AI_MeleeAttack.OnDamageMobEvent += DamageMob;
     }
-
 
     private void OnDisable()
     {
@@ -71,45 +79,51 @@ public class MobManager : MonoBehaviour
     
    private static void DamageMob(GameObject obj, int dmg)
     {
-        if(obj.tag != TagStatics.GetMobTag())
+        if (obj.GetComponent<HealthComponent>().IsDead == false)
         {
-            Debug.LogError("Failed to call DamageMob on " + obj.name.ToString() + " the GameObject may be an untagged Mob or not a Mob at all.");
-            return;
-        }
+            if (obj.tag != TagStatics.GetMobTag())
+            {
+                Debug.LogError("Failed to call DamageMob on " + obj.name.ToString() + " the GameObject may be an untagged Mob or not a Mob at all.");
+                return;
+            }
 
-        var objHealthComp = obj.gameObject.GetComponent<HealthComponent>();
+            var objHealthComp = obj.gameObject.GetComponent<HealthComponent>();
 
-        if (!objHealthComp)
-        {
-            Debug.LogError("Failed to get a Health Component on " + obj.name.ToString() + " the GameObject may be a Mob without a Health Component or not a Mob at all.");
-            return;
-        }
-        else
-        {
-            objHealthComp.TakeDamage(dmg);
-            Debug.Log(obj.name.ToString() + " has been dealt " + dmg.ToString() + " damage");
+            if (!objHealthComp)
+            {
+                Debug.LogError("Failed to get a Health Component on " + obj.name.ToString() + " the GameObject may be a Mob without a Health Component or not a Mob at all.");
+                return;
+            }
+            else
+            {
+                objHealthComp.TakeDamage(dmg);
+                Debug.Log(obj.name.ToString() + " has been dealt " + dmg.ToString() + " damage");
+            }
         }
     }
 
     private static void HealMob(GameObject obj, int hp)
     {
-        if (obj.tag != TagStatics.GetMobTag())
+        if (obj.GetComponent<HealthComponent>().IsDead == false)
         {
-            Debug.LogError("Failed to call HealMob on " + obj.name.ToString() + " the GameObject may be an untagged Mob or not a Mob at all.");
-            return;
-        }
+            if (obj.tag != TagStatics.GetMobTag())
+            {
+                Debug.LogError("Failed to call HealMob on " + obj.name.ToString() + " the GameObject may be an untagged Mob or not a Mob at all.");
+                return;
+            }
 
-        var objHealthComp = obj.gameObject.GetComponent<HealthComponent>();
+            var objHealthComp = obj.gameObject.GetComponent<HealthComponent>();
 
-        if (!objHealthComp)
-        {
-            Debug.LogError("Failed to get a Health Component on " + obj.name.ToString() + " the GameObject may be a Mob without a Health Component or not a Mob at all.");
-            return;
-        }
-        else
-        {
-            objHealthComp.Heal(hp);
-            Debug.Log(obj.name.ToString() + " has been healed for " + hp.ToString() + " hitpoints");
+            if (!objHealthComp)
+            {
+                Debug.LogError("Failed to get a Health Component on " + obj.name.ToString() + " the GameObject may be a Mob without a Health Component or not a Mob at all.");
+                return;
+            }
+            else
+            {
+                objHealthComp.Heal(hp);
+                Debug.Log(obj.name.ToString() + " has been healed for " + hp.ToString() + " hitpoints");
+            }
         }
     }
 
@@ -125,9 +139,14 @@ public class MobManager : MonoBehaviour
         {
             if (mob.GetComponent<HealthComponent>().IsDead == true)
             {
-                LastDestroyedPos = mob.transform.position;
-                _mobList.Remove(mob);
-                Debug.Log("The Mob list now contains " + _mobList.Count.ToString() + " mob(s)");
+                if (mob.name == TagStatics.GetPlayerName())
+                {
+                    OnPlayerMobDestroyed?.Invoke();
+                }
+
+               LastDestroyedPos = mob.transform.position;
+               _mobList.Remove(mob);
+               Debug.Log("The Mob list now contains " + _mobList.Count.ToString() + " mob(s)");    
             }
         }
 

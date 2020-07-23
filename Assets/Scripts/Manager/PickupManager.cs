@@ -105,8 +105,6 @@ public class PickupManager : MonoBehaviour
 
 
         Debug.Log("Pickup list contains " + _pickupList.Count + " pickups");
-
-
     }
 
     // Start is called before the first frame update
@@ -115,6 +113,18 @@ public class PickupManager : MonoBehaviour
         
     }
 
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Home))
+        {
+            SetAllPickups(true);
+        }
+
+        if (Input.GetKeyDown(KeyCode.End))
+        {
+            SetAllPickups(false);
+        }
+    }
     private void OnDisable()
     {
         foreach (var obj in FindObjectsOfType<GameObject>())
@@ -162,7 +172,6 @@ public class PickupManager : MonoBehaviour
 
         if (_pickupList.Count <= 0)
         {
-            TallyScore();
             OnAllPickupsCollectedEvent?.Invoke();
         }
 
@@ -170,8 +179,12 @@ public class PickupManager : MonoBehaviour
 
     private void TallyScore()
     {
+        var end = GameDataSerializer._gameDataList.Count - 1;
+        var gmData = GameDataSerializer.LoadGameData(end);
+
         PlayerScore = NumPickupsCollected * 10000;
-        
+        gmData.playerScore = PlayerScore;
+
         Debug.Log("The final score is " + PlayerScore.ToString());
         Debug.Log("The player has collected " + NumPickupsCollected.ToString() + " pickups");
     }
@@ -202,4 +215,20 @@ public class PickupManager : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// A cheat method to set every pickup still within in the level to be already "collected"
+    /// </summary>
+    /// <param name="collector">TRUE for the player, false for monster</param>
+    private void SetAllPickups(bool collector)
+    {
+        while (_pickupList.Count > 0)
+        {
+            foreach (var pickup in _pickupList.ToArray())
+            {
+                pickup.GetComponent<SphereHandler>().IsCollected = true;
+                pickup.GetComponent<SphereHandler>().PickupCollector = collector;
+                UpdatePickupList();
+            }
+        }
+    }
 }
