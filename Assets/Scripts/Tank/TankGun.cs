@@ -83,7 +83,6 @@ public class TankGun : MonoBehaviour
         {
             Debug.LogWarning("No Max Charge sound provided for TankGun!");
         }
-
     }
 
     void Start()
@@ -93,14 +92,16 @@ public class TankGun : MonoBehaviour
 
     void OnDisable()
     {
-        
-
+        StopAllCoroutines();
     }
 
     // Update is called once per frame
     void Update()
     {
-        HandleInput();
+        if (GameManager.IsGamePaused == false)
+        {
+            HandleInput(); 
+        }
     }
 
     void HandleInput()
@@ -164,7 +165,6 @@ public class TankGun : MonoBehaviour
     /// </summary>
     IEnumerator ReloadGun()
     {
-        
         isReadyToFire = false;
         yield return new WaitForSeconds(_reloadTime);
         UpdateGunStatus(GUN_STATUS.GUN_READY);

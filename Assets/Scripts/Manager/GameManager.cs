@@ -16,14 +16,23 @@ public class GameManager : MonoBehaviour
     public AudioClip TimeScoreSound;
     public AudioClip TimeScoreEndSound;
     public AudioClip GuitarRiffSound;
+    public AudioClip PauseSound;
+
+    /// <summary>
+    /// Is the game currently paused?
+    /// </summary>
+    public static bool IsGamePaused { private set; get; }
 
     private AudioSource _audioSource;
+
 
     public delegate void GameStateMenu();
     public delegate void GameStatePreBrief();
     public delegate void GameStatePlay();
     public delegate void GameStatePostBrief();
     public delegate void GameStateGameOver();
+    public delegate void GamePause();
+    public delegate void GameResume();
     public delegate int GameLoadLevel();
 
     /// <summary>
@@ -51,6 +60,16 @@ public class GameManager : MonoBehaviour
     /// </summary>
     public static event GameStateGameOver OnGameStateGameOver;
 
+    /// <summary>
+    /// Called when the user presses ESC during Gameplay (this will open the pause menu)
+    /// </summary>
+    public static event GamePause OnGamePause;
+
+    /// <summary>
+    /// Called when the user presses ESC while at the Pause Menu (this will close the pause menu and resume the game)
+    /// </summary>
+    public static event GameResume OnGameResume;
+
     public enum GAME_STATE 
     {
         STATE_NONE,
@@ -76,7 +95,7 @@ public class GameManager : MonoBehaviour
             _audioSource = gameObject.AddComponent<AudioSource>();
         }
 
-        if (!PickupScoreSound || !TimeScoreSound || !TimeScoreEndSound || !GuitarRiffSound)
+        if (!PickupScoreSound || !TimeScoreSound || !TimeScoreEndSound || !GuitarRiffSound || !PauseSound)
         {
             Debug.LogWarning("GameManager is missing a sound reference!");
         }
@@ -86,18 +105,27 @@ public class GameManager : MonoBehaviour
             FindObjectOfType<LevelPortal>().OnPlayerEnterPortalEvent += PauseGame;
         }
         //PickupManager.OnAllPickupsCollectedEvent += SaveData;
+
+        IsGamePaused = false;
     }
 
     // Start is called before the first frame update
     private void Start()
     {
-        Debug.Log(GameState.ToString());
-
+        // Are we at the main menu?
         if (SceneManager.GetActiveScene().name.Contains("MENU"))
         {
+            // We're at the main menu
             GameState = GAME_STATE.STATE_MENU;
             GameDataSerializer.InitGameData();
+        } 
+        else if(GameState == GAME_STATE.STATE_PLAYING) // Are we currently playing a level?
+        {
+            // Let's listen and wait for a pause request then
+            StartCoroutine(WaitForPauseState());
         }
+
+        Debug.Log(GameState.ToString());
     }
 
     private void OnEnable()
@@ -106,10 +134,12 @@ public class GameManager : MonoBehaviour
         StartLevelButton.OnLevelStartEvent += PlayGame;
         MobManager.OnPlayerMobDestroyed += EndGame;
         LevelTimerBox.OnLevelTimerEnd += EndGame;
+        ExitToMenuButton.OnExitToMenuRequest += MenuGame;
         PickupDisplayBox.OnPickupScoreUpdate += PlayScoreAudio;
         LevelTimerBox.OnLevelTimerScoreUpdate += PlayTimeScoreAudio;
         LevelTimerBox.OnLevelTimerScoreEnd += EndTimeScoreAudio;
         LevelTimerBox.OnLevelTimerScoreEnd += PlayNextLevel;
+        OnGamePause += PlayPauseAudio;
     }
 
     private void OnDisable()
@@ -118,16 +148,21 @@ public class GameManager : MonoBehaviour
         StartLevelButton.OnLevelStartEvent -= PlayGame;
         MobManager.OnPlayerMobDestroyed -= EndGame;
         LevelTimerBox.OnLevelTimerEnd -= EndGame;
+        ExitToMenuButton.OnExitToMenuRequest -= MenuGame;
         PickupDisplayBox.OnPickupScoreUpdate -= PlayScoreAudio;
         LevelTimerBox.OnLevelTimerScoreUpdate -= PlayTimeScoreAudio;
         LevelTimerBox.OnLevelTimerScoreEnd -= EndTimeScoreAudio;
         LevelTimerBox.OnLevelTimerScoreEnd -= PlayNextLevel;
+        OnGamePause -= PlayPauseAudio;
+
 
         if (FindObjectOfType<LevelPortal>() != null)
         {
             FindObjectOfType<LevelPortal>().OnPlayerEnterPortalEvent -= PauseGame;
         }
         //PickupManager.OnAllPickupsCollectedEvent -= SaveData;
+
+        StopAllCoroutines();
     }
 
     private void MenuGame()
@@ -211,6 +246,33 @@ public class GameManager : MonoBehaviour
         StartGame();
     }
 
+    IEnumerator WaitForPauseState()
+    {
+        while (!Input.GetKeyDown(KeyCode.Escape))
+        {
+            yield return null;
+        }
+
+        Debug.Log("GAME PAUSED!");
+        IsGamePaused = true;
+        OnGamePause?.Invoke();
+        yield return new WaitForSeconds(0.5f); // BEGONE RACE CONDITION
+        StartCoroutine(WaitForUnPauseState());
+    }
+
+    IEnumerator WaitForUnPauseState()
+    {
+        while (!Input.GetKeyDown(KeyCode.Escape))
+        {
+            yield return null;
+        }
+
+        Debug.Log("GAME RESUMED!");
+        IsGamePaused = false;
+        OnGameResume?.Invoke();
+        yield return new WaitForSeconds(0.5f); // BEGONE RACE CONDITION
+        StartCoroutine(WaitForPauseState());
+    }
 
     void PlayScoreAudio()
     {
@@ -233,6 +295,12 @@ public class GameManager : MonoBehaviour
     void PlayGuitarRiff()
     {
         _audioSource.clip = GuitarRiffSound;
+        _audioSource.Play();
+    }
+
+    void PlayPauseAudio()
+    {
+        _audioSource.clip = PauseSound;
         _audioSource.Play();
     }
 }

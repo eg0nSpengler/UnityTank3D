@@ -29,6 +29,7 @@ public class TankMovement : MonoBehaviour
     private int _boostAmount;
     private bool _isBoosting; // Are we currently boosting?
     private bool _isMoving; // Is the Tank currently moving?
+    private float _boostTimeCode; // The time code for the boost audio playback position (used for resuming audio after pausing)
 
     private delegate void TankBoostBegin();
     private delegate void TankBoostEnd();
@@ -54,6 +55,7 @@ public class TankMovement : MonoBehaviour
         rotationSpeed = 1;
         _boostAmount = 4;
         _tankDir = TANK_DIR.NONE;
+        _boostTimeCode = 0.0f;
 
         if (!_charController)
         {
@@ -77,7 +79,7 @@ public class TankMovement : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-
+        StartCoroutine(PauseBoostSound());
     }
 
     private void OnEnable()
@@ -89,25 +91,32 @@ public class TankMovement : MonoBehaviour
     {
         OnTankBoostBegin -= InvokeBoostSound;
         OnTankBoostEnd -= EndBoostSound;
+        StopAllCoroutines();
     }
 
     private void FixedUpdate()
     {
-        if (_isMoving == true)
+        if (GameManager.IsGamePaused == false)
         {
-            MoveTank(_tankDir);
-        }
+            if (_isMoving == true)
+            {
+                MoveTank(_tankDir);
+            }
 
-        if (_isBoosting == true)
-        {
-            BoostTank();
+            if (_isBoosting == true)
+            {
+                BoostTank();
+            }
         }
     }
 
     // Update is called once per frame
     void Update()
     {
-        HandleInput();
+        if (GameManager.IsGamePaused == false)
+        {
+            HandleInput();
+        }
     }
 
     void MoveTank(TANK_DIR dir)
@@ -196,7 +205,7 @@ public class TankMovement : MonoBehaviour
                 _isMoving = false;
             }
 
-            if (Input.GetKeyDown(KeyCode.LeftAlt))
+            if (Input.GetKeyDown(KeyCode.LeftShift))
             {
                 if (_isBoosting == true)
                 {
@@ -218,7 +227,7 @@ public class TankMovement : MonoBehaviour
         {
             InvokeRepeating("PlayBoostSound", 0.0f, _audioSource.clip.length);
         }
-       
+      
     }
 
     void EndBoostSound()
@@ -232,4 +241,19 @@ public class TankMovement : MonoBehaviour
        _audioSource.Play();
     }
 
+    IEnumerator PauseBoostSound()
+    {
+        yield return new WaitUntil(() => GameManager.IsGamePaused == true);
+        _audioSource.Pause();
+        EndBoostSound();
+        StartCoroutine(ResumeBoostSound());
+    }
+
+    IEnumerator ResumeBoostSound()
+    {
+        yield return new WaitUntil(() => GameManager.IsGamePaused == false);
+        _audioSource.UnPause();
+        InvokeBoostSound();
+        StartCoroutine(PauseBoostSound());
+    }
 }

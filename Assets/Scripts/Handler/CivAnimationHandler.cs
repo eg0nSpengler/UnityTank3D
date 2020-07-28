@@ -1,8 +1,10 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEditor.Animations;
 
+[RequireComponent(typeof(Animator))]
+[RequireComponent(typeof(SphereHandler))]
+[RequireComponent(typeof(Rigidbody))]
 public class CivAnimationHandler : MonoBehaviour
 {
     private Animator _animator;
@@ -12,7 +14,6 @@ public class CivAnimationHandler : MonoBehaviour
 
     //This is to get our IsDead param from our Animator
     private int _isDeadHash;
-
 
     public delegate void DeathAnimationPlay();
 
@@ -50,23 +51,26 @@ public class CivAnimationHandler : MonoBehaviour
 
         _isDeadHash = Animator.StringToHash("IsDead");
 
+        GameManager.OnGamePause += StopAnim;
+        GameManager.OnGameResume += ResumeAnim;
+    }
+
+    private void OnEnable()
+    {
         _sphereHandler.OnPickupDieEvent += HandleDeathAnim;
     }
 
     private void OnDisable()
     {
         _sphereHandler.OnPickupDieEvent -= HandleDeathAnim;
+        GameManager.OnGamePause -= StopAnim;
+        GameManager.OnGameResume -= ResumeAnim;
     }
 
     // Start is called before the first frame update
     void Start()
     {
-    }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 
     void HandleDeathAnim()
@@ -77,5 +81,15 @@ public class CivAnimationHandler : MonoBehaviour
          _rb.useGravity = true;
 
         OnDeathAnimPlay?.Invoke();
+    }
+
+    void StopAnim()
+    {
+        _animator.StartPlayback();
+    }
+
+    void ResumeAnim()
+    {
+        _animator.StopPlayback();
     }
 }

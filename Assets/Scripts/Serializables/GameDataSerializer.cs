@@ -69,4 +69,13 @@ public static class GameDataSerializer
         }
     }
 
+    
+    /// <summary>
+    /// This is called when the user quits back to the main menu
+    /// </summary>
+    public static void ResetGameData()
+    {
+        _gameDataList.Clear();
+        InitGameData();
+    }
 }

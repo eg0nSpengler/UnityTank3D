@@ -30,12 +30,14 @@ public class LevelPortal : MonoBehaviour
     private AudioSource _audioSource;
     private SpriteRenderer _spriteRen;
     private CapsuleCollider _capCol;
+    private Animator _anim;
 
     private void Awake()
     {
         _audioSource = GetComponent<AudioSource>();
         _spriteRen = GetComponent<SpriteRenderer>();
         _capCol = GetComponent<CapsuleCollider>();
+        _anim = GetComponent<Animator>();
 
         if (!_audioSource)
         {
@@ -55,13 +57,17 @@ public class LevelPortal : MonoBehaviour
             _capCol = gameObject.AddComponent<CapsuleCollider>();
         }
 
+        if (!_anim)
+        {
+            Debug.LogError("Failed to get Animator on LevelPortal!");
+        }
+
         _audioSource.volume = 0.2f;
         PortalPos = gameObject.transform.position;
 
         _spriteRen.enabled = false;
         _capCol.enabled = false;
         _capCol.isTrigger = true;
-
 
     }
 
@@ -70,21 +76,19 @@ public class LevelPortal : MonoBehaviour
         Debug.LogWarning(gameObject.name.ToString() + " has been enabled at " + Time.time.ToString());
         PickupManager.OnAllPickupsCollectedEvent += ShowPortal;
         SceneManager.sceneLoaded += OnSceneLoaded;
+        GameManager.OnGamePause += StopAnim;
+        GameManager.OnGameResume += ResumeAnim;
+
     }
 
     private void OnDisable()
     {
         PickupManager.OnAllPickupsCollectedEvent -= ShowPortal;
         SceneManager.sceneLoaded -= OnSceneLoaded;
+        GameManager.OnGamePause -= StopAnim;
+        GameManager.OnGameResume -= ResumeAnim;
         Debug.LogWarning(gameObject.name.ToString() + " has been destroyed at " + Time.time.ToString());
     }
-
-    // Start is called before the first frame update
-    void Start()
-    {
-
-    }
-
 
     private void OnSceneLoaded(Scene currScene, LoadSceneMode mode)
     {
@@ -109,4 +113,13 @@ public class LevelPortal : MonoBehaviour
         OnLevelPortalEnabled?.Invoke();
     }
 
+    void StopAnim()
+    {
+        _anim.StartPlayback();
+    }
+
+    void ResumeAnim()
+    {
+        _anim.StopPlayback();
+    }
 }
