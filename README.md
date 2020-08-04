@@ -53,4 +53,6 @@ The sprite sheets themselves were cut from the game by a user named [Dunkelschwa
 A quick Google search also revealed that *Dunkelschwamm* is a notable member of the Wolfenstein 3D modding community, check em' out [here](https://wl6.fandom.com/wiki/Dunkelschwamm)
 
 
+### Guitar Riff
 
+Peggle (2007) - Jimmy Lightning Powerup Sound
