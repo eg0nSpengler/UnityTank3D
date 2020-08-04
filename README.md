@@ -5,6 +5,12 @@ A personal project by Anthony Brown.
 
 ![Hovertank3D Splash Screen](https://upload.wikimedia.org/wikipedia/en/a/af/Hovertank_3D_title_screen.jpg)
 
+[Progress Video 8/4/2020](https://youtu.be/j5wobI6MfrA)
+
+![The current pre-briefing screen](https://files.catbox.moe/axustp.png)
+![Three hapless civilians waiting to be saved!](https://files.catbox.moe/98cihz.png)
+
+![The scoring screen](https://files.catbox.moe/cag5f0.png)
 # Info
 
  - *What is Hovertank 3D?*
