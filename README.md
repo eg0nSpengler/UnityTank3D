@@ -1,7 +1,6 @@
 # UnityTank3D
 A clone of iD's *Hovertank 3D* made in [Unity3D](https://unity.com/).
 
-A personal project by Anthony Brown.
 
 ![enter image description here](https://upload.wikimedia.org/wikipedia/en/a/af/Hovertank_3D_title_screen.jpg)
 
