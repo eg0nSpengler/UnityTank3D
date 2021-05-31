@@ -4,11 +4,9 @@ A clone of iD's *Hovertank 3D* made in [Unity3D](https://unity.com/).
 
 ![enter image description here](https://upload.wikimedia.org/wikipedia/en/a/af/Hovertank_3D_title_screen.jpg)
 
-
-![The current pre-briefing screen](https://files.catbox.moe/axustp.png)
-![Three hapless civilians waiting to be saved!](https://files.catbox.moe/98cihz.png)
-
-![The scoring screen](https://files.catbox.moe/cag5f0.png)
+![](https://i.ibb.co/GxT3vS5/Unity-d-IVOs1e-Cx-O.png)
+![](https://i.ibb.co/kqSQHb3/Unity-9cj7-Sxoh-IF.png)
+![](https://i.ibb.co/tx7F6W9/Unity-JIm-Ecq-MOiw.png)
 
 # Info
 
