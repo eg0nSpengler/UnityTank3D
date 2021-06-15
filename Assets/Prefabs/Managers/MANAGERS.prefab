@@ -28,7 +28,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7034575865338096852}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
@@ -60,6 +60,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   levelInfo: {fileID: 0}
+  levelInfoList: {fileID: 11400000, guid: b683cb5c5bb03684e9e6f07537467e5f, type: 2}
   lowTimeSound: {fileID: 8300000, guid: c881eea6b9bf49445a66825d582e11a2, type: 3}
 --- !u!114 &8916938708837098349
 MonoBehaviour:
@@ -85,6 +86,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bc14a7affda4d5d4ab6061d838e9ee9c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  PauseSound: {fileID: 8300000, guid: de3d225714a2679499c181fa3f2306d5, type: 3}
 --- !u!82 &3016061593557578414
 AudioSource:
   m_ObjectHideFlags: 0

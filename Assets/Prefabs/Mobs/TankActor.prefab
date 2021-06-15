@@ -361,7 +361,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 704b1335183b21348b3f660352c660b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentHP: 10
+  _currentHP: 30
 --- !u!114 &3137103096665009884
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -387,7 +387,7 @@ GameObject:
   - component: {fileID: 2808160856073899270}
   m_Layer: 8
   m_Name: TankCamera
-  m_TagString: Camera
+  m_TagString: MainCamera
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -506,3 +506,53 @@ MonoBehaviour:
   fireSound: {fileID: 8300000, guid: e734a4043cd02204da15a11d0d5f24bb, type: 3}
   rearmSound: {fileID: 8300000, guid: e80a67a3afb21594eaeed8676420ec02, type: 3}
   maxChargeSound: {fileID: 8300000, guid: 1c28de642b39eb84895c29749c82561c, type: 3}
+--- !u!222 &1589346118
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6888420289623258304}
+  m_CullTransparentMesh: 0
+--- !u!114 &1589346117
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6888420289623258304}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 0}
+  m_RaycastTarget: 1
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 0}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!114 &1589346120
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6888420289623258304}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2abb14991a834b341a9b29c81a6f75ed, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  deathImage: {fileID: 21300000, guid: 30634d8eb6b99ae4796eb8a140872f6b, type: 3}

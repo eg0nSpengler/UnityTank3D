@@ -48,3 +48,5 @@ sysinfo.txt
 crashlytics-build.properties
 /Assets/Audio/dota_meepmerp.wav.meta
 /Assets/Audio/dota_meepmerp.wav
+/binwebgl
+/bin

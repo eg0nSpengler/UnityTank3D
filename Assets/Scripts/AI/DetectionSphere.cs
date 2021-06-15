@@ -2,7 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.SceneManagement;
 
+[RequireComponent(typeof(SphereCollider))]
+[RequireComponent(typeof(NavComponent))]
 public class DetectionSphere : MonoBehaviour
 {
 
@@ -11,11 +14,16 @@ public class DetectionSphere : MonoBehaviour
     public Collider audioTargetCollider;
 
     private SphereCollider _sphereCollider;
+    private NavComponent _navComponent;
 
-    private float _sphereRadius = 5.0f;
+    private float _sphereRadius;
+
+    /// <summary>
+    /// Are we currently tracking a target?
+    /// </summary>
+    private bool _isTrackingTarget;
 
     public delegate void TargetClearLOS(GameObject obj);
-    public delegate void TargetNoClearLOS(GameObject obj);
     public delegate void TargetInRadius(GameObject obj);
     public delegate void TargetExitRadius(GameObject obj);
     public delegate void TargetTracking(GameObject obj);
@@ -26,11 +34,6 @@ public class DetectionSphere : MonoBehaviour
     /// Called when we have a clear Line of Sight to a target
     /// </summary>
     public event TargetClearLOS OnTargetClearLOS;
-
-    /// <summary>
-    /// Called when we don't have a clear Line of Sight to a target
-    /// </summary>
-    public event TargetNoClearLOS OnTargetNoClearLOS;
 
     /// <summary>
     /// Called when a target has come inside the radius of our sphere
@@ -56,35 +59,48 @@ public class DetectionSphere : MonoBehaviour
     private void Awake()
     {
         _sphereCollider = GetComponent<SphereCollider>();
+        _navComponent = GetComponent<NavComponent>();
 
-        _sphereCollider.radius = _sphereRadius;
         _sphereCollider.isTrigger = true;
+        _isTrackingTarget = false;
 
         if (!_sphereCollider)
         {
-            Debug.LogError("Failed to get SphereCollider on " + gameObject.name.ToString() + ", creating one now...");
+            Debug.LogError("Failed to get SphereCollider on " + gameObject.name.ToString() + ", creating one now");
             _sphereCollider = gameObject.AddComponent<SphereCollider>();
         }
 
+        if (!_navComponent)
+        {
+            Debug.LogError("Failed to get NavComponent on " + gameObject.name.ToString() + ", creating one now");
+            _navComponent = gameObject.AddComponent<NavComponent>();
+        }
 
-        OnTargetTracking += SearchForTarget;
+        SceneManager.sceneLoaded += Init;
+        
     }
 
-    // Start is called before the first frame update
-    private void Start()
+    private void Init(Scene scene, LoadSceneMode mode)
     {
-        OnTargetTracking -= SearchForTarget;
+        _sphereCollider = GetComponent<SphereCollider>();
+        _navComponent = GetComponent<NavComponent>();
+    }
+
+    private void OnEnable()
+    {
+        _navComponent.OnDestinationFail += StopDetection;
     }
 
     private void OnDisable()
     {
-        
+        _navComponent.OnDestinationFail -= StopDetection;
+
     }
 
     // Update is called once per frame
     private void Update()
     {
-        SearchForTarget(currentTarget);
+         SearchForTarget(currentTarget);
     }
 
     private void OnTriggerEnter(Collider other)
@@ -95,13 +111,14 @@ public class DetectionSphere : MonoBehaviour
         {
             if (InLineOfSight(other.gameObject))
             {
-                OnTargetClearLOS(other.gameObject);
-                OnTargetInRadius(other.gameObject);
+                OnTargetClearLOS?.Invoke(other.gameObject);
+                OnTargetInRadius?.Invoke(other.gameObject);
+                _isTrackingTarget = true;
             }
             else
             {
-                OnTargetNoClearLOS(other.gameObject);
-                OnTargetInRadius(other.gameObject);
+                OnTargetInRadius?.Invoke(other.gameObject);
+                _isTrackingTarget = false;
             }
         }
 
@@ -110,13 +127,14 @@ public class DetectionSphere : MonoBehaviour
             //The mob is within our LoS
             if (InLineOfSight(other.gameObject))
             {
-                OnTargetClearLOS(other.gameObject);
-                OnTargetInRadius(other.gameObject);
+                OnTargetClearLOS?.Invoke(other.gameObject);
+                OnTargetInRadius?.Invoke(other.gameObject);
+                _isTrackingTarget = true;
             }
             else
             {
-                OnTargetInRadius(other.gameObject);
-                OnTargetNoClearLOS(other.gameObject);
+                OnTargetInRadius?.Invoke(other.gameObject);
+                _isTrackingTarget = false;
                 return;
             }
             currentTarget = other.gameObject;
@@ -126,7 +144,7 @@ public class DetectionSphere : MonoBehaviour
         //We heard a noise
         if (other.gameObject.tag == "Audible")
         {
-            OnHeardSound(other.gameObject);
+            OnHeardSound?.Invoke(other.gameObject);
         }
 
     }
@@ -135,8 +153,9 @@ public class DetectionSphere : MonoBehaviour
     {
         if (other.gameObject.tag == TagStatics.GetMobTag() && other.gameObject.name == TagStatics.GetPlayerName())
         {
-            OnTargetExitRadius(other.gameObject);
+            OnTargetExitRadius?.Invoke(other.gameObject);
             currentTarget = null;
+            _isTrackingTarget = false;
         }
     }
 
@@ -154,15 +173,14 @@ public class DetectionSphere : MonoBehaviour
         {
             if (hit.collider.gameObject.name == obj.name)
             {
-                OnTargetClearLOS(obj);
-                OnTargetInRadius(obj);
+                OnTargetClearLOS?.Invoke(obj);
+                OnTargetInRadius?.Invoke(obj);
                 Debug.DrawRay(startPos, hit.point - startPos, Color.green);
                 return true;
             }
             else
             {
-                OnTargetNoClearLOS(obj);
-                OnTargetInRadius(obj);
+                OnTargetInRadius?.Invoke(obj);
                 return false;
             }
         }
@@ -182,10 +200,18 @@ public class DetectionSphere : MonoBehaviour
             //Checking to see if they are actually within our radius
             if (_sphereCollider.bounds.Contains(currentTarget.GetComponent<Collider>().bounds.center))
             {
-                OnTargetClearLOS(currentTarget);
-                OnTargetTracking(currentTarget);
+                OnTargetClearLOS?.Invoke(currentTarget);
+                OnTargetTracking?.Invoke(currentTarget);
             }
         }
+    }
+
+    void StopDetection()
+    {
+        // This is a bit of a hack to stop the sphere from throwing events still when the monster is dead
+        // Again, would prefer to not explicity delete a gameObject or component instance during gameplay
+        // But alas, it shall suffice for now
+        Destroy(this);
     }
     
 }

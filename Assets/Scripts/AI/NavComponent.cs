@@ -3,6 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
+/// <summary>
+/// This class holds all navigation related logic for AI Mobs
+/// </summary>
+/// 
+
+[RequireComponent(typeof(NavMeshAgent))]
+//[RequireComponent(typeof(DetectionSphere))]
+[RequireComponent(typeof(HealthComponent))]
 public class NavComponent : MonoBehaviour
 {
     public delegate void DestinationBegin();
@@ -31,60 +39,81 @@ public class NavComponent : MonoBehaviour
     /// </summary>
     public event NavToTarget OnNavToTarget;
 
+    private NavMeshAgent _navAgent;
+    //private DetectionSphere //_detectionsphere;
+    private NavMeshPath _navMeshPath;
     private GameObject _currentTarget;
     private Vector3 _lastKnownPos;
-    private DetectionSphere _detectionSphere;
-
-    private NavMeshAgent _navAgent;
-    private NavMeshPath _navMeshPath;
+    private HealthComponent _healthComp;
+    private IEnumerator _coroutineRef; // This is to keep a ref to our running coroutine
 
     private float _pathElapsed; //For NavMeshPath debugging purposes
+    private float _moveSpeed;
 
     private void Awake()
     {
         _navAgent = GetComponentInParent<NavMeshAgent>();
-        _detectionSphere = GetComponent<DetectionSphere>();
+        //_detectionsphere = GetComponentInChildren<DetectionSphere>();
 
-        _pathElapsed = 0.0f;
         _navMeshPath = new NavMeshPath();
+        _currentTarget = null;
         _lastKnownPos = new Vector3(0.0f, 0.0f, 0.0f);
+        _moveSpeed = 2f;
+        _coroutineRef = CheckDist();
+        _pathElapsed = 0.0f;
+        _navAgent.speed = _moveSpeed;
 
+        if (GetComponentInParent<HealthComponent>() != null)
+        {
+            Debug.Log("NavComponent has found a health component!");
+            _healthComp = GetComponentInParent<HealthComponent>();
+            _healthComp.OnHealthZero += StopNav;
+        }
+        
         if (!_navAgent)
         {
-            Debug.LogError("Failed to get NavMeshAgent on " + gameObject.name.ToString() + ", creating one now...");
+            Debug.LogError("Failed to get NavMeshAgent on " + gameObject.name.ToString() + ", creating one now");
             _navAgent = gameObject.AddComponent<NavMeshAgent>();
         }
 
-        if (!_detectionSphere)
+        /*if (!//_detectionsphere)
         {
-            Debug.LogError("Failed to get DetectionSphere on " + gameObject.name.ToString() + ", creating one now...");
-            _detectionSphere = gameObject.AddComponent<DetectionSphere>();
-        }
+            Debug.LogError("Failed to get DetectionSphere on " + gameObject.name.ToString() + ", creating one now");
+            //_detectionsphere = gameObject.AddComponent<DetectionSphere>();
+        }*/
 
-        _detectionSphere.OnTargetClearLOS += MoveToTarget;
-        _detectionSphere.OnTargetNoClearLOS += SetPossibleTarget;
-        _detectionSphere.OnTargetInRadius += SetPossibleTarget;
-        _detectionSphere.OnTargetExitRadius += ForgetTarget;
-        _detectionSphere.OnTargetExitRadius += MoveToLastKnownPos;
-        _detectionSphere.OnHeardSound += MoveToAudible;
-        _detectionSphere.OnTargetTracking += MoveToTarget;
+
+        
     }
 
     private void Start()
     {
-        
+
+    }
+
+    private void OnEnable()
+    {
+        //_detectionsphere.OnTargetClearLOS += MoveToTarget;
+        //_detectionsphere.OnTargetInRadius += SetPossibleTarget;
+        //_detectionsphere.OnTargetExitRadius += ForgetTarget;
+        //_detectionsphere.OnTargetExitRadius += MoveToLastKnownPos;
+        //_detectionsphere.OnHeardSound += MoveToAudible;
+        //_detectionsphere.OnTargetTracking += MoveToTarget;
     }
 
     private void OnDisable()
     {
 
-        _detectionSphere.OnTargetClearLOS -= MoveToTarget;
-        _detectionSphere.OnTargetNoClearLOS -= SetPossibleTarget;
-        _detectionSphere.OnTargetInRadius -= SetPossibleTarget;
-        _detectionSphere.OnTargetExitRadius -= ForgetTarget;
-        _detectionSphere.OnTargetExitRadius -= MoveToLastKnownPos;
-        _detectionSphere.OnHeardSound -= MoveToAudible;
-        _detectionSphere.OnTargetTracking -= MoveToTarget;
+        //_detectionsphere.OnTargetClearLOS -= MoveToTarget;
+        //_detectionsphere.OnTargetInRadius -= SetPossibleTarget;
+        //_detectionsphere.OnTargetExitRadius -= ForgetTarget;
+        //_detectionsphere.OnTargetExitRadius -= MoveToLastKnownPos;
+        //_detectionsphere.OnHeardSound -= MoveToAudible;
+        //_detectionsphere.OnTargetTracking -= MoveToTarget;
+
+        OnDestinationBegin -= UpdateDestStatus;
+
+        StopAllCoroutines();
     }
 
     private void Update()
@@ -112,7 +141,7 @@ public class NavComponent : MonoBehaviour
     {
         _currentTarget = obj;
         _navAgent.SetDestination(obj.transform.position);
-        //OnDestinationBegin();
+        OnDestinationBegin?.Invoke();
     }
 
     /// <summary>
@@ -134,6 +163,7 @@ public class NavComponent : MonoBehaviour
     private void MoveToLastKnownPos(GameObject obj)
     {
         _navAgent.SetDestination(_lastKnownPos);
+        OnDestinationBegin?.Invoke();
     }
 
     /// <summary>
@@ -142,16 +172,30 @@ public class NavComponent : MonoBehaviour
     /// <param name="other"></param>
     private void MoveToAudible(GameObject obj)
     {
-        _navAgent.SetDestination(obj.transform.position);
-        _currentTarget = obj;
-        _lastKnownPos = obj.transform.position;
-        //OnDestinationBegin();
+        if (_navAgent.enabled == true)
+        {
+            _navAgent.SetDestination(obj.transform.position);
+            _currentTarget = obj;
+            _lastKnownPos = obj.transform.position;
+            OnDestinationBegin?.Invoke();    
+        }
+    }
+
+    /// <summary>
+    /// So the monster's corpse doesn't navigate.
+    /// <para>lol</para>
+    /// </summary>
+    void StopNav()
+    {
+        
+        StopCoroutine(_coroutineRef);
+        _navAgent.isStopped = true;
+        _navAgent.enabled = false;
+        OnDestinationFail?.Invoke();
     }
 
     IEnumerator CheckDist()
     {
-        Debug.Log("I've begun navigating to a destination...");
-
         // I don't know why but
         // As great as predicates are
         // That little () => bit of syntax has always irked me
@@ -166,6 +210,7 @@ public class NavComponent : MonoBehaviour
 
         yield return new WaitWhile(() => _navAgent.remainingDistance > _navAgent.stoppingDistance);
 
+        OnDestinationSuccess?.Invoke();
     }
 
     /// <summary>
@@ -173,7 +218,7 @@ public class NavComponent : MonoBehaviour
     /// </summary>
     private void UpdateDestStatus()
     {
-        StartCoroutine(CheckDist());
+        StartCoroutine(_coroutineRef);   
     }
 
 }

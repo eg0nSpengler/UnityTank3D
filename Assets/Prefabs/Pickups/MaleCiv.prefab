@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 8202792218715480723}
   - component: {fileID: 282526410}
   - component: {fileID: 7164160612429628535}
+  - component: {fileID: 8324176558015665995}
   m_Layer: 12
   m_Name: MaleCiv
   m_TagString: Pickup
@@ -162,3 +163,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerPickupSound: {fileID: 8300000, guid: 51db81b9412c40248b19399666599754, type: 3}
   monsterPickupSound: {fileID: 8300000, guid: d3640581d89f39c47bb80c66f76fc0a8, type: 3}
+--- !u!114 &8324176558015665995
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8779632963563172537}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a46ab806d8e6b8b48b10955922b07d1e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
