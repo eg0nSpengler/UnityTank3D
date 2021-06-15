@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
+
+[RequireComponent(typeof(TextMeshProUGUI))]
 public class ZoneText : MonoBehaviour
 {
     [Header("References")]
@@ -15,12 +17,6 @@ public class ZoneText : MonoBehaviour
     void Awake()
     {
         _zoneText = GetComponent<TextMeshProUGUI>();
-
-        if (!_zoneText)
-        {
-            Debug.LogError("Failed to get TextMeshProTextUI element on " + gameObject.name.ToString() + ", creating one now...");
-            _zoneText = gameObject.AddComponent<TextMeshProUGUI>();
-        }
 
         _zoneString = "Zone ";
         _zoneText.color = Color.white;

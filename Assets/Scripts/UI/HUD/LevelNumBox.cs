@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
+[RequireComponent(typeof(TextMeshProUGUI))]
 public class LevelNumBox : MonoBehaviour
 {
     private TextMeshProUGUI _levelNum;
@@ -11,13 +12,6 @@ public class LevelNumBox : MonoBehaviour
     {
         _levelNum = GetComponent<TextMeshProUGUI>();
         _levelNum.color = Color.green;
-
-        if (!_levelNum)
-        {
-            Debug.LogError("Failed to get TextMeshProTextUI element on " + gameObject.name.ToString() + ", creating one now...");
-            _levelNum = gameObject.AddComponent<TextMeshProUGUI>();
-        }
-
 
     }
     // Start is called before the first frame update

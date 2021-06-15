@@ -26,12 +26,6 @@ public class MenuDoor : MonoBehaviour
         _toolTipForeground = new GUIStyle();
         _toolTipBackground = new GUIStyle();
 
-        if (!_audioSource)
-        {
-            Debug.LogError("Failed to get Audio Source on " + gameObject.name.ToString() + ", creating one now...");
-            _audioSource = gameObject.AddComponent<AudioSource>();
-        }
-
         _audioSource.clip = DoorOpenSound;
 
         _toolTipForeground.normal.textColor = Color.white;

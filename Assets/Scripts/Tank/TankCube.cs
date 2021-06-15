@@ -15,14 +15,6 @@ public class TankCube : MonoBehaviour
     {
         _meshRen = GetComponentInParent<MeshRenderer>();
         _defaultMaterial = GetComponentInParent<MeshRenderer>().material;
-
-        if (!_meshRen)
-        {
-            Debug.LogError("Failed to get MeshRenderer on " + gameObject.name.ToString() + ", creating one now...");
-            _meshRen = gameObject.AddComponent<MeshRenderer>();
-        }
-
-        
     }
 
     // Start is called before the first frame update

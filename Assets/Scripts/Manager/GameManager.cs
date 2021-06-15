@@ -89,12 +89,6 @@ public class GameManager : MonoBehaviour
     {
         _audioSource = GetComponent<AudioSource>();
 
-        if (!_audioSource)
-        {
-            Debug.LogError("Failed to get AudioSource on GameManager, creating one now");
-            _audioSource = gameObject.AddComponent<AudioSource>();
-        }
-
         if (!PickupScoreSound || !TimeScoreSound || !TimeScoreEndSound || !GuitarRiffSound || !PauseSound)
         {
             Debug.LogWarning("GameManager is missing a sound reference!");

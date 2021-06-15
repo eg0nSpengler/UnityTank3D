@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
+[RequireComponent(typeof(TextMeshProUGUI))]
 public class ScoreBox : MonoBehaviour
 {
     private TextMeshProUGUI _score;
@@ -10,12 +11,6 @@ public class ScoreBox : MonoBehaviour
     private void Awake()
     {
         _score = GetComponent<TextMeshProUGUI>();
-
-        if (!_score)
-        {
-            Debug.LogError("Failed to get TextMeshProTextUI element on " + gameObject.name.ToString() + ", creating one now...");
-            _score = gameObject.AddComponent<TextMeshProUGUI>();
-        }
 
         _score.color = Color.green;
 

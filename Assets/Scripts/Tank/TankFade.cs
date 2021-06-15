@@ -8,6 +8,7 @@ using UnityEngine.UI;
 /// </summary>
 /// 
 [RequireComponent(typeof(HealthComponent))]
+[RequireComponent(typeof(Image))]
 public class TankFade : MonoBehaviour
 {
     [Header("References")]
@@ -20,17 +21,6 @@ public class TankFade : MonoBehaviour
     {
         _healthComp = GetComponentInParent<HealthComponent>();
         _img = GetComponent<Image>();
-
-        if (!_healthComp)
-        {
-            Debug.LogError("Failed to get HealthComponent on TankFade!");
-        }
-
-        if (!_img)
-        {
-            Debug.LogError("Failed to get Image on TankFade, creating one now.");
-            _img = gameObject.AddComponent<Image>();
-        }
 
         if(!deathImage)
         {
@@ -55,6 +45,7 @@ public class TankFade : MonoBehaviour
     {
         _healthComp.OnHealthZero -= DoDeathFade;
         GameManager.OnGameStateGameOver -= DoDeathFade;
+        StopAllCoroutines();
     }
 
     public void DoDeathFade()

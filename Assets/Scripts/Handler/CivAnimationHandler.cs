@@ -28,27 +28,6 @@ public class CivAnimationHandler : MonoBehaviour
         _sphereHandler = GetComponent<SphereHandler>();
         _rb = GetComponent<Rigidbody>();
 
-
-        if (!_animator)
-        {
-            Debug.LogError("Failed to get Animator on " + gameObject.name.ToString() + ", creating one now");
-            _animator = gameObject.AddComponent<Animator>();
-        }
-
-
-        if (!_sphereHandler)
-        {
-            Debug.LogError("Failed to get SphereHandler on " + gameObject.name.ToString() + ", creating one now");
-            _sphereHandler = gameObject.AddComponent<SphereHandler>();
-        }
-
-
-        if (!_rb)
-        {
-            Debug.LogError("Failed to get Rigidbody on " + gameObject.name.ToString() + ", creating one now");
-            _rb = gameObject.AddComponent<Rigidbody>();
-        }
-
         _isDeadHash = Animator.StringToHash("IsDead");
 
         GameManager.OnGamePause += StopAnim;

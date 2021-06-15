@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using TMPro;
 
+[RequireComponent(typeof(TextMeshProUGUI))]
 public class LevelTimerBox : MonoBehaviour
 {
     [Header("GameObject References")]
@@ -51,12 +52,6 @@ public class LevelTimerBox : MonoBehaviour
         _levelTimeText = GetComponent<TextMeshProUGUI>();
         _levelTimeText.color = Color.green;
         IsCalled = false;
-
-        if (!_levelTimeText)
-        {
-            Debug.LogError("Failed to get TextMeshProTextUI element on " + gameObject.name.ToString() + ", creating one now...");
-            _levelTimeText = gameObject.AddComponent<TextMeshProUGUI>();
-        }
 
         SceneManager.sceneLoaded += Init;
         GameManager.OnGamePause += StopTimer;

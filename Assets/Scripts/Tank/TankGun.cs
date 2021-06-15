@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-
+[RequireComponent(typeof(AudioSource))]
 public class TankGun : MonoBehaviour
 {
 
@@ -61,12 +61,6 @@ public class TankGun : MonoBehaviour
         if (!projectile)
         {
             Debug.LogError("No projectile found on " + gameObject.name.ToString() + ", you probably forgot to set it in the Inspector!");
-        }
-
-        if (!_audioSource)
-        {
-            Debug.LogError("No Audio Source found on " + gameObject.name.ToString() + ", creating one now..");
-            _audioSource = gameObject.AddComponent<AudioSource>();
         }
 
         if (!fireSound)

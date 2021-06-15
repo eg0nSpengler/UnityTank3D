@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(Camera))]
 public class PostBriefCamera : MonoBehaviour
 {
     [Header("References")]
@@ -19,12 +20,6 @@ public class PostBriefCamera : MonoBehaviour
 
         _smoothTime = 2.0f;
         _smoothVel = Vector3.zero;
-
-        if (!_camera)
-        {
-            Debug.LogError("Failed to get Camera on " + gameObject.name.ToString() + ", creating one now");
-            _camera = gameObject.AddComponent<Camera>();
-        }
 
         if (!_transPoint1)
         {

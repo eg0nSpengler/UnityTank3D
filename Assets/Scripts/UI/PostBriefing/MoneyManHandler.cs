@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+[RequireComponent(typeof(Image))]
 public class MoneyManHandler : MonoBehaviour
 {
     [Header("Sprite References")]
@@ -13,12 +14,6 @@ public class MoneyManHandler : MonoBehaviour
     private void Awake()
     {
         _img = GetComponent<Image>();
-
-        if (!_img)
-        {
-            Debug.LogError("Failed to get Image on " + gameObject.name.ToString() + ", creating one now");
-            _img = gameObject.AddComponent<Image>();
-        }
 
         if (!MoneyManPissed)
         {

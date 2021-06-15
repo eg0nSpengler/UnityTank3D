@@ -50,18 +50,6 @@ public class TankActor : MonoBehaviour
         _tankStats = new TankStats();
         _tankStats.PickupBool = new List<bool>();
 
-        if (!HealthComp)
-        {
-            Debug.LogError("Failed to get Health Component on " + gameObject.name.ToString() + ", creating one now");
-            gameObject.AddComponent<HealthComponent>();
-        }
-
-        if (!_audioSource)
-        {
-            Debug.LogError("Failed to get Audio Source on " + gameObject.name.ToString() + ", creating one now");
-            gameObject.AddComponent<AudioSource>();
-        }
-
         if (!hitSound)
         {
             Debug.LogWarning("No Hit Sound provided for TankActor!");
@@ -89,7 +77,10 @@ public class TankActor : MonoBehaviour
 
     private void OnEnable()
     {
-        FindObjectOfType<LevelPortal>().OnLevelPortalEnabled += SaveTankData;
+        if (FindObjectOfType<LevelPortal>() != null)
+        {
+            FindObjectOfType<LevelPortal>().OnLevelPortalEnabled += SaveTankData;
+        }
         //LevelTimerBox.OnLevelTimerScoreEnd += SaveTankData;
         HealthComp.OnHealthModified += PlayHitSound;
         HealthComp.OnHealthZero += PlayDeathSound;
@@ -98,7 +89,10 @@ public class TankActor : MonoBehaviour
 
     private void OnDisable()
     {
-        FindObjectOfType<LevelPortal>().OnLevelPortalEnabled -= SaveTankData;
+        if (FindObjectOfType<LevelPortal>() != null)
+        {
+            FindObjectOfType<LevelPortal>().OnLevelPortalEnabled -= SaveTankData;
+        }
         HealthComp.OnHealthModified -= PlayHitSound;
         HealthComp.OnHealthZero -= PlayDeathSound;
         GameManager.OnGameStateGameOver -= PlayDeathSound;
@@ -111,6 +105,7 @@ public class TankActor : MonoBehaviour
         _tankStats.PlayerScore = PickupManager.PlayerScore;
         _tankStats.LevelNum = LevelManager.CurrentLevelStats.CurrentLevelNum;
         _tankStats.LevelNum++;
+        Debug.LogWarning("TankStat LevelNum is now " + _tankStats.LevelNum.ToString());
         _tankStats.NumPickupsCollected = PickupManager.NumPickupsCollected;
         _tankStats.NumPickupsLost = PickupManager.NumPickupsLost;
         _tankStats.FinalLevelTime = LevelTimerBox.FinalLevelTime;

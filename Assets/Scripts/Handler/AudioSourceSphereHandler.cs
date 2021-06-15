@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(SphereCollider))]
+[RequireComponent(typeof(AudioSource))]
 public class AudioSourceSphereHandler : MonoBehaviour
 {
     [Header("References")]
@@ -18,20 +20,6 @@ public class AudioSourceSphereHandler : MonoBehaviour
     {
         sphereCollider = GetComponent<SphereCollider>();
         _audioSource = GetComponentInParent<AudioSource>();
-
-        if (!sphereCollider)
-        {
-            Debug.LogError("Failed to get Sphere Collider on " + gameObject.name.ToString() + ", creating one now");
-            sphereCollider = gameObject.AddComponent<SphereCollider>();
-        }
-        
-        if (!_audioSource)
-        {
-            Debug.LogError("Failed to get Audio Source on " + gameObject.name.ToString() + ", creating one now");
-            _audioSource = gameObject.AddComponent<AudioSource>();
-        }
-
-
     }
 
     void Start()

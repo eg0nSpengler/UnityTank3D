@@ -29,7 +29,6 @@ public class TankMovement : MonoBehaviour
     private int _boostAmount;
     private bool _isBoosting; // Are we currently boosting?
     private bool _isMoving; // Is the Tank currently moving?
-    private float _boostTimeCode; // The time code for the boost audio playback position (used for resuming audio after pausing)
 
     private delegate void TankBoostBegin();
     private delegate void TankBoostEnd();
@@ -51,23 +50,10 @@ public class TankMovement : MonoBehaviour
 
         _isBoosting = false;
         _isMoving = false;
-        tankSpeed = 2;
-        rotationSpeed = 1;
+        tankSpeed = 4;
+        rotationSpeed = 3;
         _boostAmount = 4;
         _tankDir = TANK_DIR.NONE;
-        _boostTimeCode = 0.0f;
-
-        if (!_charController)
-        {
-            Debug.LogError("Failed to get character controller in TankMovement instance on " + gameObject.name.ToString() + ", creating one now.");
-            _charController = gameObject.AddComponent<CharacterController>();
-        }
-
-        if (!_audioSource)
-        {
-            Debug.LogError("Failed to get AudioSource in TankMovement instance on " + gameObject.name.ToString() + ", creating one now.");
-            _audioSource = gameObject.AddComponent<AudioSource>();
-        }
 
         if (!boostSound)
         {

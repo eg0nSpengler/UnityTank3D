@@ -39,24 +39,6 @@ public class LevelPortal : MonoBehaviour
         _capCol = GetComponent<CapsuleCollider>();
         _anim = GetComponent<Animator>();
 
-        if (!_audioSource)
-        {
-            Debug.LogError("No Audio Source on " + gameObject.name.ToString() + ", creating one now");
-            _audioSource = gameObject.AddComponent<AudioSource>();
-        }
-
-        if (!_spriteRen)
-        {
-            Debug.LogError("Failed to get Sprite Renderer on LevelPortal, creating one now");
-            _spriteRen = gameObject.AddComponent<SpriteRenderer>();
-        }
-
-        if (!_capCol)
-        {
-            Debug.LogError("Failed to get CapsuleCollider on LevelPortal, creating one now");
-            _capCol = gameObject.AddComponent<CapsuleCollider>();
-        }
-
         if (!_anim)
         {
             Debug.LogError("Failed to get Animator on LevelPortal!");

@@ -17,12 +17,6 @@ public class ProjectileAnimationHandler : MonoBehaviour
     {
         _animator = GetComponent<Animator>();
 
-        if (!_animator)
-        {
-            Debug.LogError("Failed to get Animator on ProjectileAnimationHandler" + " creating one now");
-            _animator = gameObject.AddComponent<Animator>();
-        }
-
         _hasHitHash = Animator.StringToHash("HasHit");
 
     }

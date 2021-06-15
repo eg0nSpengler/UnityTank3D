@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(CivAnimationHandler))]
+[RequireComponent(typeof(CapsuleCollider))]
+[RequireComponent(typeof(Rigidbody))]
 public class SphereHandler : MonoBehaviour
 {
     [Header("Audio References")]
@@ -25,14 +28,14 @@ public class SphereHandler : MonoBehaviour
     /// <summary>
     /// Has this pickup been collected?
     /// </summary>
-    public bool IsCollected { private set; get; }
+    public bool IsCollected { set; get; }
 
     /// <summary>
     /// A boolean that we set depending on who collects the pickup
     /// <para>TRUE if the player</para>
     /// <para>FALSE if a monster (Or if the player shot the pickup)</para>
     /// </summary>
-    public bool PickupCollector {private set; get; }
+    public bool PickupCollector {set; get; }
 
     private CivAnimationHandler _animHandler;
     private CapsuleCollider _capsuleCollider;
@@ -58,26 +61,6 @@ public class SphereHandler : MonoBehaviour
             Debug.LogWarning("No Monster Pickup sound provided for " + gameObject.name.ToString());
         }
 
-        if (!_animHandler)
-        {
-            Debug.LogError("Failed to get CivAnimationHandler on " + gameObject.name.ToString() + ", creating one now");
-            _animHandler = gameObject.AddComponent<CivAnimationHandler>();
-        }
-
-
-        if (!_capsuleCollider)
-        {
-            Debug.LogError("Failed to get CapsuleCollider on " + gameObject.name.ToString() + ", creating one now");
-            _capsuleCollider = gameObject.AddComponent<CapsuleCollider>();
-        }
-
-        if (!_rb)
-        {
-            Debug.LogError("Failed to get Rigidbody on " + gameObject.name.ToString() + ", creating one now");
-            _rb = gameObject.AddComponent<Rigidbody>();
-        }
-        _animHandler.OnDeathAnimPlay += HandleDeathAnim;
-
     }
 
     // Start is called before the first frame update
@@ -86,15 +69,15 @@ public class SphereHandler : MonoBehaviour
         
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 
+    private void OnEnable()
+    {
+        _animHandler.OnDeathAnimPlay += HandleDeathAnim;
+    }
     private void OnDisable()
     {
         _animHandler.OnDeathAnimPlay -= HandleDeathAnim;
+        StopAllCoroutines();
     }
 
     private void OnTriggerEnter(Collider other)

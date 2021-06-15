@@ -31,12 +31,6 @@ public class MenuRollingDoor : MonoBehaviour
 
         _audioSource = GetComponent<AudioSource>();
 
-        if (!_audioSource)
-        {
-            Debug.LogError("Failed to get Audio Source on " + gameObject.name.ToString() + ", creating one now...");
-            _audioSource = gameObject.AddComponent<AudioSource>();
-        }
-
         _toolTipForeground = new GUIStyle();
         _toolTipBackground = new GUIStyle();
 
